@@ -2,6 +2,7 @@ import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup, useTo
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCriarUsuario } from "../../hooks/useCriarUsuario";
 
 
 const inputSchema = z.object({
@@ -16,18 +17,17 @@ type inputs = z.infer<typeof inputSchema>
 
 const CadastroUsuario = () => {
     const toast = useToast();
+    const {criarUsuario} = useCriarUsuario();
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
     } = useForm<inputs>({
         resolver: zodResolver(inputSchema)
     })
 
-    const onSubmit = (data: inputs) => {
-        console.log(errors)
-        console.log(data)
+    const onSubmit = (dados: inputs) => {
+        criarUsuario(dados.email, dados.senha, dados.nome, dados.sobrenome, dados.cpf, false)
     }
 
     const onError: SubmitErrorHandler<inputs> = (errors) => {
