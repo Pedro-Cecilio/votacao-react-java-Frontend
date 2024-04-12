@@ -1,0 +1,3 @@
+interface RespostaErro{
+    erro: string;
+}
