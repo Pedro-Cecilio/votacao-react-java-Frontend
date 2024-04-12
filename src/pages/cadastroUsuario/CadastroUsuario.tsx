@@ -1,8 +1,11 @@
-import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup, useToast } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup} from "@chakra-ui/react";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCriarUsuario } from "../../hooks/useCriarUsuario";
+import { AxiosError } from "axios";
+import useToastPersonalizado from "../../hooks/useToastPersonalizado";
+import { useState } from "react";
 
 
 const inputSchema = z.object({
@@ -16,8 +19,9 @@ const inputSchema = z.object({
 type inputs = z.infer<typeof inputSchema>
 
 const CadastroUsuario = () => {
-    const toast = useToast();
-    const {criarUsuario} = useCriarUsuario();
+    const [isLoading, setIsLoading] = useState(false)
+    const { toastErro } = useToastPersonalizado();
+    const { criarUsuario } = useCriarUsuario();
 
     const {
         register,
@@ -26,21 +30,23 @@ const CadastroUsuario = () => {
         resolver: zodResolver(inputSchema)
     })
 
-    const onSubmit = (dados: inputs) => {
-        criarUsuario(dados.email, dados.senha, dados.nome, dados.sobrenome, dados.cpf, false)
+    const onSubmit = async ({ email, senha, nome, sobrenome, cpf }: inputs) => {
+        try {
+            setIsLoading(true)
+            await criarUsuario(email, senha, nome, sobrenome, cpf, false)
+        } catch (error) {
+            const axiosError = error as AxiosError<RespostaErro>;
+            const mensagem: string = axiosError.response!.data.erro;
+            toastErro(mensagem)
+        }
+        setIsLoading(false)
+
     }
 
     const onError: SubmitErrorHandler<inputs> = (errors) => {
         for (const [_, valor] of Object.entries(errors)) {
             if (valor) {
-                toast({
-                    title: "Erro",
-                    description: valor.message,
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true,
-                    position: "top-right"
-                })
+                toastErro(valor.message!)
                 break;
             }
         }
@@ -74,23 +80,24 @@ const CadastroUsuario = () => {
                         minWidth={300}
                     >
                         <FormLabel>Email</FormLabel>
-                        <Input type='email'  {...register('email')} data-testid="input-email" />
+                        <Input type='email'  {...register('email')} data-testid="input-email" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                         <FormLabel>Senha</FormLabel>
-                        <Input type='password' {...register('senha')} data-testid="input-senha" />
+                        <Input type='password' {...register('senha')} data-testid="input-senha" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                         <FormLabel>Nome</FormLabel>
-                        <Input type='text' {...register('nome')} data-testid="input-nome" />
+                        <Input type='text' {...register('nome')} data-testid="input-nome" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                         <FormLabel>Sobrenome</FormLabel>
-                        <Input type='text' {...register('sobrenome')} data-testid="input-sobrenome" />
+                        <Input type='text' {...register('sobrenome')} data-testid="input-sobrenome" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                         <FormLabel>Cpf</FormLabel>
-                        <Input type='text' {...register('cpf')} data-testid="input-cpf" />
+                        <Input type='text' {...register('cpf')} data-testid="input-cpf" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                     </InputGroup>
                 </FormControl>
                 <Button
+                    isLoading={isLoading}
                     my={4}
                     maxWidth={300}
                     minWidth={200}
                     type="submit"
-                    colorScheme='blue'>
+                    colorScheme='gray'>
                     Enviar
                 </Button>
             </form>
