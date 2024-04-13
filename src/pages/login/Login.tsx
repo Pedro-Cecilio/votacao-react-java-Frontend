@@ -1,29 +1,20 @@
-import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup} from "@chakra-ui/react";
-import { SubmitErrorHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCriarUsuario } from "../../hooks/useCriarUsuario";
-import { AxiosError } from "axios";
+import { SubmitErrorHandler, useForm } from "react-hook-form";
 import useToastPersonalizado from "../../hooks/useToastPersonalizado";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { z } from "zod";
+import { AxiosError } from "axios";
 
 const inputSchema = z.object({
     email: z.string().email("Email deve ter formato válido."),
     senha: z.string().min(8, "Senha deve conter no mínimo 8 caracteres."),
-    nome: z.string().min(3, "Nome deve conter no mínimo 3 caracteres.").max(20, "Nome deve conter no máximo 20 caracteres."),
-    sobrenome: z.string().min(2, "Sobrenome deve conter no mínimo 2 caracteres.").max(20, "Sobrenome deve conter no máximo 20 caracteres."),
-    cpf: z.string().length(11, "Cpf deve ter exatamente 11 caracteres")
 })
 
 type inputs = z.infer<typeof inputSchema>
-
-const CadastroUsuario = () => {
+const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro } = useToastPersonalizado();
-    const { criarUsuario } = useCriarUsuario();
-    const navigate = useNavigate();
 
     const {
         register,
@@ -32,11 +23,11 @@ const CadastroUsuario = () => {
         resolver: zodResolver(inputSchema)
     })
 
-    const onSubmit = async ({ email, senha, nome, sobrenome, cpf }: inputs) => {
+    const onSubmit = async ({ email, senha }: inputs) => {
         try {
             setIsLoading(true)
-            await criarUsuario(email, senha, nome, sobrenome, cpf, false)
-            navigate("/login")
+            console.log(email)
+            console.log(senha)
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             const mensagem: string = axiosError.response!.data.erro;
@@ -54,7 +45,6 @@ const CadastroUsuario = () => {
             }
         }
     };
-
     return (
         <Flex
             gap={12}
@@ -65,7 +55,7 @@ const CadastroUsuario = () => {
             textColor={'branco'}
             minH='100vh'
         >
-            <Heading as={'h1'} size={'xl'}>Cadastro de Usuário</Heading>
+            <Heading as={'h1'} size={'xl'}>Login</Heading>
             <form
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                 onSubmit={handleSubmit(onSubmit, onError)}
@@ -86,17 +76,11 @@ const CadastroUsuario = () => {
                         <Input type='email'  {...register('email')} data-testid="input-email" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                         <FormLabel>Senha</FormLabel>
                         <Input type='password' {...register('senha')} data-testid="input-senha" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
-                        <FormLabel>Nome</FormLabel>
-                        <Input type='text' {...register('nome')} data-testid="input-nome" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
-                        <FormLabel>Sobrenome</FormLabel>
-                        <Input type='text' {...register('sobrenome')} data-testid="input-sobrenome" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
-                        <FormLabel>Cpf</FormLabel>
-                        <Input type='text' {...register('cpf')} data-testid="input-cpf" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                     </InputGroup>
                 </FormControl>
                 <Button
                     isLoading={isLoading}
-                    my={4}
+                    my={8}
                     maxWidth={300}
                     minWidth={200}
                     type="submit"
@@ -109,5 +93,4 @@ const CadastroUsuario = () => {
     );
 }
 
-export default CadastroUsuario;
-
+export default Login;
