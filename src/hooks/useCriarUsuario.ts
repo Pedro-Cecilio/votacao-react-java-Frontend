@@ -2,12 +2,12 @@ import { criarUsuarioService } from "../services/criarUsuario.service"
 
 export const useCriarUsuario = () => {
     const criarUsuario = async (email: string, senha: string, nome: string, sobrenome: string, cpf: string, admin: boolean)=>{
-        const criarAutenticacaoDto: CriarAutenticacaoDados = {
+        const autenticacaoDto: AutenticacaoDados = {
             email, 
             senha
         }
         const criarUsuarioDados: CriarUsuarioDados = {
-            criarAutenticacaoDto,
+            autenticacaoDto,
             nome,
             sobrenome,
             cpf,
