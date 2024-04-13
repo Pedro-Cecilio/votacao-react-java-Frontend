@@ -7,11 +7,6 @@ interface CriarUsuarioResposta{
     admin: boolean;
 }
 
-interface AutenticacaoDados{
-    email: string;
-    senha: string;
-}
-
 interface CriarUsuarioDados{
     autenticacaoDto: AutenticacaoDados;
     nome: string;

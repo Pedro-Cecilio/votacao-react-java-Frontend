@@ -5,6 +5,8 @@ import useToastPersonalizado from "../../hooks/useToastPersonalizado";
 import { useState } from "react";
 import { z } from "zod";
 import { AxiosError } from "axios";
+import { useLoginUsuario } from "../../hooks/useLoginUsuario";
+import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 
 const inputSchema = z.object({
     email: z.string().email("Email deve ter formato válido."),
@@ -15,6 +17,8 @@ type inputs = z.infer<typeof inputSchema>
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro } = useToastPersonalizado();
+    const { loginUsuario } = useLoginUsuario();
+    const { setDadosUsuario } = useDadosUsuarioStore()
 
     const {
         register,
@@ -25,22 +29,21 @@ const Login = () => {
 
     const onSubmit = async ({ email, senha }: inputs) => {
         try {
-            setIsLoading(true)
-            console.log(email)
-            console.log(senha)
+            setIsLoading(true);
+            const authReposta = await loginUsuario(email, senha);
+            setDadosUsuario(authReposta);
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem)
+            toastErro(mensagem);
         }
-        setIsLoading(false)
-
+        setIsLoading(false);
     }
 
     const onError: SubmitErrorHandler<inputs> = (errors) => {
         for (const [_, valor] of Object.entries(errors)) {
             if (valor) {
-                toastErro(valor.message!)
+                toastErro(valor.message!);
                 break;
             }
         }
