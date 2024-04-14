@@ -7,6 +7,7 @@ import { z } from "zod";
 import { AxiosError } from "axios";
 import { useLoginUsuario } from "../../hooks/useLoginUsuario";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
@@ -14,6 +15,7 @@ const Login = () => {
     const { toastErro } = useToastPersonalizado();
     const { loginUsuario } = useLoginUsuario();
     const { setDadosUsuario } = useDadosUsuarioStore()
+    const navigate = useNavigate();
 
     const inputSchema = z.object({
         email: z.string().email("Email deve ter formato válido."),
@@ -34,6 +36,7 @@ const Login = () => {
             setIsLoading(true);
             const authReposta = await loginUsuario(email, senha);
             setDadosUsuario(authReposta);
+            navigate("/paginaInicial")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             const mensagem: string = axiosError.response!.data.erro;
