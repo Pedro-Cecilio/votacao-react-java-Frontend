@@ -6,6 +6,13 @@ interface CriarUsuarioResposta{
     cpf: string;
     admin: boolean;
 }
+interface UsuarioResposta{
+    id: number;
+    nome: string;
+    sobrenome: string;
+    cpf: string;
+    admin: boolean;
+}
 
 interface CriarUsuarioDados{
     autenticacaoDto: AutenticacaoDados;

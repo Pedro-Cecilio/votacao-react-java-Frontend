@@ -6,7 +6,6 @@ import { useState } from "react";
 import { z } from "zod";
 import { AxiosError } from "axios";
 import { useLoginUsuario } from "../../hooks/useLoginUsuario";
-import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import { useNavigate } from "react-router-dom";
 import { useUtils } from "../../utils/useUtils";
 
@@ -15,7 +14,6 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro } = useToastPersonalizado();
     const { loginUsuario } = useLoginUsuario();
-    const { setDadosUsuario } = useDadosUsuarioStore()
     const { inserirTokenNoLocalStorage } = useUtils()
     const navigate = useNavigate();
 
@@ -37,7 +35,6 @@ const Login = () => {
         try {
             setIsLoading(true);
             const authReposta = await loginUsuario(email, senha);
-            setDadosUsuario(authReposta);
             inserirTokenNoLocalStorage(authReposta.token);
             navigate("/paginaInicial")
         } catch (error) {
