@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import { useLoginUsuario } from "../../hooks/useLoginUsuario";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import { useNavigate } from "react-router-dom";
+import { useUtils } from "../../utils/useUtils";
 
 
 const Login = () => {
@@ -15,13 +16,14 @@ const Login = () => {
     const { toastErro } = useToastPersonalizado();
     const { loginUsuario } = useLoginUsuario();
     const { setDadosUsuario } = useDadosUsuarioStore()
+    const { inserirTokenNoLocalStorage } = useUtils()
     const navigate = useNavigate();
 
     const inputSchema = z.object({
         email: z.string().email("Email deve ter formato válido."),
         senha: z.string().min(8, "Senha deve conter no mínimo 8 caracteres."),
     })
-    
+
     type inputs = z.infer<typeof inputSchema>
 
     const {
@@ -36,6 +38,7 @@ const Login = () => {
             setIsLoading(true);
             const authReposta = await loginUsuario(email, senha);
             setDadosUsuario(authReposta);
+            inserirTokenNoLocalStorage(authReposta.token);
             navigate("/paginaInicial")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
@@ -64,38 +67,36 @@ const Login = () => {
             minH='100vh'
         >
             <Heading as={'h1'} size={'xl'}>Login</Heading>
-            <form
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-                onSubmit={handleSubmit(onSubmit, onError)}
+
+            <FormControl
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'center'}
+                px={4}
             >
-                <FormControl
+                <InputGroup
+                    gap={2}
                     display={'flex'}
                     flexDirection={'column'}
-                    alignItems={'center'}
+                    maxWidth={450}
+                    minWidth={300}
                 >
-                    <InputGroup
-                        gap={2}
-                        display={'flex'}
-                        flexDirection={'column'}
-                        maxWidth={500}
-                        minWidth={300}
-                    >
-                        <FormLabel>Email</FormLabel>
-                        <Input type='email'  {...register('email')} data-testid="input-email" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
-                        <FormLabel>Senha</FormLabel>
-                        <Input type='password' {...register('senha')} data-testid="input-senha" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
-                    </InputGroup>
-                </FormControl>
-                <Button
-                    isLoading={isLoading}
-                    my={8}
-                    maxWidth={300}
-                    minWidth={200}
-                    type="submit"
-                    colorScheme='gray'>
-                    Enviar
-                </Button>
-            </form>
+                    <FormLabel>Email</FormLabel>
+                    <Input type='email'  {...register('email')} data-testid="input-email" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
+                    <FormLabel>Senha</FormLabel>
+                    <Input type='password' {...register('senha')} data-testid="input-senha" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
+                </InputGroup>
+            </FormControl>
+            <Button
+                isLoading={isLoading}
+                onClick={handleSubmit(onSubmit, onError)}
+                my={8}
+                maxWidth={300}
+                minWidth={200}
+                type="submit"
+                colorScheme='gray'>
+                Enviar
+            </Button>
         </Flex>
 
     );
