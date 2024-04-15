@@ -55,6 +55,7 @@ const Login = () => {
                 break;
             }
         }
+        setIsLoading(false);
     };
     return (
         <Flex
