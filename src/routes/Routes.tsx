@@ -3,6 +3,8 @@ import CadastroUsuario from "../pages/cadastroUsuario/CadastroUsuario";
 import App from "../App";
 import Login from "../pages/login/Login";
 import CadastroAdmin from "../pages/cadastroAdmin/CadastroAdmin";
+import PaginaInicial from "../pages/paginaInicial/PaginaInicial";
+import RotasComCabecalho from "./RotasComCabecalho";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,16 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
     },
+    {
+        element: <RotasComCabecalho/>,
+        children:[
+            {
+                path: "/paginaInicial",
+                element: <PaginaInicial />,
+            },
+        ]
+    },
+    
 ]);
 
 const Routes: React.FC = () => {

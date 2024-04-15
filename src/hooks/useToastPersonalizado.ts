@@ -11,10 +11,20 @@ const useToastPersonalizado = () => {
       duration: 3000,
       isClosable: true,
       position: "top-right"
-  })
+    })
+  };
+  const toastSucesso = (description: string) => {
+    toast({
+      title: "Sucesso",
+      description: description,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right"
+    })
   };
 
-  return {toastErro};
+  return { toastErro, toastSucesso };
 };
 
 export default useToastPersonalizado;
