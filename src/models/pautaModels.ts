@@ -9,5 +9,12 @@ export interface RespostaPautaDados{
     id: number;
     assunto: string;
     categoria: Categoria;
-    usuario_id: number;
+    usuario: UsuarioResposta;
+    sessaoVotacao: SessaoVotacaoResposta | null;
+}
+
+interface SessaoVotacaoResposta{
+    votosPositivos: number;
+    votosNegativos: number;
+    pauta_id: number;
 }
