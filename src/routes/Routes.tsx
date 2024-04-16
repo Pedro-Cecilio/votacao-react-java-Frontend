@@ -5,6 +5,7 @@ import CadastroAdmin from "../pages/cadastroAdmin/CadastroAdmin";
 import PaginaInicial from "../pages/paginaInicial/PaginaInicial";
 import RotasComCabecalho from "./RotasComCabecalho";
 import RotasAutenticadas from "./RotasAutenticadas";
+import Pautas from "../pages/pautas/Pautas";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
                         path: "/paginaInicial",
                         element: <PaginaInicial />,
                     },
+                    {
+                        path: "/pautas",
+                        element: <Pautas />,
+                    }
                 ]
             },
         ]
