@@ -1,11 +1,11 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import { useUtils } from "../utils/useUtils"
 import { useDadosUsuarioStore } from "../hooks/useDadosUsuarioStore"
 import { useBuscarUsuarioLogado } from "../hooks/useBuscarUsuarioLogado"
+import { useTokenLocalStorage } from "../hooks/useTokenLocalStorage"
 
 const RotasAutenticadas = () => {
-    const { obterTokenDoLocalStorage } = useUtils();
+    const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const navigate = useNavigate();
     const { setDadosUsuario } = useDadosUsuarioStore();
     const { buscarUsuarioLogado } = useBuscarUsuarioLogado();

@@ -7,14 +7,14 @@ import { z } from "zod";
 import { AxiosError } from "axios";
 import { useLoginUsuario } from "../../hooks/useLoginUsuario";
 import { useNavigate } from "react-router-dom";
-import { useUtils } from "../../utils/useUtils";
+import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
 
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro } = useToastPersonalizado();
     const { loginUsuario } = useLoginUsuario();
-    const { inserirTokenNoLocalStorage } = useUtils()
+    const { inserirTokenNoLocalStorage } = useTokenLocalStorage()
     const navigate = useNavigate();
 
     const inputSchema = z.object({
