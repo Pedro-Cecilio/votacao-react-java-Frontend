@@ -1,4 +1,4 @@
-export const useUtils = () => {
+export const useTokenLocalStorage = () => {
     const inserirTokenNoLocalStorage = (token:string):void => {
         localStorage.setItem("VOTACAO_TOKEN", token);
     }

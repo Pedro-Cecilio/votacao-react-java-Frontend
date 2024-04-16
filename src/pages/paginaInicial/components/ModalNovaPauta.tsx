@@ -7,8 +7,8 @@ import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useState } from "react";
 import Botao from "../../components/botao/Botao";
 import { Categoria } from "../../../enums/categoria";
-import { useUtils } from "../../../utils/useUtils";
 import { useCriarPauta } from "../../../hooks/useCriarPauta";
+import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 
 interface ModalProps {
     aberto: boolean;
@@ -17,7 +17,7 @@ interface ModalProps {
 const ModalNovaPauta = ({ aberto, fechar }: ModalProps) => {
     const { toastErro, toastSucesso } = useToastPersonalizado()
     const [isLoading, setIsLoading] = useState(false)
-    const { obterTokenDoLocalStorage } = useUtils()
+    const { obterTokenDoLocalStorage } = useTokenLocalStorage()
     const { criarPauta } = useCriarPauta()
 
     const inputSchema = z.object({

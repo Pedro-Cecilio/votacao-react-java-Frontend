@@ -14,8 +14,8 @@ const PaginaInicial = () => {
         <Flex justifyContent="center" alignItems="center" flexDirection="row" gap={16} h="100%" bg={'cinza.50'}>
             {admin ? (
                 <>
-                    <Botao onClick={mudarModalNovaPautaAberto} tamanho={'lg'} texto={"Ver pautas criadas"} />
-                    <Botao onClick={()=>{}} tamanho={'lg'} texto={"Criar nova pauta"} />
+                    <Botao onClick={()=>{}} tamanho={'lg'} texto={"Ver pautas criadas"} />
+                    <Botao onClick={mudarModalNovaPautaAberto} tamanho={'lg'} texto={"Criar nova pauta"} />
                 </>
             ) :
                 <>
@@ -23,7 +23,6 @@ const PaginaInicial = () => {
                     <Botao onClick={()=>{}} tamanho={'lg'} texto={"Sessões que votei"} />
                 </>
             }
-
             <ModalNovaPauta aberto={modalNovaPautaAberto} fechar={mudarModalNovaPautaAberto} />
         </Flex>
     );
