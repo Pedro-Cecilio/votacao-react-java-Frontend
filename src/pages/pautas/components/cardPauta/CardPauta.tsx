@@ -6,7 +6,7 @@ const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao}: RespostaPa
     return (
         <Card w={"300px"} id={id.toString()}>
             <CardHeader>
-                <Flex flexWrap='wrap'>
+                <Flex flexWrap='wrap' flexDirection={"column"}>
                     <Flex flex='1' gap='4' alignItems='center'>
                         <Avatar name={usuario.nome} src='https://bit.ly/broken-link' bg={"gray.700"} color={"white"} />
 
