@@ -12,6 +12,8 @@ import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import ModalNovaPauta from "./components/modalNovaPauta/ModalNovaPauta";
 import Botao from "../components/botao/Botao";
 import conteudoNaoEncontrado from "../../assets/conteudoNaoEncontrado.svg"
+
+
 const Pautas = () => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const { buscarTodasPautas } = useBuscarTodasPautas();
@@ -24,6 +26,8 @@ const Pautas = () => {
     const quantidadeDePaginas = Math.ceil(pautas.length / itensPorPagina);
     const [categoria, setCategoria] = useState<Categoria | "">("");
     const [paginaCarregada, setPaginaCarregada] = useState(false)
+    const [novaPautaAdicionada, setNovaPautaAdicionada] = useState(false)
+
 
     useEffect(() => {
         const buscarPautas = async () => {
@@ -37,7 +41,7 @@ const Pautas = () => {
           return () => {
             window.removeEventListener('load', () => {});
           };
-    }, [token, categoria]);
+    }, [token, categoria, novaPautaAdicionada]);
 
     const mudarModalNovaPautaAberto = () => {
         setModalNovaPautaAberto(!modalNovaPautaAberto);
@@ -96,7 +100,7 @@ const Pautas = () => {
             <Flex justifyContent={"center"} m={2} pl={10}>
                 <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
             </Flex>
-            <ModalNovaPauta aberto={modalNovaPautaAberto} fechar={mudarModalNovaPautaAberto} />
+            <ModalNovaPauta aberto={modalNovaPautaAberto} fechar={mudarModalNovaPautaAberto} setNovaPautaAdicionada={setNovaPautaAdicionada} />
         </Flex>
     );
 };

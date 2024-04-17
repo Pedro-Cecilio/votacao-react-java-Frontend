@@ -1,5 +1,5 @@
 import { SettingsIcon } from "@chakra-ui/icons"
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, FormControl, FormLabel, Input, Select, Stack, useDisclosure } from "@chakra-ui/react"
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, FormControl, FormLabel, Select, Stack, useDisclosure } from "@chakra-ui/react"
 import Botao from "../../../components/botao/Botao";
 import { Categoria } from "../../../../enums/categoria";
 import { z } from "zod";
