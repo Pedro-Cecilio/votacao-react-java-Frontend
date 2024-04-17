@@ -29,7 +29,7 @@ const Pautas = () => {
         setPaginaAtual(selected);
     };
 
-    const renderizarPautas = () => {
+    const renderizarPautasPorPagina = () => {
         const indexInicial = paginaAtual * itensPorPagina;
         const indexFinal = indexInicial + itensPorPagina;
         return pautas.slice(indexInicial, indexFinal).map(pauta => (
@@ -52,7 +52,7 @@ const Pautas = () => {
     }
     return (
         <>
-            <Flex p={quantidadeDePaginas > 0 ? 5 : 4} justifyContent={"center"} position={"relative"}>
+            <Flex p={quantidadeDePaginas > 1 ? 2 : 6} justifyContent={"center"} position={"relative"} >
                 <Box>
                     <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
                 </Box>
@@ -61,7 +61,7 @@ const Pautas = () => {
                 </Box>
             </Flex>
             <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyContent={"center"} justifyItems={"center"} alignItems={"center"}>
-                {renderizarPautas()}
+                {renderizarPautasPorPagina()}
             </Grid>
             <Box p={4}>
                 <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
