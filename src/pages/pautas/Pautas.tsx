@@ -2,28 +2,46 @@ import { useEffect, useState } from "react";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
 import { RespostaPautaDados } from "../../models/pautaModels";
 import CardPauta from "./components/cardPauta/CardPauta";
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Box, Flex, Grid, Image } from "@chakra-ui/react";
 import Paginacao from "./components/paginacao/Paginacao";
 import Filtro, { InputsFiltro } from "./components/filtro/Filtro";
 import { SubmitErrorHandler } from "react-hook-form";
 import { useBuscarTodasPautas } from "../../hooks/useBuscarTodasPautas";
-
+import { Categoria } from "../../enums/categoria";
+import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
+import ModalNovaPauta from "./components/modalNovaPauta/ModalNovaPauta";
+import Botao from "../components/botao/Botao";
+import conteudoNaoEncontrado from "../../assets/conteudoNaoEncontrado.svg"
 const Pautas = () => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const { buscarTodasPautas } = useBuscarTodasPautas();
+    const { admin } = useDadosUsuarioStore();
+    const [modalNovaPautaAberto, setModalNovaPautaAberto] = useState(false);
     const token = obterTokenDoLocalStorage();
     const [pautas, setPautas] = useState<RespostaPautaDados[]>([]);
     const [paginaAtual, setPaginaAtual] = useState(0);
     const itensPorPagina = 6;
     const quantidadeDePaginas = Math.ceil(pautas.length / itensPorPagina);
+    const [categoria, setCategoria] = useState<Categoria | "">("");
+    const [paginaCarregada, setPaginaCarregada] = useState(false)
 
     useEffect(() => {
         const buscarPautas = async () => {
-            const response = await buscarTodasPautas(token)
+            const response = await buscarTodasPautas(token, categoria);
             setPautas(response.data);
         };
         buscarPautas();
-    }, [token]);
+        window.addEventListener('load', () => {
+            setPaginaCarregada(true);
+          });
+          return () => {
+            window.removeEventListener('load', () => {});
+          };
+    }, [token, categoria]);
+
+    const mudarModalNovaPautaAberto = () => {
+        setModalNovaPautaAberto(!modalNovaPautaAberto);
+    }
 
     const controlarPaginaAtual = (selected: number) => {
         setPaginaAtual(selected);
@@ -43,30 +61,43 @@ const Pautas = () => {
             />
         ));
     };
-    const onSubmitFiltro = ({assunto, categoria}:InputsFiltro) => {
-        console.log(assunto);
-        console.log(categoria);
+    const onSubmitFiltro = async ({ categoria }: InputsFiltro) => {
+        setCategoria(categoria);
     }
     const onError: SubmitErrorHandler<InputsFiltro> = (error) => {
         console.log(error.categoria);
     }
     return (
-        <>
-            <Flex p={quantidadeDePaginas > 1 ? 2 : 6} justifyContent={"center"} position={"relative"} >
+        <Flex flexDirection={"column"} h={"100%"}>
+            <Flex m={2} justifyContent={"space-between"}>
+                {admin && (
+                    <Box>
+                        <Botao onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
+                    </Box>
+                )}
                 <Box>
                     <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
                 </Box>
-                <Box position={"absolute"} right={5} top={"50%"} transform={"translateY(-50%)"}>
-                    <Filtro onSubmit={onSubmitFiltro} onError={onError}/>
+                <Box >
+                    <Filtro onSubmit={onSubmitFiltro} onError={onError} />
                 </Box>
             </Flex>
             <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyContent={"center"} justifyItems={"center"} alignItems={"center"}>
                 {renderizarPautasPorPagina()}
             </Grid>
-            <Box p={4}>
+            <Flex justifyContent={"Center"}>
+
+                {pautas.length == 0 && paginaCarregada &&
+                    <Image src={conteudoNaoEncontrado} w={{base:"60%", md:"50%", lg:"40%"}} />
+                }
+
+            </Flex>
+
+            <Flex justifyContent={"center"} m={2} pl={10}>
                 <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
-            </Box>
-        </>
+            </Flex>
+            <ModalNovaPauta aberto={modalNovaPautaAberto} fechar={mudarModalNovaPautaAberto} />
+        </Flex>
     );
 };
 

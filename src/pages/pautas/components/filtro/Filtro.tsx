@@ -7,13 +7,12 @@ import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const inputSchema = z.object({
-    assunto: z.string(),
-    categoria: z.nativeEnum(Categoria) 
+    categoria: z.nativeEnum(Categoria)
 })
 export type InputsFiltro = z.infer<typeof inputSchema>
 
 interface FiltroProps{
-    readonly onSubmit: (inputs:InputsFiltro)=>void;
+    readonly onSubmit: (inputs:InputsFiltro)=>Promise<void>;
     readonly onError: SubmitErrorHandler<InputsFiltro> 
 }
 function Filtro({onSubmit, onError}:FiltroProps) {
@@ -23,13 +22,12 @@ function Filtro({onSubmit, onError}:FiltroProps) {
     const {
         register,
         handleSubmit,
-        reset,
     } = useForm<InputsFiltro>({
         resolver: zodResolver(inputSchema)
     })
-
-    const fecharModal = () => {
-        reset();
+    
+    const enviarFormulario = async (inputs:InputsFiltro) => {
+        await onSubmit(inputs);
         onClose();
     }
     return (
@@ -38,7 +36,7 @@ function Filtro({onSubmit, onError}:FiltroProps) {
             <Drawer
                 isOpen={isOpen}
                 placement='right'
-                onClose={fecharModal}
+                onClose={onClose}
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -50,14 +48,6 @@ function Filtro({onSubmit, onError}:FiltroProps) {
                     <DrawerBody>
                         <FormControl>
                             <Stack spacing='24px'>
-                                <Box>
-                                    <FormLabel htmlFor='assunto'>Assunto</FormLabel>
-                                    <Input
-                                        {...register("assunto")}
-                                        id="assunto"
-                                        placeholder='Insira o assunto desejado'
-                                    />
-                                </Box>
                                 <Box>
                                     <FormLabel htmlFor='categoria'>Categoria</FormLabel>
                                     <Select {...register("categoria")} placeholder="Categorias">
@@ -73,10 +63,10 @@ function Filtro({onSubmit, onError}:FiltroProps) {
                     </DrawerBody>
 
                     <DrawerFooter borderTopWidth='1px'>
-                        <Button variant='outline' mr={3} onClick={fecharModal}>
+                        <Button variant='outline' mr={3} onClick={onClose}>
                             Cancel
                         </Button>
-                        <Botao onClick={handleSubmit(onSubmit, onError)} tamanho={"md"} texto="Filtrar" />
+                        <Botao onClick={handleSubmit(enviarFormulario, onError)} tamanho={"md"} texto="Filtrar" />
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
