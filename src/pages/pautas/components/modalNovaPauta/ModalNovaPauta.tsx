@@ -3,12 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
+import useToastPersonalizado from "../../../../hooks/useToastPersonalizado";
 import { useState } from "react";
-import Botao from "../../components/botao/Botao";
-import { Categoria } from "../../../enums/categoria";
-import { useCriarPauta } from "../../../hooks/useCriarPauta";
-import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
+import Botao from "../../../components/botao/Botao";
+import { Categoria } from "../../../../enums/categoria";
+import { useCriarPauta } from "../../../../hooks/useCriarPauta";
+import { useTokenLocalStorage } from "../../../../hooks/useTokenLocalStorage";
 
 interface ModalProps {
     aberto: boolean;

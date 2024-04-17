@@ -39,7 +39,7 @@ const Cadastro = ({ mensagemH1, admin }: CadastroProps) => {
         try {
             setIsLoading(true)
             await criarUsuario(email, senha, nome, sobrenome, cpf, admin)
-            navigate("/login")
+            navigate("/")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             if (axiosError.code == "ERR_NETWORK") {
