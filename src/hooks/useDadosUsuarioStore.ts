@@ -1,16 +1,27 @@
 import { create } from 'zustand'
 
-interface DadosUsuarioState{
-    token: string;
-    setToken: (token: string) => void;
-    admin: boolean;
-    setAdmin: (admin: boolean) => void;
-    setDadosUsuario:(token: string, admin: boolean) => void
+interface DadosUsuarioState {
+  id: number | null;
+  nome: string;
+  sobrenome: string;
+  admin: boolean;
+  setId: (id: number | null) => void;
+  setNome: (nome: string) => void;
+  setSobrenome: (sobrenome: string) => void;
+  setAdmin: (admin: boolean) => void;
+  setDadosUsuario: (id: number, nome: string, sobrenome: string, admin: boolean) => void
 }
 export const useDadosUsuarioStore = create<DadosUsuarioState>(set => ({
-  token: "",
-  setToken: (token: string) => set({ token }),
+  id: null,
+  nome: "",
+  sobrenome: "",
   admin: false,
+
+  setId: (id: number | null) => set({ id }),
+  setNome: (nome: string) => set({ nome }),
+  setSobrenome: (sobrenome: string) => set({ sobrenome }),
   setAdmin: (admin: boolean) => set({ admin }),
-  setDadosUsuario: (token: string, admin: boolean) => set({ token, admin }),
-}))
+
+  setDadosUsuario: (id: number | null, nome: string, sobrenome: string, admin: boolean) => set({ id, nome, sobrenome, admin })
+}));
+

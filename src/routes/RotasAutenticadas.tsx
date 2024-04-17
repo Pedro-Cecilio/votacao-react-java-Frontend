@@ -21,7 +21,7 @@ const RotasAutenticadas = () => {
                 if (!possuiToken()) navigate("/")
                 const token = obterTokenDoLocalStorage();
                 const response = await buscarUsuarioLogado(token);
-                setDadosUsuario(token, response.admin);
+                setDadosUsuario(response.id, response.nome, response.sobrenome, response.admin);
             } catch (error) {
                 navigate("/")
             }
