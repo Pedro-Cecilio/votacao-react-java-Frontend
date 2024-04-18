@@ -4,7 +4,8 @@ import Login from "../pages/login/Login";
 import CadastroAdmin from "../pages/cadastroAdmin/CadastroAdmin";
 import RotasComCabecalho from "./RotasComCabecalho";
 import RotasAutenticadas from "./RotasAutenticadas";
-import Pautas from "../pages/pautas/Pautas";
+import ExplorarPautasAtivas from "../pages/explorarPautasAtivas/ExplorarPautasAtivas";
+import ExplorarMinhasPautas from "../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 
 const router = createBrowserRouter([
     {
@@ -27,8 +28,12 @@ const router = createBrowserRouter([
                 element: <RotasComCabecalho />,
                 children: [
                     {
-                        path: "/pautas",
-                        element: <Pautas />,
+                        path: "/explorar",
+                        element: <ExplorarPautasAtivas />,
+                    },
+                    {
+                        path: "/minhasPautas",
+                        element: <ExplorarMinhasPautas />,
                     }
                 ]
             },
