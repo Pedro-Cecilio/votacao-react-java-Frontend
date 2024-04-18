@@ -87,14 +87,11 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme='red' mr={3} onClick={fecharModal}>
-                        Fechar
-                    </Button>
                     <Botao
                         isLoading={isLoading}
                         onClick={handleSubmit(onSubmit, onError)}
                         tamanho={"md"}
-                        texto={"Criar"}
+                        texto={"Abrir votação"}
                     />
                 </ModalFooter>
             </ModalContent>
