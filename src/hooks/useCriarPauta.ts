@@ -1,9 +1,8 @@
-import { Categoria } from "../enums/categoria"
 import { CriarPautaDados } from "../models/pautaModels"
 import { criarPautaService } from "../services/criarPauta.service"
 
 export const useCriarPauta = () => {
-    const criarPauta = async (assunto: string, categoria: Categoria, token:string)=>{
+    const criarPauta = async (assunto: string, categoria: string, token:string)=>{
         const criarPautaDados: CriarPautaDados = {
             assunto, 
             categoria

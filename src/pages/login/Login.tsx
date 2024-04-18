@@ -36,7 +36,7 @@ const Login = () => {
             setIsLoading(true);
             const authReposta = await loginUsuario(email, senha);
             inserirTokenNoLocalStorage(authReposta.token);
-            navigate("/paginaInicial")
+            navigate("/explorar")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             const mensagem: string = axiosError.response!.data.erro;

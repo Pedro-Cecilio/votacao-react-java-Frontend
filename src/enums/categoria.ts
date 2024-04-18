@@ -9,4 +9,5 @@ export enum Categoria {
     EMPREGO = "EMPREGO",
     SERVICOS_PUBLICOS = "SERVICOS_PUBLICOS",
     ASSUNTOS_GERAIS = "ASSUNTOS_GERAIS"
+
 }

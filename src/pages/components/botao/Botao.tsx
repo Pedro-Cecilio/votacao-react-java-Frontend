@@ -5,10 +5,12 @@ interface BotaoProps{
     tamanho: ResponsiveValue<string> | undefined;
     texto: string;
     isLoading?: boolean;
+    rightIcon?: React.ReactElement
+    disabled?: boolean
 }
-const Botao = ({onClick, tamanho, texto, isLoading}:BotaoProps) => {
+const Botao = ({onClick, tamanho, texto, isLoading, rightIcon, disabled}:BotaoProps) => {
     return (
-        <Button isLoading={isLoading} onClick={onClick} bg={"cinza.700"} color={"branco"} size={tamanho} _hover={{ backgroundColor: "cinza.800" }}>
+        <Button isLoading={isLoading} onClick={onClick} bg={"cinza.700"} color={"branco"} size={tamanho} _hover={{ backgroundColor: "cinza.800" }} rightIcon={rightIcon} disabled={disabled}>
             {texto}
         </Button>
     )

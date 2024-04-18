@@ -4,8 +4,8 @@ import { AxiosError } from "axios";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
-import { useState } from "react";
-import Botao from "../../components/botao/Botao";
+import { useEffect, useState } from "react";
+import Botao from "../botao/Botao";
 import { Categoria } from "../../../enums/categoria";
 import { useCriarPauta } from "../../../hooks/useCriarPauta";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
@@ -13,16 +13,24 @@ import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 interface ModalProps {
     aberto: boolean;
     fechar: () => void;
+    setNovaPautaAdicionada: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const ModalNovaPauta = ({ aberto, fechar }: ModalProps) => {
+const ModalNovaPauta = ({ aberto, fechar, setNovaPautaAdicionada }: ModalProps) => {
     const { toastErro, toastSucesso } = useToastPersonalizado()
     const [isLoading, setIsLoading] = useState(false)
     const { obterTokenDoLocalStorage } = useTokenLocalStorage()
     const { criarPauta } = useCriarPauta()
 
+    useEffect(() => {
+        if (!aberto) {
+            setNovaPautaAdicionada(false);
+        }
+    }, [aberto, setNovaPautaAdicionada]);
+
+  
     const inputSchema = z.object({
         assunto: z.string().min(1, "Assunto deve ser informado."),
-        categoria: z.nativeEnum(Categoria),
+        categoria: z.string().min(1, "Categoria deve ser informada."),
     })
     type inputs = z.infer<typeof inputSchema>
     const {
@@ -42,9 +50,9 @@ const ModalNovaPauta = ({ aberto, fechar }: ModalProps) => {
         try {
             const token = obterTokenDoLocalStorage() ?? "";
             await criarPauta(assunto, categoria, token);
-            fecharModal();
+            fecharModal(); 
+            setNovaPautaAdicionada(true)
             toastSucesso("Pauta criada com sucesso!")
-
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             if (axiosError.code == "ERR_NETWORK") {
@@ -94,9 +102,6 @@ const ModalNovaPauta = ({ aberto, fechar }: ModalProps) => {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme='red' mr={3} onClick={fecharModal}>
-                        Fechar
-                    </Button>
                     <Botao
                         isLoading={isLoading}
                         onClick={handleSubmit(onSubmit, onError)}

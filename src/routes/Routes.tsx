@@ -2,13 +2,17 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import CadastroUsuario from "../pages/cadastroUsuario/CadastroUsuario";
 import Login from "../pages/login/Login";
 import CadastroAdmin from "../pages/cadastroAdmin/CadastroAdmin";
-import PaginaInicial from "../pages/paginaInicial/PaginaInicial";
 import RotasComCabecalho from "./RotasComCabecalho";
 import RotasAutenticadas from "./RotasAutenticadas";
+import ExplorarPautasAtivas from "../pages/explorarPautasAtivas/ExplorarPautasAtivas";
+import ExplorarMinhasPautas from "../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 
 const router = createBrowserRouter([
     {
-        
+        path: "/",
+        element: <Login />,
+    },
+    {           
         element: <RotasAutenticadas />,
         children: [
             {
@@ -24,17 +28,18 @@ const router = createBrowserRouter([
                 element: <RotasComCabecalho />,
                 children: [
                     {
-                        path: "/paginaInicial",
-                        element: <PaginaInicial />,
+                        path: "/explorar",
+                        element: <ExplorarPautasAtivas />,
                     },
+                    {
+                        path: "/minhasPautas",
+                        element: <ExplorarMinhasPautas />,
+                    }
                 ]
             },
         ]
-    },
-    {
-        path: "/login",
-        element: <Login />,
-    },
+    }
+    
     
 
 ]);

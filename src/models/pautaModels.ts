@@ -2,12 +2,22 @@ import { Categoria } from "../enums/categoria";
 
 export interface CriarPautaDados{
     assunto: string;
-    categoria: Categoria
+    categoria: string
 }
 
 export interface RespostaPautaDados{
     id: number;
     assunto: string;
     categoria: Categoria;
-    usuario_id: number;
+    usuario: UsuarioResposta;
+    sessaoVotacao: SessaoVotacaoResposta | null;
+}
+
+interface SessaoVotacaoResposta {
+    id: number;
+    pauta_id: number;
+    votosPositivos: number;
+    votosNegativos: number;
+    dataAbertura: string;
+    dataFechamento: string;
 }
