@@ -26,21 +26,22 @@ const Pautas = () => {
     const [categoria, setCategoria] = useState<string>("");
     const [paginaCarregada, setPaginaCarregada] = useState(false)
     const [novaPautaAdicionada, setNovaPautaAdicionada] = useState(false)
-
+    const [buscaConcluida, setBuscaConcluida] = useState(false);
 
     useEffect(() => {
         const buscarPautas = async () => {
             const response = await buscarTodasPautas(token, categoria);
             setPautas(response.data);
+            setBuscaConcluida(true); 
         };
         buscarPautas();
-        window.addEventListener('load', () => {
-            setPaginaCarregada(true);
-          });
-          return () => {
-            window.removeEventListener('load', () => {});
-          };
     }, [token, categoria, novaPautaAdicionada]);
+
+    useEffect(() => {
+        if (buscaConcluida) {
+            setPaginaCarregada(true);
+        }
+    }, [buscaConcluida]);
 
     const mudarModalNovaPautaAberto = () => {
         setModalNovaPautaAberto(!modalNovaPautaAberto);
@@ -70,6 +71,7 @@ const Pautas = () => {
     const onError: SubmitErrorHandler<InputsFiltro> = (error) => {
         console.log(error.categoria);
     }
+
     return (
         <Flex flexDirection={"column"} h={"100%"}>
             <Flex m={2} justifyContent={"space-between"}>
@@ -90,7 +92,7 @@ const Pautas = () => {
             </Grid>
             <Flex justifyContent={"Center"} flex={1}>
 
-                {pautas.length == 0 && paginaCarregada &&
+                {paginaCarregada && pautas.length == 0 &&
                     <Image src={conteudoNaoEncontrado} w={{base:"60%", md:"50%", lg:"40%"}} />
                 }
 
