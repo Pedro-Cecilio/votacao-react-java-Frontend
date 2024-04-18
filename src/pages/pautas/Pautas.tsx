@@ -7,7 +7,6 @@ import Paginacao from "./components/paginacao/Paginacao";
 import Filtro, { InputsFiltro } from "./components/filtro/Filtro";
 import { SubmitErrorHandler } from "react-hook-form";
 import { useBuscarTodasPautas } from "../../hooks/useBuscarTodasPautas";
-import { Categoria } from "../../enums/categoria";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import ModalNovaPauta from "./components/modalNovaPauta/ModalNovaPauta";
 import Botao from "../components/botao/Botao";
@@ -24,7 +23,7 @@ const Pautas = () => {
     const [paginaAtual, setPaginaAtual] = useState(0);
     const itensPorPagina = 6;
     const quantidadeDePaginas = Math.ceil(pautas.length / itensPorPagina);
-    const [categoria, setCategoria] = useState<Categoria | "">("");
+    const [categoria, setCategoria] = useState<string>("");
     const [paginaCarregada, setPaginaCarregada] = useState(false)
     const [novaPautaAdicionada, setNovaPautaAdicionada] = useState(false)
 
@@ -66,10 +65,6 @@ const Pautas = () => {
         ));
     };
     const onSubmitFiltro = async ({ categoria }: InputsFiltro) => {
-        if(categoria === Categoria.TODAS){
-            setCategoria("");
-            return;
-        }
         setCategoria(categoria);
     }
     const onError: SubmitErrorHandler<InputsFiltro> = (error) => {

@@ -1,5 +1,4 @@
 export enum Categoria {
-    TODAS = "TODAS",
     TRANSPORTE = "TRANSPORTE",
     EDUCACAO = "EDUCACAO",
     SAUDE = "SAUDE",
@@ -10,4 +9,5 @@ export enum Categoria {
     EMPREGO = "EMPREGO",
     SERVICOS_PUBLICOS = "SERVICOS_PUBLICOS",
     ASSUNTOS_GERAIS = "ASSUNTOS_GERAIS"
+
 }

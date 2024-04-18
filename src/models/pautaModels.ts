@@ -2,7 +2,7 @@ import { Categoria } from "../enums/categoria";
 
 export interface CriarPautaDados{
     assunto: string;
-    categoria: Categoria
+    categoria: string
 }
 
 export interface RespostaPautaDados{

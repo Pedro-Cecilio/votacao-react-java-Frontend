@@ -27,9 +27,10 @@ const ModalNovaPauta = ({ aberto, fechar, setNovaPautaAdicionada }: ModalProps) 
         }
     }, [aberto, setNovaPautaAdicionada]);
 
+  
     const inputSchema = z.object({
         assunto: z.string().min(1, "Assunto deve ser informado."),
-        categoria: z.nativeEnum(Categoria),
+        categoria: z.string().min(1, "Categoria deve ser informada."),
     })
     type inputs = z.infer<typeof inputSchema>
     const {

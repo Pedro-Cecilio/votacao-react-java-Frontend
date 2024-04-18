@@ -7,7 +7,7 @@ import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const inputSchema = z.object({
-    categoria: z.nativeEnum(Categoria)
+    categoria: z.string()
 })
 export type InputsFiltro = z.infer<typeof inputSchema>
 
@@ -50,7 +50,7 @@ function Filtro({onSubmit, onError}:FiltroProps) {
                             <Stack spacing='24px'>
                                 <Box>
                                     <FormLabel htmlFor='categoria'>Categoria</FormLabel>
-                                    <Select {...register("categoria")}  defaultValue={Categoria.TODAS}>
+                                    <Select {...register("categoria")} placeholder="Categorias">
                                         {Object.values(Categoria).map((categoria) => (
                                             <option key={categoria} value={categoria}>
                                                 {categoria}
