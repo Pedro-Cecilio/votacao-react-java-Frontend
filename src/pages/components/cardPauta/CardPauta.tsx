@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text } from "@chakra-ui/react"
-import { RespostaPautaDados } from "../../../../models/pautaModels";
-import { useDadosUsuarioStore } from "../../../../hooks/useDadosUsuarioStore";
+import { RespostaPautaDados } from "../../../models/pautaModels";
+import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import MenuAbrirVotacao from "../menuAbrirVotacao/menuAbrirVotacao";
 
 const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaPautaDados) => {

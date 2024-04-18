@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import Botao from "../../../components/botao/Botao";
+import Botao from "../botao/Botao";
 interface PaginacaoProps {
     readonly paginaAtual: number;
     readonly totalPaginas: number;

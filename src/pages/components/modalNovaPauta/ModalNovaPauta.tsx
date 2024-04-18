@@ -3,12 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import useToastPersonalizado from "../../../../hooks/useToastPersonalizado";
+import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useEffect, useState } from "react";
-import Botao from "../../../components/botao/Botao";
-import { Categoria } from "../../../../enums/categoria";
-import { useCriarPauta } from "../../../../hooks/useCriarPauta";
-import { useTokenLocalStorage } from "../../../../hooks/useTokenLocalStorage";
+import Botao from "../botao/Botao";
+import { Categoria } from "../../../enums/categoria";
+import { useCriarPauta } from "../../../hooks/useCriarPauta";
+import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 
 interface ModalProps {
     aberto: boolean;
@@ -102,9 +102,6 @@ const ModalNovaPauta = ({ aberto, fechar, setNovaPautaAdicionada }: ModalProps) 
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme='red' mr={3} onClick={fecharModal}>
-                        Fechar
-                    </Button>
                     <Botao
                         isLoading={isLoading}
                         onClick={handleSubmit(onSubmit, onError)}

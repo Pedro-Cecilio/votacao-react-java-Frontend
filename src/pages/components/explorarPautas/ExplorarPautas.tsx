@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
-import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
-import { RespostaPautaDados } from "../../models/pautaModels";
-import CardPauta from "./components/cardPauta/CardPauta";
+import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
+import { RespostaPautaDados } from "../../../models/pautaModels";
+import CardPauta from "../cardPauta/CardPauta";
 import { Box, Flex, Grid, Image } from "@chakra-ui/react";
-import Paginacao from "./components/paginacao/Paginacao";
-import Filtro, { InputsFiltro } from "./components/filtro/Filtro";
+import Paginacao from "../paginacao/Paginacao";
+import Filtro, { InputsFiltro } from "../filtro/Filtro";
 import { SubmitErrorHandler } from "react-hook-form";
-import { useBuscarTodasPautas } from "../../hooks/useBuscarTodasPautas";
-import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
-import ModalNovaPauta from "./components/modalNovaPauta/ModalNovaPauta";
-import Botao from "../components/botao/Botao";
-import conteudoNaoEncontrado from "../../assets/conteudoNaoEncontrado.svg"
+import { useBuscarTodasPautas } from "../../../hooks/useBuscarTodasPautas";
+import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
+import ModalNovaPauta from "../modalNovaPauta/ModalNovaPauta";
+import Botao from "../botao/Botao";
+import conteudoNaoEncontrado from "../../../assets/conteudoNaoEncontrado.svg"
+import { AxiosResponse } from "axios";
 
+interface ExplorarPautasProps{
+    metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<AxiosResponse<RespostaPautaDados[], any>>
+}
 
-const Pautas = () => {
+const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const { buscarTodasPautas } = useBuscarTodasPautas();
     const { admin } = useDadosUsuarioStore();
@@ -30,7 +34,7 @@ const Pautas = () => {
 
     useEffect(() => {
         const buscarPautas = async () => {
-            const response = await buscarTodasPautas(token, categoria);
+            const response = await metodoBuscarPautasBanco(token, categoria);
             setPautas(response.data);
             setBuscaConcluida(true); 
         };
@@ -108,4 +112,4 @@ const Pautas = () => {
 
 
 
-export default Pautas;
+export default ExplorarPautas;
