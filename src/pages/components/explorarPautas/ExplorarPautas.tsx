@@ -6,12 +6,12 @@ import { Box, Flex, Grid, Image } from "@chakra-ui/react";
 import Paginacao from "../paginacao/Paginacao";
 import Filtro, { InputsFiltro } from "../filtro/Filtro";
 import { SubmitErrorHandler } from "react-hook-form";
-import { useBuscarTodasPautas } from "../../../hooks/useBuscarTodasPautas";
 import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import ModalNovaPauta from "../modalNovaPauta/ModalNovaPauta";
 import Botao from "../botao/Botao";
 import conteudoNaoEncontrado from "../../../assets/conteudoNaoEncontrado.svg"
 import { AxiosResponse } from "axios";
+import { useLocation } from 'react-router-dom';
 
 interface ExplorarPautasProps{
     metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<AxiosResponse<RespostaPautaDados[], any>>
@@ -19,7 +19,6 @@ interface ExplorarPautasProps{
 
 const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
-    const { buscarTodasPautas } = useBuscarTodasPautas();
     const { admin } = useDadosUsuarioStore();
     const [modalNovaPautaAberto, setModalNovaPautaAberto] = useState(false);
     const token = obterTokenDoLocalStorage();
@@ -28,10 +27,10 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
     const itensPorPagina = 6;
     const quantidadeDePaginas = Math.ceil(pautas.length / itensPorPagina);
     const [categoria, setCategoria] = useState<string>("");
-    const [paginaCarregada, setPaginaCarregada] = useState(false)
-    const [novaPautaAdicionada, setNovaPautaAdicionada] = useState(false)
+    const [paginaCarregada, setPaginaCarregada] = useState(false);
+    const [novaPautaAdicionada, setNovaPautaAdicionada] = useState(false);
     const [buscaConcluida, setBuscaConcluida] = useState(false);
-
+    const rotaAtual:string = useLocation().pathname;
     useEffect(() => {
         const buscarPautas = async () => {
             const response = await metodoBuscarPautasBanco(token, categoria);
@@ -79,7 +78,7 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
     return (
         <Flex flexDirection={"column"} h={"100%"}>
             <Flex m={2} justifyContent={"space-between"}>
-                {admin && (
+                {admin && rotaAtual == "/minhasPautas" &&(
                     <Box>
                         <Botao onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
                     </Box>
