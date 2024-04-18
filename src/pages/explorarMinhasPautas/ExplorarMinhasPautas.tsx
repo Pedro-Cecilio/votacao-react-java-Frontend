@@ -1,10 +1,10 @@
-import { useBuscarTodasPautas } from "../../hooks/useBuscarTodasPautas"
+import { useBuscarTodasPautasUsuarioLogado } from "../../hooks/useBuscarTodasPautasUsuarioLogado";
 import ExplorarPautas from "../components/explorarPautas/ExplorarPautas"
 
 const ExplorarMinhasPautas = ()=>{
-    const {buscarTodasPautas} = useBuscarTodasPautas()
+    const {buscarTodasPautasUsuarioLogado} = useBuscarTodasPautasUsuarioLogado()
     return (
-        <ExplorarPautas metodoBuscarPautasBanco={buscarTodasPautas}/>
+        <ExplorarPautas metodoBuscarPautasBanco={buscarTodasPautasUsuarioLogado}/>
     )
 }
 
