@@ -9,6 +9,7 @@ const Cabecalho = () => {
         <Flex as="header" bg={'cinza.700'} p={3} justifyContent={"space-between"} alignItems={"center"} textColor={"branco"}>
             <Image src={logo} w='50px' />
             <Flex gap={6}>
+                <ChakraLink as={ReactRouterLink} to={"/explorar"} fontWeight={"bold"} m={1}>Explorar</ChakraLink >
                 {admin &&
                     <ChakraLink as={ReactRouterLink} to={"/minhasPautas"} fontWeight={"bold"} m={1}>Minhas pautas</ChakraLink >
                 }
