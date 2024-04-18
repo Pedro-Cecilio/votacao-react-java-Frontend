@@ -13,8 +13,11 @@ export interface RespostaPautaDados{
     sessaoVotacao: SessaoVotacaoResposta | null;
 }
 
-interface SessaoVotacaoResposta{
+interface SessaoVotacaoResposta {
+    id: number;
+    pauta_id: number;
     votosPositivos: number;
     votosNegativos: number;
-    pauta_id: number;
+    dataAbertura: string;
+    dataFechamento: string;
 }
