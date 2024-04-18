@@ -1,19 +1,32 @@
 import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text } from "@chakra-ui/react"
 import { RespostaPautaDados } from "../../../../models/pautaModels";
+import { useDadosUsuarioStore } from "../../../../hooks/useDadosUsuarioStore";
+import MenuAbrirVotacao from "../menuAbrirVotacao/menuAbrirVotacao";
 
-const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao}: RespostaPautaDados) => {
+const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaPautaDados) => {
+    const { id: idUsuarioLogado } = useDadosUsuarioStore();
+    const usuarioEstaLogadoEAdmin = idUsuarioLogado == usuario.id && usuario.admin;
+    const votacaoNaoAberta = sessaoVotacao == null;
+    
 
     return (
-        <Card w={"300px"} id={id.toString()}>
+        <Card w={"300px"} h={"350px"} id={id.toString()}>
             <CardHeader>
                 <Flex flexWrap='wrap' flexDirection={"column"}>
-                    <Flex flex='1' gap='4' alignItems='center'>
-                        <Avatar name={usuario.nome} src='https://bit.ly/broken-link' bg={"gray.700"} color={"white"} />
+                    <Flex alignItems='center'>
+                        <Flex flex={1} gap='2' alignItems='center'>
+                            <Avatar name={`${usuario.nome} ${usuario.sobrenome}`} src='https://bit.ly/broken-link' bg={"gray.700"} color={"white"} />
 
-                        <Box>
-                            <Heading size='sm'>{usuario.nome}</Heading>
-                            <Text fontStyle={"italic"}>Administrador</Text>
-                        </Box>
+                            <Box>
+                                <Heading size='sm'>{`${usuario.nome} ${usuario.sobrenome}`}</Heading>
+                                <Text fontStyle={"italic"}>Administrador</Text>
+                            </Box>
+                        </Flex>
+                        {usuarioEstaLogadoEAdmin && votacaoNaoAberta &&  
+                            <Box>
+                                <MenuAbrirVotacao/>
+                            </Box>
+                        }
                     </Flex>
                     <Flex alignItems='center' mt={4} ml={2}>
                         <Text fontSize={"small"} fontWeight={"700"} >{categoria}</Text>
@@ -34,18 +47,26 @@ const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao}: RespostaPa
                     },
                 }}
             >
-                <Button flex='1' variant='ghost' colorScheme="whatsapp">
-                    Sim
-                </Button>
-                <Button flex='1' variant='ghost' colorScheme="red">
-                    Não
-                </Button>
-                <Button flex='1' variant='ghost'>
-                    Compartilhar
-                </Button>
+                {idUsuarioLogado !== usuario.id &&
+                    <>
+                        <Button flex='1' variant='ghost' colorScheme="whatsapp">
+                            Sim
+                        </Button>
+                        <Button flex='1' variant='ghost' colorScheme="red">
+                            Não
+                        </Button>
+                    </>
+                }
+                { usuarioEstaLogadoEAdmin &&
+                    <Button flex='1' variant='ghost'>
+                        Compartilhar
+                    </Button>
+                }
+
             </CardFooter>
         </Card>
     )
 }
+
 
 export default CardPauta;

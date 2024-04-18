@@ -50,7 +50,7 @@ function Filtro({onSubmit, onError}:FiltroProps) {
                             <Stack spacing='24px'>
                                 <Box>
                                     <FormLabel htmlFor='categoria'>Categoria</FormLabel>
-                                    <Select {...register("categoria")} placeholder="Categorias">
+                                    <Select {...register("categoria")}  defaultValue={Categoria.TODAS}>
                                         {Object.values(Categoria).map((categoria) => (
                                             <option key={categoria} value={categoria}>
                                                 {categoria}

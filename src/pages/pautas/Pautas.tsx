@@ -66,6 +66,10 @@ const Pautas = () => {
         ));
     };
     const onSubmitFiltro = async ({ categoria }: InputsFiltro) => {
+        if(categoria === Categoria.TODAS){
+            setCategoria("");
+            return;
+        }
         setCategoria(categoria);
     }
     const onError: SubmitErrorHandler<InputsFiltro> = (error) => {
@@ -86,10 +90,10 @@ const Pautas = () => {
                     <Filtro onSubmit={onSubmitFiltro} onError={onError} />
                 </Box>
             </Flex>
-            <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyContent={"center"} justifyItems={"center"} alignItems={"center"}>
+            <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }}  justifyItems={"center"} >
                 {renderizarPautasPorPagina()}
             </Grid>
-            <Flex justifyContent={"Center"}>
+            <Flex justifyContent={"Center"} flex={1}>
 
                 {pautas.length == 0 && paginaCarregada &&
                     <Image src={conteudoNaoEncontrado} w={{base:"60%", md:"50%", lg:"40%"}} />

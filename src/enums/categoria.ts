@@ -1,4 +1,5 @@
 export enum Categoria {
+    TODAS = "TODAS",
     TRANSPORTE = "TRANSPORTE",
     EDUCACAO = "EDUCACAO",
     SAUDE = "SAUDE",
