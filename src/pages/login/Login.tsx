@@ -39,6 +39,11 @@ const Login = () => {
             navigate("/explorar")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
+            if (axiosError.code == "ERR_NETWORK") {
+                toastErro("Erro ao conectar com servidor.")
+                setIsLoading(false)
+                return;
+            }
             const mensagem: string = axiosError.response!.data.erro;
             toastErro(mensagem);
         }
