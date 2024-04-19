@@ -7,19 +7,22 @@ import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useState } from "react";
 import Botao from "../botao/Botao";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
+import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
+import { useAbrirSessaoVotacao } from "../../../hooks/useAbrirSessaoVotacao";
 
 interface ModalProps {
     aberto: boolean;
     fechar: () => void;
 }
 const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
-    const { toastErro, toastSucesso } = useToastPersonalizado()
-    const [isLoading, setIsLoading] = useState(false)
-    const { obterTokenDoLocalStorage } = useTokenLocalStorage()
-
+    const { toastErro, toastSucesso } = useToastPersonalizado();
+    const [isLoading, setIsLoading] = useState(false);
+    const { obterTokenDoLocalStorage } = useTokenLocalStorage();
+    const {pautaId, setPautaId} = useDadosAbrirVotacaoStore();
+    const {abrirSessaoVotacao} = useAbrirSessaoVotacao();
 
     const inputSchema = z.object({
-        tempo: z.number().int("O tempo deve ser informado em minutos.")
+        minutos: z.number().int("O tempo deve ser informado em minutos.")
     })
     type inputs = z.infer<typeof inputSchema>
     const {
@@ -31,37 +34,44 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
     })
 
     const fecharModal = () => {
+        setPautaId(0);
         reset();
         fechar();
     }
 
-    const onSubmit = async ({ tempo }: inputs) => {
+    const onSubmit = async ({ minutos }: inputs) => {
         try {
+            const dados:AbrirSessaoVotacaoDados = {
+                minutos, 
+                pautaId
+            }
             const token = obterTokenDoLocalStorage() ?? "";
-            console.log(tempo)
+            await abrirSessaoVotacao(token, dados);
+            toastSucesso("Sessão de votação iniciada com sucesso");
+            fecharModal();
 
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
+                toastErro("Erro ao conectar com servidor.");
+                setIsLoading(false);
                 return;
             }
             const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem)
+            toastErro(mensagem);
         }
-        setIsLoading(false)
+        setIsLoading(false);
 
     }
 
     const onError: SubmitErrorHandler<inputs> = (errors) => {
         for (const [_, valor] of Object.entries(errors)) {
             if (valor) {
-                toastErro(valor.message!)
+                toastErro(valor.message!);
                 break;
             }
         }
-        setIsLoading(false)
+        setIsLoading(false);
     };
     return (
         <Modal isOpen={aberto} onClose={fecharModal} size={"sm"}>
@@ -77,7 +87,7 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
                     <FormControl>
                         <FormLabel>Tempo da votação em Minutos</FormLabel>
                         <NumberInput defaultValue={1} min={1}>
-                            <NumberInputField {...register("tempo", {valueAsNumber:true})}/>
+                            <NumberInputField {...register("minutos", {valueAsNumber:true})}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />

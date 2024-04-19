@@ -6,8 +6,8 @@ import MenuAbrirVotacao from "../menuAbrirVotacao/menuAbrirVotacao";
 const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaPautaDados) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
     const usuarioEstaLogadoEAdmin = idUsuarioLogado == usuario.id && usuario.admin;
-    const votacaoNaoAberta = sessaoVotacao == null;
-    
+    const votacaoAberta = sessaoVotacao != null;
+
 
     return (
         <Card w={"300px"} h={"350px"} id={id.toString()}>
@@ -22,9 +22,9 @@ const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaP
                                 <Text fontStyle={"italic"}>Administrador</Text>
                             </Box>
                         </Flex>
-                        {usuarioEstaLogadoEAdmin && votacaoNaoAberta &&  
+                        {usuarioEstaLogadoEAdmin &&
                             <Box>
-                                <MenuAbrirVotacao/>
+                                <MenuAbrirVotacao pautaId={id} />
                             </Box>
                         }
                     </Flex>
@@ -57,12 +57,6 @@ const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaP
                         </Button>
                     </>
                 }
-                { usuarioEstaLogadoEAdmin &&
-                    <Button flex='1' variant='ghost'>
-                        Compartilhar
-                    </Button>
-                }
-
             </CardFooter>
         </Card>
     )
