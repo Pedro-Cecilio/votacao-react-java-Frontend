@@ -1,12 +1,14 @@
-import { AddIcon, CopyIcon, HamburgerIcon, LinkIcon } from "@chakra-ui/icons";
+import { AddIcon, HamburgerIcon, LinkIcon } from "@chakra-ui/icons";
 import { IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import ModalIniciarVotacaoAberto from "../modalIniciarVotacao/ModalIniciarVotacao";
 import { useState } from "react";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
+
 interface MenuAbrirVotacaoProps {
     pautaId: number;
+    sessaoVotacao: SessaoVotacaoResposta | null
 }
-const MenuAbrirVotacao = ({ pautaId }: MenuAbrirVotacaoProps) => {
+const MenuAbrirVotacao = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
     const [modalIniciarVotacaoAberto, setModalIniciarVotacaoAberto] = useState<boolean>(false);
     const { setPautaId } = useDadosAbrirVotacaoStore()
     const fechar = () => {
@@ -26,16 +28,18 @@ const MenuAbrirVotacao = ({ pautaId }: MenuAbrirVotacaoProps) => {
                 variant='outline'
             />
             <MenuList>
-
-                <MenuItem icon={<LinkIcon />} onClick={() => { }}>
-                    Compartilhar
-                </MenuItem>
-                
-                <MenuItem icon={<AddIcon />} onClick={abrir}>
-                    Abrir Votação
-                </MenuItem>
-
-
+                {
+                    sessaoVotacao == null &&
+                    <MenuItem icon={<AddIcon />} onClick={abrir}>
+                        Abrir Votação
+                    </MenuItem>
+                }
+                {
+                    sessaoVotacao?.sessaoAtiva &&
+                    <MenuItem icon={<LinkIcon />} onClick={() => { }}>
+                        Compartilhar
+                    </MenuItem>
+                }
             </MenuList>
             <ModalIniciarVotacaoAberto aberto={modalIniciarVotacaoAberto} fechar={fechar} />
 
