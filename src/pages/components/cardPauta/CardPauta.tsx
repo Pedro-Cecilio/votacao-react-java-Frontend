@@ -3,11 +3,11 @@ import { RespostaPautaDados } from "../../../models/pautaModels";
 import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import MenuAbrirVotacao from "../menuAbrirVotacao/menuAbrirVotacao";
 
+import PopoverTotalVotos from "../popoverTotalVotos/PopoverTotalVotos";
 const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaPautaDados) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
     const usuarioEstaLogadoEAdmin = idUsuarioLogado == usuario.id && usuario.admin;
-    const votacaoNaoAberta = sessaoVotacao == null;
-    
+
 
     return (
         <Card w={"300px"} h={"350px"} id={id.toString()}>
@@ -22,9 +22,9 @@ const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaP
                                 <Text fontStyle={"italic"}>Administrador</Text>
                             </Box>
                         </Flex>
-                        {usuarioEstaLogadoEAdmin && votacaoNaoAberta &&  
+                        {usuarioEstaLogadoEAdmin && (sessaoVotacao == null || sessaoVotacao.sessaoAtiva) &&
                             <Box>
-                                <MenuAbrirVotacao/>
+                                <MenuAbrirVotacao pautaId={id} sessaoVotacao={sessaoVotacao} />
                             </Box>
                         }
                     </Flex>
@@ -38,35 +38,27 @@ const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaP
                     {assunto}
                 </Text>
             </CardBody>
-            <CardFooter
-                justify='space-between'
-                flexWrap='wrap'
-                sx={{
-                    '& > button': {
-                        minW: '136px',
-                    },
-                }}
-            >
-                {idUsuarioLogado !== usuario.id &&
-                    <>
+            <CardFooter flexDirection={"column"}>
+                {
+                    idUsuarioLogado !== usuario.id &&
+                    <Flex w={"100%"}>
                         <Button flex='1' variant='ghost' colorScheme="whatsapp">
                             Sim
                         </Button>
                         <Button flex='1' variant='ghost' colorScheme="red">
                             Não
                         </Button>
-                    </>
+                    </Flex>
                 }
-                { usuarioEstaLogadoEAdmin &&
-                    <Button flex='1' variant='ghost'>
-                        Compartilhar
-                    </Button>
+                {
+                    sessaoVotacao != null && 
+                    <PopoverTotalVotos votosPositivos={sessaoVotacao.votosPositivos} votosNegativos={sessaoVotacao.votosNegativos} />
                 }
-
             </CardFooter>
         </Card>
     )
 }
+
 
 
 export default CardPauta;
