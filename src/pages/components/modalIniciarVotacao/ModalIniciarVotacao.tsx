@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
+import { FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ interface ModalProps {
     fechar: () => void;
 }
 const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
-    const { toastErro, toastSucesso } = useToastPersonalizado();
+    const { toastErro } = useToastPersonalizado();
     const [isLoading, setIsLoading] = useState(false);
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const {pautaId, setPautaId} = useDadosAbrirVotacaoStore();
@@ -47,7 +47,7 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
             }
             const token = obterTokenDoLocalStorage() ?? "";
             await abrirSessaoVotacao(token, dados);
-            toastSucesso("Sessão de votação iniciada com sucesso");
+            window.location.reload()
             fecharModal();
 
         } catch (error) {

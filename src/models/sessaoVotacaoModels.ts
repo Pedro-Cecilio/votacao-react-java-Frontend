@@ -5,6 +5,7 @@ interface SessaoVotacaoResposta {
     votosNegativos: number;
     dataAbertura: string;
     dataFechamento: string;
+    sessaoAtiva: boolean;
 }
 
 interface AbrirSessaoVotacaoDados{
