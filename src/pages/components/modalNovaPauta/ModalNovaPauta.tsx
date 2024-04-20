@@ -13,9 +13,9 @@ import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 interface ModalProps {
     aberto: boolean;
     fechar: () => void;
-    setNovaPautaAdicionada: React.Dispatch<React.SetStateAction<boolean>>;
+    setAtualizarPagina: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const ModalNovaPauta = ({ aberto, fechar, setNovaPautaAdicionada }: ModalProps) => {
+const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     const { toastErro, toastSucesso } = useToastPersonalizado()
     const [isLoading, setIsLoading] = useState(false)
     const { obterTokenDoLocalStorage } = useTokenLocalStorage()
@@ -23,9 +23,9 @@ const ModalNovaPauta = ({ aberto, fechar, setNovaPautaAdicionada }: ModalProps) 
 
     useEffect(() => {
         if (!aberto) {
-            setNovaPautaAdicionada(false);
+            setAtualizarPagina(false);
         }
-    }, [aberto, setNovaPautaAdicionada]);
+    }, [aberto, setAtualizarPagina]);
 
   
     const inputSchema = z.object({
@@ -51,7 +51,7 @@ const ModalNovaPauta = ({ aberto, fechar, setNovaPautaAdicionada }: ModalProps) 
             const token = obterTokenDoLocalStorage() ?? "";
             await criarPauta(assunto, categoria, token);
             fecharModal(); 
-            setNovaPautaAdicionada(true)
+            setAtualizarPagina(true)
             toastSucesso("Pauta criada com sucesso!")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;

@@ -1,0 +1,4 @@
+export enum TipoDeVoto{
+    VOTO_POSITIVO = "VOTO_POSITIVO",
+    VOTO_NEGATIVO = "VOTO_NEGATIVO"
+}

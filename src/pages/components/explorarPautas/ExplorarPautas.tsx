@@ -13,11 +13,11 @@ import conteudoNaoEncontrado from "../../../assets/conteudoNaoEncontrado.svg"
 import { AxiosResponse } from "axios";
 import { useLocation } from 'react-router-dom';
 
-interface ExplorarPautasProps{
+interface ExplorarPautasProps {
     metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<AxiosResponse<RespostaPautaDados[], any>>
 }
 
-const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
+const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const { admin } = useDadosUsuarioStore();
     const [modalNovaPautaAberto, setModalNovaPautaAberto] = useState(false);
@@ -28,17 +28,17 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
     const quantidadeDePaginas = Math.ceil(pautas.length / itensPorPagina);
     const [categoria, setCategoria] = useState<string>("");
     const [paginaCarregada, setPaginaCarregada] = useState(false);
-    const [novaPautaAdicionada, setNovaPautaAdicionada] = useState(false);
+    const [atualizarPagina, setAtualizarPagina] = useState(false);
     const [buscaConcluida, setBuscaConcluida] = useState(false);
-    const rotaAtual:string = useLocation().pathname;
+    const rotaAtual: string = useLocation().pathname;
     useEffect(() => {
         const buscarPautas = async () => {
             const response = await metodoBuscarPautasBanco(token, categoria);
             setPautas(response.data);
-            setBuscaConcluida(true); 
+            setBuscaConcluida(true);
         };
         buscarPautas();
-    }, [token, categoria, novaPautaAdicionada]);
+    }, [token, categoria, atualizarPagina]);
 
     useEffect(() => {
         if (buscaConcluida) {
@@ -60,11 +60,14 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
         return pautas.slice(indexInicial, indexFinal).map(pauta => (
             <CardPauta
                 key={pauta.id}
-                id={pauta.id}
-                assunto={pauta.assunto}
-                categoria={pauta.categoria}
-                usuario={pauta.usuario}
-                sessaoVotacao={pauta.sessaoVotacao}
+                respostaPautaDados={{
+                    id: pauta.id,
+                    assunto: pauta.assunto,
+                    categoria: pauta.categoria,
+                    usuario: pauta.usuario,
+                    sessaoVotacao: pauta.sessaoVotacao
+                }}
+                setAtualizarPagina={setAtualizarPagina}
             />
         ));
     };
@@ -78,7 +81,7 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
     return (
         <Flex flexDirection={"column"} h={"100%"}>
             <Flex m={2} justifyContent={"space-between"}>
-                {admin && rotaAtual == "/minhasPautas" &&(
+                {admin && rotaAtual == "/minhasPautas" && (
                     <Box>
                         <Botao onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
                     </Box>
@@ -90,13 +93,13 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
                     <Filtro onSubmit={onSubmitFiltro} onError={onError} />
                 </Box>
             </Flex>
-            <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }}  justifyItems={"center"} >
+            <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} >
                 {renderizarPautasPorPagina()}
             </Grid>
             <Flex justifyContent={"Center"} flex={1}>
 
                 {paginaCarregada && pautas.length == 0 &&
-                    <Image src={conteudoNaoEncontrado} w={{base:"60%", md:"50%", lg:"40%"}} />
+                    <Image src={conteudoNaoEncontrado} w={{ base: "60%", md: "50%", lg: "40%" }} />
                 }
 
             </Flex>
@@ -104,7 +107,7 @@ const ExplorarPautas = ({metodoBuscarPautasBanco}: ExplorarPautasProps) => {
             <Flex justifyContent={"center"} m={2} pl={10}>
                 <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
             </Flex>
-            <ModalNovaPauta aberto={modalNovaPautaAberto} fechar={mudarModalNovaPautaAberto} setNovaPautaAdicionada={setNovaPautaAdicionada} />
+            <ModalNovaPauta aberto={modalNovaPautaAberto} fechar={mudarModalNovaPautaAberto} setAtualizarPagina={setAtualizarPagina} />
         </Flex>
     );
 };
