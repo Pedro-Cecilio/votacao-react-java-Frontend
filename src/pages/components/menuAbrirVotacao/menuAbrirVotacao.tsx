@@ -3,6 +3,7 @@ import { IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/rea
 import ModalIniciarVotacaoAberto from "../modalIniciarVotacao/ModalIniciarVotacao";
 import { useState } from "react";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
+import { SessaoVotacaoResposta } from "../../../models/sessaoVotacaoModels";
 
 interface MenuAbrirVotacaoProps {
     pautaId: number;

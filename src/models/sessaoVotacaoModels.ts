@@ -1,4 +1,6 @@
-interface SessaoVotacaoResposta {
+import { TipoDeVoto } from "../enums/tipoDeVoto";
+
+export interface SessaoVotacaoResposta {
     id: number;
     pauta_id: number;
     votosPositivos: number;
@@ -8,7 +10,12 @@ interface SessaoVotacaoResposta {
     sessaoAtiva: boolean;
 }
 
-interface AbrirSessaoVotacaoDados{
+export interface AbrirSessaoVotacaoDados{
     pautaId:number
     minutos:number
+}
+
+export interface InserirVotoDados{
+    pautaId: number,
+    tipoDeVoto: TipoDeVoto
 }

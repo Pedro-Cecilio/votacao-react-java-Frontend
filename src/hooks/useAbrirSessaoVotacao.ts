@@ -1,3 +1,4 @@
+import { AbrirSessaoVotacaoDados } from "../models/sessaoVotacaoModels";
 import { abrirSessaoVotacaoService } from "../services/abrirSessaoVotacao.service";
 
 
