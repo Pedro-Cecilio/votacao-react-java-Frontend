@@ -4,55 +4,83 @@ import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import MenuAbrirVotacao from "../menuAbrirVotacao/menuAbrirVotacao";
 
 import PopoverTotalVotos from "../popoverTotalVotos/PopoverTotalVotos";
-const CardPauta = ({ id, assunto, categoria, usuario, sessaoVotacao }: RespostaPautaDados) => {
+import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
+import { useInserirVoto } from "../../../hooks/useInserirVoto";
+import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
+import { TipoDeVoto } from "../../../enums/tipoDeVoto";
+import { AxiosError } from "axios";
+interface CardPautaProps {
+    respostaPautaDados: RespostaPautaDados,
+    setAtualizarPagina: React.Dispatch<React.SetStateAction<boolean>>
+}
+const CardPauta = ({ respostaPautaDados: dados, setAtualizarPagina }: CardPautaProps) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
-    const usuarioEstaLogadoEAdmin = idUsuarioLogado == usuario.id && usuario.admin;
+    const usuarioEstaLogadoEAdmin = idUsuarioLogado == dados.usuario.id && dados.usuario.admin;
+    const { obterTokenDoLocalStorage } = useTokenLocalStorage()
+    const { inserirVoto } = useInserirVoto()
+    const { toastSucesso, toastErro } = useToastPersonalizado()
 
-
+    const votar = async (tipoDeVoto: TipoDeVoto) => {
+        try {
+            const token = obterTokenDoLocalStorage();
+            await inserirVoto(dados.id, tipoDeVoto, token);
+            toastSucesso("Voto inserido com sucesso")
+            setAtualizarPagina(true);
+        }catch (error) {
+            const axiosError = error as AxiosError<RespostaErro>;
+            if (axiosError.code == "ERR_NETWORK") {
+                toastErro("Erro ao conectar com servidor.")
+                return;
+            }
+            const mensagem: string = axiosError.response!.data.erro;
+            toastErro(mensagem);
+        }
+    }
+ 
     return (
-        <Card w={"300px"} h={"350px"} id={id.toString()}>
+        <Card w={"300px"} h={"350px"} id={dados.id.toString()}>
             <CardHeader>
                 <Flex flexWrap='wrap' flexDirection={"column"}>
                     <Flex alignItems='center'>
                         <Flex flex={1} gap='2' alignItems='center'>
-                            <Avatar name={`${usuario.nome} ${usuario.sobrenome}`} src='https://bit.ly/broken-link' bg={"gray.700"} color={"white"} />
+                            <Avatar name={`${dados.usuario.nome} ${dados.usuario.sobrenome}`} src='https://bit.ly/broken-link' bg={"gray.700"} color={"white"} />
 
                             <Box>
-                                <Heading size='sm'>{`${usuario.nome} ${usuario.sobrenome}`}</Heading>
+                                <Heading size='sm'>{`${dados.usuario.nome} ${dados.usuario.sobrenome}`}</Heading>
                                 <Text fontStyle={"italic"}>Administrador</Text>
                             </Box>
                         </Flex>
-                        {usuarioEstaLogadoEAdmin && (sessaoVotacao == null || sessaoVotacao.sessaoAtiva) &&
+                        {usuarioEstaLogadoEAdmin && (dados.sessaoVotacao == null || dados.sessaoVotacao.sessaoAtiva) &&
                             <Box>
-                                <MenuAbrirVotacao pautaId={id} sessaoVotacao={sessaoVotacao} />
+                                <MenuAbrirVotacao pautaId={dados.id} sessaoVotacao={dados.sessaoVotacao} />
                             </Box>
                         }
                     </Flex>
                     <Flex alignItems='center' mt={4} ml={2}>
-                        <Text fontSize={"small"} fontWeight={"700"} >{categoria}</Text>
+                        <Text fontSize={"small"} fontWeight={"700"} >{dados.categoria}</Text>
                     </Flex>
                 </Flex>
             </CardHeader>
             <CardBody display={"flex"} justifyContent={"center"} fontWeight={'bold'}>
                 <Text fontSize="lg" fontWeight="bold" >
-                    {assunto}
+                    {dados.assunto}
                 </Text>
             </CardBody>
             <CardFooter flexDirection={"column"}>
                 {
-                    idUsuarioLogado !== usuario.id &&
+                    idUsuarioLogado !== dados.usuario.id &&
                     <Flex w={"100%"}>
-                        <Button flex='1' variant='ghost' colorScheme="whatsapp">
+                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={()=>votar(TipoDeVoto.VOTO_POSITIVO)}>
                             Sim
                         </Button>
-                        <Button flex='1' variant='ghost' colorScheme="red">
+                        <Button flex='1' variant='ghost' colorScheme="red" onClick={()=>votar(TipoDeVoto.VOTO_NEGATIVO)}>
                             Não
                         </Button>
                     </Flex>
                 }
                 {
-                    sessaoVotacao != null && 
-                    <PopoverTotalVotos votosPositivos={sessaoVotacao.votosPositivos} votosNegativos={sessaoVotacao.votosNegativos} />
+                    dados.sessaoVotacao != null &&
+                    <PopoverTotalVotos votosPositivos={dados.sessaoVotacao.votosPositivos} votosNegativos={dados.sessaoVotacao.votosNegativos} />
                 }
             </CardFooter>
         </Card>
