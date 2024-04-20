@@ -11,7 +11,11 @@ const Cabecalho = () => {
             <Flex gap={6}>
                 <ChakraLink as={ReactRouterLink} to={"/explorar"} fontWeight={"bold"} m={1}>Explorar</ChakraLink >
                 {admin &&
-                    <ChakraLink as={ReactRouterLink} to={"/minhasPautas"} fontWeight={"bold"} m={1}>Minhas pautas</ChakraLink >
+                    <>
+                        <ChakraLink as={ReactRouterLink} to={"/cadastro"} fontWeight={"bold"} m={1}>Novo usuário</ChakraLink >
+                        <ChakraLink as={ReactRouterLink} to={"/minhasPautas"} fontWeight={"bold"} m={1}>Minhas pautas</ChakraLink >
+                    </>
+
                 }
                 <ChakraLink as={ReactRouterLink} to={"/perfil"} fontWeight={"bold"} m={1}>Perfil</ChakraLink >
             </Flex>
