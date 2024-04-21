@@ -11,9 +11,9 @@ import { TipoDeVoto } from "../../../enums/tipoDeVoto";
 import { AxiosError } from "axios";
 interface CardPautaProps {
     respostaPautaDados: RespostaPautaDados,
-    setAtualizarPagina: React.Dispatch<React.SetStateAction<boolean>>
+    callBackAoVotar: ()=> void;
 }
-const CardPauta = ({ respostaPautaDados: dados, setAtualizarPagina }: CardPautaProps) => {
+const CardPauta = ({ respostaPautaDados: dados, callBackAoVotar }: CardPautaProps) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
     const usuarioEstaLogadoEAdmin = idUsuarioLogado == dados.usuario.id && dados.usuario.admin;
     const { obterTokenDoLocalStorage } = useTokenLocalStorage()
@@ -25,7 +25,7 @@ const CardPauta = ({ respostaPautaDados: dados, setAtualizarPagina }: CardPautaP
             const token = obterTokenDoLocalStorage();
             await inserirVoto(dados.id, tipoDeVoto, token);
             toastSucesso("Voto inserido com sucesso")
-            setAtualizarPagina(true);
+            callBackAoVotar();
         }catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             if (axiosError.code == "ERR_NETWORK") {

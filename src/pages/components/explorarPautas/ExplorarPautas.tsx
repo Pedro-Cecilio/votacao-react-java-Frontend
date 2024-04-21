@@ -67,7 +67,7 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
                     usuario: pauta.usuario,
                     sessaoVotacao: pauta.sessaoVotacao
                 }}
-                setAtualizarPagina={setAtualizarPagina}
+                callBackAoVotar={()=>{setAtualizarPagina(true)}}
             />
         ));
     };
