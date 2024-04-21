@@ -4,14 +4,16 @@ import ModalIniciarVotacaoAberto from "../modalIniciarVotacao/ModalIniciarVotaca
 import { useState } from "react";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
 import { SessaoVotacaoResposta } from "../../../models/sessaoVotacaoModels";
+import { useNavigate } from "react-router-dom";
 
 interface MenuAbrirVotacaoProps {
     pautaId: number;
     sessaoVotacao: SessaoVotacaoResposta | null
 }
-const menuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
+const MenuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
     const [modalIniciarVotacaoAberto, setModalIniciarVotacaoAberto] = useState<boolean>(false);
     const { setPautaId } = useDadosAbrirVotacaoStore()
+    const navigate = useNavigate();
     const fechar = () => {
         setModalIniciarVotacaoAberto(false);
     }
@@ -42,8 +44,8 @@ const menuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
                     </MenuItem>
                 }
                 {
-                    !sessaoVotacao?.sessaoAtiva &&
-                    <MenuItem icon={<InfoOutlineIcon />} onClick={() => { }}>
+                    sessaoVotacao &&
+                    <MenuItem icon={<InfoOutlineIcon />} onClick={() => navigate(`/detalhes/${pautaId}`)}>
                         Detalhes
                     </MenuItem>
                 }
@@ -54,4 +56,4 @@ const menuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
     )
 }
 
-export default menuCardPauta;
+export default MenuCardPauta;
