@@ -1,4 +1,4 @@
-import { buscarDetalhesPautaService } from "../services/buscarDetalhesPautaService.service";
+import { buscarDetalhesPautaService } from "../services/buscarDetalhesPauta.service";
 
 
 export const useBuscarDetalhesPauta = () => {
