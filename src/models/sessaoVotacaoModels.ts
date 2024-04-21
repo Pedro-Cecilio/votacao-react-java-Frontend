@@ -19,3 +19,9 @@ export interface InserirVotoDados{
     pautaId: number,
     tipoDeVoto: TipoDeVoto
 }
+
+export enum StatusSessaoVotacao{
+    APROVADA = "APROVADA", 
+    EM_ANDAMENTO = "EM_ANDAMENTO",
+    REPROVADA = "REPROVADA"
+}

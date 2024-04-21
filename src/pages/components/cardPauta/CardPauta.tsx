@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Text } from "@chakra-ui/react"
 import { RespostaPautaDados } from "../../../models/pautaModels";
 import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
-import MenuAbrirVotacao from "../menuAbrirVotacao/menuAbrirVotacao";
+import MenuCardPauta from "../menuCardPauta/menuCardPauta";
 
 import PopoverTotalVotos from "../popoverTotalVotos/PopoverTotalVotos";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
@@ -50,9 +50,9 @@ const CardPauta = ({ respostaPautaDados: dados, setAtualizarPagina }: CardPautaP
                                 <Text fontStyle={"italic"}>Administrador</Text>
                             </Box>
                         </Flex>
-                        {usuarioEstaLogadoEAdmin && (dados.sessaoVotacao == null || dados.sessaoVotacao.sessaoAtiva) &&
+                        {usuarioEstaLogadoEAdmin && 
                             <Box>
-                                <MenuAbrirVotacao pautaId={dados.id} sessaoVotacao={dados.sessaoVotacao} />
+                                <MenuCardPauta pautaId={dados.id} sessaoVotacao={dados.sessaoVotacao} />
                             </Box>
                         }
                     </Flex>

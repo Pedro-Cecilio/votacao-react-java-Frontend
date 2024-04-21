@@ -5,6 +5,7 @@ import RotasAutenticadas from "./RotasAutenticadas";
 import ExplorarPautasAtivas from "../pages/explorarPautasAtivas/ExplorarPautasAtivas";
 import ExplorarMinhasPautas from "../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 import Cadastro from "../pages/cadastro/Cadastro";
+import Detalhes from "../pages/detalhes/Detalhes";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
                     {
                         path: "/minhasPautas",
                         element: <ExplorarMinhasPautas />,
+                    },
+                    {
+                        path: "/detalhes/:id",
+                        element: <Detalhes/>,
                     }
                 ]
             },

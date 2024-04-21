@@ -1,5 +1,5 @@
 import { Categoria } from "../enums/categoria";
-import { SessaoVotacaoResposta } from "./sessaoVotacaoModels";
+import { SessaoVotacaoResposta, StatusSessaoVotacao } from "./sessaoVotacaoModels";
 
 export interface CriarPautaDados{
     assunto: string;
@@ -14,3 +14,7 @@ export interface RespostaPautaDados{
     sessaoVotacao: SessaoVotacaoResposta | null;
 }
 
+export interface DetalhesPautaDados{
+    dadosPauta: RespostaPautaDados;
+    status: StatusSessaoVotacao;
+}
