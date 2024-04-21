@@ -7,6 +7,7 @@ import ExplorarMinhasPautas from "../pages/explorarMinhasPautas/ExplorarMinhasPa
 import Cadastro from "../pages/cadastro/Cadastro";
 import Detalhes from "../pages/detalhes/Detalhes";
 import VotoExterno from "../pages/votoExterno/VotoExterno";
+import NaoEncontrado from "../pages/components/naoEncontrado/NaoEncontrado";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
                 ]
             },
         ]
+    },
+    {
+        path: "*",
+        element: <NaoEncontrado />,
     }
     
     
