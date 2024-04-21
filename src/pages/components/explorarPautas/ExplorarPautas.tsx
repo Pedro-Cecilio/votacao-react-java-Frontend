@@ -96,10 +96,10 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
             <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} >
                 {renderizarPautasPorPagina()}
             </Grid>
-            <Flex justifyContent={"Center"} flex={1}>
+            <Flex justifyContent={"center"} >
 
                 {paginaCarregada && pautas.length == 0 &&
-                    <Image src={conteudoNaoEncontrado} w={{ base: "60%", md: "50%", lg: "40%" }} />
+                    <Image src={conteudoNaoEncontrado} w={{ base: "60%", md: "50%", lg: "30%" }} />
                 }
 
             </Flex>
