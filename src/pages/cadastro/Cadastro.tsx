@@ -1,7 +1,6 @@
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import useToastPersonalizado from "../../hooks/useToastPersonalizado";
 import { useCriarUsuario } from "../../hooks/useCriarUsuario";
-import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,10 +12,11 @@ import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
 
 const Cadastro = () => {
     const [isLoading, setIsLoading] = useState(false)
-    const { toastErro } = useToastPersonalizado();
+    const { toastErro, toastSucesso } = useToastPersonalizado();
     const { criarUsuario } = useCriarUsuario();
-    const navigate = useNavigate();
     const { admin } = useDadosUsuarioStore();
+    const [paginaCarregada, setPaginaCarregada] = useState(false);
+
 
     const inputSchema = z.object({
         email: z.string().email("Email deve ter formato válido."),
@@ -29,9 +29,15 @@ const Cadastro = () => {
 
     type inputs = z.infer<typeof inputSchema>
 
+    useEffect(() => {
+        window.addEventListener('load', () => {
+            setPaginaCarregada(true);
+        });
+    }, []);
     const {
         register,
         handleSubmit,
+        reset,
     } = useForm<inputs>({
         resolver: zodResolver(inputSchema)
     })
@@ -40,7 +46,8 @@ const Cadastro = () => {
         try {
             setIsLoading(true)
             await criarUsuario(email, senha, nome, sobrenome, cpf, tipoDeUsuario == TipoDeUsuario.ADMINISTRADOR)
-            navigate("/")
+            reset()
+            toastSucesso("Usuário criado com sucesso")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
             if (axiosError.code == "ERR_NETWORK") {
@@ -63,8 +70,10 @@ const Cadastro = () => {
         }
     };
 
+    if(paginaCarregada && !admin){
+        return <NaoAutorizado />
+    }
     return (
-        admin ? (
             <Flex
                 gap={8}
                 flexDirection={'column'}
@@ -119,7 +128,6 @@ const Cadastro = () => {
                     </Button>
                 </form>
             </Flex>
-        ) : <NaoAutorizado/>
     );
 
 
