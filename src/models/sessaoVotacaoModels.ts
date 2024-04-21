@@ -16,6 +16,7 @@ export interface AbrirSessaoVotacaoDados{
 }
 
 export interface InserirVotoDados{
+    usuarioId: number
     pautaId: number,
     tipoDeVoto: TipoDeVoto
 }

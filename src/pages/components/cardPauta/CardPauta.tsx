@@ -23,7 +23,7 @@ const CardPauta = ({ respostaPautaDados: dados, callBackAoVotar }: CardPautaProp
     const votar = async (tipoDeVoto: TipoDeVoto) => {
         try {
             const token = obterTokenDoLocalStorage();
-            await inserirVoto(dados.id, tipoDeVoto, token);
+            await inserirVoto(idUsuarioLogado!, dados.id, tipoDeVoto, token);
             toastSucesso("Voto inserido com sucesso")
             callBackAoVotar();
         }catch (error) {
