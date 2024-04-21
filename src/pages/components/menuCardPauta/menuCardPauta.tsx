@@ -39,7 +39,7 @@ const MenuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
                 }
                 {
                     sessaoVotacao?.sessaoAtiva &&
-                    <MenuItem icon={<LinkIcon />} onClick={() => { }}>
+                    <MenuItem icon={<LinkIcon />} onClick={() => navigate(`/votar/${pautaId}`)}>
                         Compartilhar
                     </MenuItem>
                 }

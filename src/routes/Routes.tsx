@@ -6,11 +6,16 @@ import ExplorarPautasAtivas from "../pages/explorarPautasAtivas/ExplorarPautasAt
 import ExplorarMinhasPautas from "../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 import Cadastro from "../pages/cadastro/Cadastro";
 import Detalhes from "../pages/detalhes/Detalhes";
+import VotoExterno from "../pages/votoExterno/VotoExterno";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Login />,
+    },
+    {
+        path: "/votar/:id",
+        element: <VotoExterno />,
     },
     
     {           
