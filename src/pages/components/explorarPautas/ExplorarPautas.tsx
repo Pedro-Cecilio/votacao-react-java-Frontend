@@ -10,8 +10,11 @@ import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import ModalNovaPauta from "../modalNovaPauta/ModalNovaPauta";
 import Botao from "../botao/Botao";
 import conteudoNaoEncontrado from "../../../assets/conteudoNaoEncontrado.svg"
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { useLocation } from 'react-router-dom';
+import { TipoDeVoto } from "../../../enums/tipoDeVoto";
+import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
+import { useInserirVoto } from "../../../hooks/useInserirVoto";
 
 interface ExplorarPautasProps {
     metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<AxiosResponse<RespostaPautaDados[], any>>
@@ -30,6 +33,9 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
     const [paginaCarregada, setPaginaCarregada] = useState(false);
     const [atualizarPagina, setAtualizarPagina] = useState(false);
     const [buscaConcluida, setBuscaConcluida] = useState(false);
+    const { inserirVotoInterno } = useInserirVoto();
+    const { toastSucesso, toastErro } = useToastPersonalizado()
+
     const rotaAtual: string = useLocation().pathname;
     useEffect(() => {
         const buscarPautas = async () => {
@@ -54,6 +60,22 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
         setPaginaAtual(selected);
     };
 
+    const metodoParaVotarNaPauta = async (tipoDeVoto: TipoDeVoto, pautaId:number) => {
+        try {
+            const token = obterTokenDoLocalStorage();
+            await inserirVotoInterno(pautaId, tipoDeVoto, token);
+            toastSucesso("Voto inserido com sucesso")
+            setAtualizarPagina(true);
+        } catch (error) {
+            const axiosError = error as AxiosError<RespostaErro>;
+            if (axiosError.code == "ERR_NETWORK") {
+                toastErro("Erro ao conectar com servidor.")
+                return;
+            }
+            const mensagem: string = axiosError.response!.data.erro;
+            toastErro(mensagem);
+        }
+    }
     const renderizarPautasPorPagina = () => {
         const indexInicial = paginaAtual * itensPorPagina;
         const indexFinal = indexInicial + itensPorPagina;
@@ -67,7 +89,7 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
                     usuario: pauta.usuario,
                     sessaoVotacao: pauta.sessaoVotacao
                 }}
-                callBackAoVotar={()=>{setAtualizarPagina(true)}}
+                metodoParaVotar={metodoParaVotarNaPauta}
             />
         ));
     };
@@ -93,16 +115,16 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
                     <Filtro onSubmit={onSubmitFiltro} onError={onError} />
                 </Box>
             </Flex>
-            <Grid gap={8} m={4} p={8} templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} >
+            <Grid gap={8} m={{ base: 2, sm: 4 }} p={{ base: 0, sm: 8 }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} >
                 {renderizarPautasPorPagina()}
             </Grid>
-            <Flex justifyContent={"center"} >
 
-                {paginaCarregada && pautas.length == 0 &&
+
+            {paginaCarregada && pautas.length == 0 &&
+                <Flex justifyContent={"center"} h={"100%"}>
                     <Image src={conteudoNaoEncontrado} w={{ base: "60%", md: "50%", lg: "30%" }} />
-                }
-
-            </Flex>
+                </Flex>
+            }
 
             <Flex justifyContent={"center"} m={2} pl={10}>
                 <Paginacao paginaAtual={paginaAtual} totalPaginas={quantidadeDePaginas} controlarPaginaAtual={controlarPaginaAtual} />
