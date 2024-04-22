@@ -5,9 +5,13 @@ export const useTokenLocalStorage = () => {
     const obterTokenDoLocalStorage = ():string  => {
         return localStorage.getItem("VOTACAO_TOKEN") ?? "";
     }
+    const removerTokenDoLocalStorage = (): void => {
+        localStorage.removeItem("VOTACAO_TOKEN");
+    }
 
     return {
         inserirTokenNoLocalStorage,
-        obterTokenDoLocalStorage
+        obterTokenDoLocalStorage,
+        removerTokenDoLocalStorage
     }
 }

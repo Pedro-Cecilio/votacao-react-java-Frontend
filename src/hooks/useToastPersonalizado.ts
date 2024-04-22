@@ -23,8 +23,18 @@ const useToastPersonalizado = () => {
       position: "top-right"
     })
   };
+  const toastInfo = (description: string) => {
+    toast({
+      title: "Info",
+      description: description,
+      status: "info",
+      duration: 3000,
+      isClosable: true,
+      position: "top-right"
+    })
+  };
 
-  return { toastErro, toastSucesso };
+  return { toastErro, toastSucesso, toastInfo };
 };
 
 export default useToastPersonalizado;

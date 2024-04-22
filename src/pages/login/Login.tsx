@@ -2,7 +2,7 @@ import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup } from
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import useToastPersonalizado from "../../hooks/useToastPersonalizado";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { AxiosError } from "axios";
 import { useLoginUsuario } from "../../hooks/useLoginUsuario";
@@ -59,6 +59,23 @@ const Login = () => {
         }
         setIsLoading(false);
     };
+
+    
+
+    useEffect(() => {
+        const handleTeclaPressionada = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                handleSubmit(onSubmit, onError)();
+            }
+        };
+
+        window.addEventListener("keydown", handleTeclaPressionada);
+
+        return () => {
+            window.removeEventListener("keydown", handleTeclaPressionada);
+        };
+    }, [handleSubmit, onError]);
+
     return (
         <Flex
             gap={12}

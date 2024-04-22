@@ -1,19 +1,30 @@
 import { TipoDeVoto } from "../enums/tipoDeVoto";
 import { InserirVotoDados } from "../models/sessaoVotacaoModels";
-import { inserirVotoService } from "../services/inserirVoto.service"
+import { inserirVotoService } from "../services/inserirVoto.service";
 
 export const useInserirVoto = () => {
-    const inserirVoto = async (pautaId: number, tipoDeVoto: TipoDeVoto, token: string)=>{
+    const inserirVotoInterno = async (pautaId: number, tipoDeVoto: TipoDeVoto, token: string)=>{
         const inserirVotoDados: InserirVotoDados = {
             pautaId, 
             tipoDeVoto
         }
         
-        const resposta = await inserirVotoService(token, inserirVotoDados);
+        const resposta = await inserirVotoService(inserirVotoDados, "/votacao/votoInterno", token);
+        return resposta;
+    }
+    const inserirVotoExterno = async (pautaId: number, tipoDeVoto: TipoDeVoto, cpf: string)=>{
+        const inserirVotoDados: InserirVotoDados = {
+            pautaId, 
+            tipoDeVoto,
+            cpf
+        }
+        
+        const resposta = await inserirVotoService(inserirVotoDados, "/votacao/votoExterno");
         return resposta;
     }
 
     return {
-        inserirVoto
+        inserirVotoInterno,
+        inserirVotoExterno
     }
 }

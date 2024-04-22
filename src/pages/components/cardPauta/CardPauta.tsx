@@ -4,39 +4,16 @@ import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import MenuCardPauta from "../menuCardPauta/menuCardPauta";
 
 import PopoverTotalVotos from "../popoverTotalVotos/PopoverTotalVotos";
-import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
-import { useInserirVoto } from "../../../hooks/useInserirVoto";
-import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { TipoDeVoto } from "../../../enums/tipoDeVoto";
-import { AxiosError } from "axios";
 interface CardPautaProps {
     respostaPautaDados: RespostaPautaDados,
-    setAtualizarPagina: React.Dispatch<React.SetStateAction<boolean>>
+    metodoParaVotar: (tipoDeVoto: TipoDeVoto, pautaId:number) => Promise<void>;
 }
-const CardPauta = ({ respostaPautaDados: dados, setAtualizarPagina }: CardPautaProps) => {
+const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar:votar }: CardPautaProps) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
     const usuarioEstaLogadoEAdmin = idUsuarioLogado == dados.usuario.id && dados.usuario.admin;
-    const { obterTokenDoLocalStorage } = useTokenLocalStorage()
-    const { inserirVoto } = useInserirVoto()
-    const { toastSucesso, toastErro } = useToastPersonalizado()
+    
 
-    const votar = async (tipoDeVoto: TipoDeVoto) => {
-        try {
-            const token = obterTokenDoLocalStorage();
-            await inserirVoto(dados.id, tipoDeVoto, token);
-            toastSucesso("Voto inserido com sucesso")
-            setAtualizarPagina(true);
-        }catch (error) {
-            const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
-        }
-    }
- 
     return (
         <Card w={"300px"} h={"350px"} id={dados.id.toString()}>
             <CardHeader>
@@ -70,10 +47,10 @@ const CardPauta = ({ respostaPautaDados: dados, setAtualizarPagina }: CardPautaP
                 {
                     idUsuarioLogado !== dados.usuario.id &&
                     <Flex w={"100%"}>
-                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={()=>votar(TipoDeVoto.VOTO_POSITIVO)}>
+                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={()=>votar(TipoDeVoto.VOTO_POSITIVO, dados.id)}>
                             Sim
                         </Button>
-                        <Button flex='1' variant='ghost' colorScheme="red" onClick={()=>votar(TipoDeVoto.VOTO_NEGATIVO)}>
+                        <Button flex='1' variant='ghost' colorScheme="red" onClick={()=>votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)}>
                             Não
                         </Button>
                     </Flex>

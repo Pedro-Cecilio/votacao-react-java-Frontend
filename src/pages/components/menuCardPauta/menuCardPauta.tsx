@@ -4,7 +4,8 @@ import ModalIniciarVotacaoAberto from "../modalIniciarVotacao/ModalIniciarVotaca
 import { useState } from "react";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
 import { SessaoVotacaoResposta } from "../../../models/sessaoVotacaoModels";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 
 interface MenuAbrirVotacaoProps {
     pautaId: number;
@@ -13,13 +14,24 @@ interface MenuAbrirVotacaoProps {
 const MenuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
     const [modalIniciarVotacaoAberto, setModalIniciarVotacaoAberto] = useState<boolean>(false);
     const { setPautaId } = useDadosAbrirVotacaoStore()
+    const { toastInfo } = useToastPersonalizado()
     const navigate = useNavigate();
+
     const fechar = () => {
         setModalIniciarVotacaoAberto(false);
     }
     const abrir = () => {
         setPautaId(pautaId);
         setModalIniciarVotacaoAberto(true);
+    }
+    const compartilhar = async () => {
+        const protocol = window.location.protocol;
+        const hostname = window.location.hostname;
+        const port = window.location.port;
+        const baseUrl = `${protocol}//${hostname}:${port}`;
+        const urlVotoExterno = `${baseUrl}/votar/${pautaId}`
+        navigator.clipboard.writeText(urlVotoExterno)
+        toastInfo("Link copiado para área de transferência")
     }
     return (
         <Menu>
@@ -39,7 +51,7 @@ const MenuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
                 }
                 {
                     sessaoVotacao?.sessaoAtiva &&
-                    <MenuItem icon={<LinkIcon />} onClick={() => { }}>
+                    <MenuItem icon={<LinkIcon />} onClick={compartilhar}>
                         Compartilhar
                     </MenuItem>
                 }
