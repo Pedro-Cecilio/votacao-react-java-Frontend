@@ -97,7 +97,10 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
         setCategoria(categoria);
     }
     const onError: SubmitErrorHandler<InputsFiltro> = (error) => {
-        console.log(error.categoria);
+        if(error.categoria?.message) return toastErro(error.categoria.message);
+        else{
+            toastErro("Houve um erro ao filtrar pautas.");
+        }
     }
 
     return (
