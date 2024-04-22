@@ -16,13 +16,22 @@ export interface AbrirSessaoVotacaoDados{
 }
 
 export interface InserirVotoDados{
-    usuarioId: number
     pautaId: number,
     tipoDeVoto: TipoDeVoto
+    cpf?:string
 }
 
 export enum StatusSessaoVotacao{
     APROVADA = "APROVADA", 
     EM_ANDAMENTO = "EM_ANDAMENTO",
     REPROVADA = "REPROVADA"
+}
+
+export interface ValidarVotoExterno{
+    cpf:string
+    senha:string
+}
+
+export interface ValidarVotoExternoResposta{
+    valido:boolean
 }

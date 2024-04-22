@@ -21,3 +21,7 @@ interface CriarUsuarioDados{
     cpf: string;
     admin: boolean;
 }
+
+interface VerificarSeUsuarioExisteResposta{
+    existe: boolean;
+}
