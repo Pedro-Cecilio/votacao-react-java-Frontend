@@ -9,8 +9,10 @@ import { Button, Flex, FormControl, FormLabel, Heading, Input, InputGroup, Selec
 import { TipoDeUsuario } from "../../enums/tipoDeUsuario";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
+import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
 
 const Cadastro = () => {
+    const {obterTokenDoLocalStorage} = useTokenLocalStorage();
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro, toastSucesso } = useToastPersonalizado();
     const { criarUsuario } = useCriarUsuario();
@@ -45,7 +47,8 @@ const Cadastro = () => {
     const onSubmit = async ({ email, senha, nome, sobrenome, cpf, tipoDeUsuario }: inputs) => {
         try {
             setIsLoading(true)
-            await criarUsuario(email, senha, nome, sobrenome, cpf, tipoDeUsuario == TipoDeUsuario.ADMINISTRADOR)
+            const token = obterTokenDoLocalStorage();
+            await criarUsuario(email, senha, nome, sobrenome, cpf, tipoDeUsuario == TipoDeUsuario.ADMINISTRADOR, token)
             reset()
             toastSucesso("Usuário criado com sucesso")
         } catch (error) {
