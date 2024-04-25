@@ -18,6 +18,7 @@ const VotoExterno = () => {
     const { toastErro, toastSucesso } = useToastPersonalizado();
     const [usuarioExiste, setUsuarioExiste] = useState<boolean>(false);
     const [usuarioSeValidou, setUsuarioSeValidou] = useState<boolean>(false);
+    const [senha, setSenha] = useState<string>("");
     const [pauta, setPauta] = useState<RespostaPautaDados | null>(null);
     const { buscarPautaPorId } = useBuscarPautaPorId();
     const [buscaConcluida, setBuscaConcluida] = useState<boolean>(false);
@@ -51,7 +52,7 @@ const VotoExterno = () => {
 
     const metodoParaVotarNaPauta = async (tipoDeVoto: TipoDeVoto, pautaId: number) => {
         try {
-            await inserirVotoExterno(pautaId, tipoDeVoto, cpf);
+            await inserirVotoExterno(pautaId, tipoDeVoto, cpf, senha);
             toastSucesso("Voto inserido com sucesso")
             navigate("/")
         } catch (error) {
@@ -79,7 +80,7 @@ const VotoExterno = () => {
             flexDirection={"column"}
         >
             {!cpf && <FormularioCpf setUsuarioExiste={setUsuarioExiste} setCpf={setCpf} isLoading={isLoading} setIsloading={setIsLoading} />}
-            {cpf && usuarioExiste && !usuarioSeValidou && <FormularioSenha setUsuarioSeValidou={setUsuarioSeValidou} cpf={cpf} isLoading={isLoading} setIsloading={setIsLoading} />}
+            {cpf && usuarioExiste && !usuarioSeValidou && <FormularioSenha setUsuarioSeValidou={setUsuarioSeValidou} setSenha={setSenha} cpf={cpf} isLoading={isLoading} setIsloading={setIsLoading} />}
             {((cpf && usuarioExiste && usuarioSeValidou) || (cpf && !usuarioExiste && !usuarioSeValidou)) && <CardPauta respostaPautaDados={pauta} metodoParaVotar={metodoParaVotarNaPauta} />}
             
         </Flex>

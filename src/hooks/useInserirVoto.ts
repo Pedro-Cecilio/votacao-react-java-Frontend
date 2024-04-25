@@ -12,11 +12,12 @@ export const useInserirVoto = () => {
         const resposta = await inserirVotoService(inserirVotoDados, "/votacao/votoInterno", token);
         return resposta;
     }
-    const inserirVotoExterno = async (pautaId: number, tipoDeVoto: TipoDeVoto, cpf: string)=>{
+    const inserirVotoExterno = async (pautaId: number, tipoDeVoto: TipoDeVoto, cpf: string, senha:string)=>{
         const inserirVotoDados: InserirVotoDados = {
             pautaId, 
             tipoDeVoto,
-            cpf
+            cpf,
+            senha
         }
         
         const resposta = await inserirVotoService(inserirVotoDados, "/votacao/votoExterno");

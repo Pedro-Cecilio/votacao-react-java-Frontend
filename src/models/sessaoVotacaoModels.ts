@@ -19,6 +19,7 @@ export interface InserirVotoDados{
     pautaId: number,
     tipoDeVoto: TipoDeVoto
     cpf?:string
+    senha?:string
 }
 
 export enum StatusSessaoVotacao{
