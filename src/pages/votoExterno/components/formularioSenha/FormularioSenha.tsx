@@ -8,13 +8,14 @@ import { useValidarUsuarioPorCpfESenha } from "../../../../hooks/useValidarUsuar
 
 interface FormularioSenhaProps {
     setUsuarioSeValidou: (usuarioSeValidou: boolean) => void;
+    setSenha: (senha: string) => void;
     cpf:string
     isLoading: boolean;
     setIsloading: (isLoading: boolean) => void;
 }
 
 
-const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading }: FormularioSenhaProps) => {
+const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading, setSenha }: FormularioSenhaProps) => {
     const { toastErro } = useToastPersonalizado();
     const { validarUsuarioPorCpfESenha } = useValidarUsuarioPorCpfESenha();
 
@@ -36,15 +37,16 @@ const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading }: 
             cpf,
             senha
         }
-        const resposta = await validarUsuarioPorCpfESenha(dados)
-        setUsuarioSeValidou(resposta.data.valido)
+        setSenha(senha);
+        const resposta = await validarUsuarioPorCpfESenha(dados);
+        setUsuarioSeValidou(resposta.data.valido);
         setIsloading(false);
     }
 
     const onError: SubmitErrorHandler<inputSenha> = (errors) => {
         for (const [_, valor] of Object.entries(errors)) {
             if (valor) {
-                toastErro(valor.message!)
+                toastErro(valor.message!);
                 break;
             }
         }
