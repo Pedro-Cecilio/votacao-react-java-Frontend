@@ -7,5 +7,5 @@ export const buscarTodasPautasUsuarioLogadoService= async (token: string, catego
             Authorization: `Bearer ${token}`
         }
     });
-    return resposta;
+    return resposta.data;
 }

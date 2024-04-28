@@ -8,5 +8,5 @@ export const abrirSessaoVotacaoService = async (token: string, dados:AbrirSessao
             Authorization: `Bearer ${token}`
         }
     });
-    return resposta;
+    return resposta.data;
 }

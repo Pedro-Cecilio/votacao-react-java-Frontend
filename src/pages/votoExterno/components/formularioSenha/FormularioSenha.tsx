@@ -39,7 +39,7 @@ const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading, se
         }
         setSenha(senha);
         const resposta = await validarUsuarioPorCpfESenha(dados);
-        setUsuarioSeValidou(resposta.data.valido);
+        setUsuarioSeValidou(resposta.valido);
         setIsloading(false);
     }
 

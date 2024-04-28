@@ -9,6 +9,7 @@ import Botao from "../botao/Botao";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
 import { useAbrirSessaoVotacao } from "../../../hooks/useAbrirSessaoVotacao";
+import { AbrirSessaoVotacaoDados } from "../../../models/sessaoVotacaoModels";
 
 interface ModalProps {
     aberto: boolean;

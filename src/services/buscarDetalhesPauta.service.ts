@@ -7,5 +7,5 @@ export const buscarDetalhesPautaService = async (token: string, pautaId: string)
             Authorization: `Bearer ${token}`
         }
     });
-    return resposta;
+    return resposta.data;
 }

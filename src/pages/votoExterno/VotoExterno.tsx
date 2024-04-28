@@ -31,7 +31,7 @@ const VotoExterno = () => {
     const BuscarPauta = async () => {
         try {
             const resposta = await buscarPautaPorId(pautaId!);
-            setPauta(resposta.data);
+            setPauta(resposta);
             setBuscaConcluida(true);
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;

@@ -25,7 +25,7 @@ const Detalhes = () => {
         try {
             const token = obterTokenDoLocalStorage();
             const resposta = await buscarDetalhesPauta(token, pautaId!);
-            setDados(resposta.data);
+            setDados(resposta);
             setBuscaConcluida(true);
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;

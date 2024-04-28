@@ -3,5 +3,5 @@ import { ValidarVotoExterno, ValidarVotoExternoResposta } from "../models/sessao
 
 export const validarUsuarioPorCpfESenhaService = async (dados: ValidarVotoExterno) => {
     const resposta = await api.post<ValidarVotoExternoResposta>("/auth/votoExterno", dados);
-    return resposta;
+    return resposta.data;
 }

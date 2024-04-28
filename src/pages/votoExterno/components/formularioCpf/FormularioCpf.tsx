@@ -32,7 +32,7 @@ const FormularioCpf = ({ setUsuarioExiste, setCpf, isLoading, setIsloading }: Fo
     const onSubmit = async ({ cpf }: inputCpf) => {
         setIsloading(true);
         const resposta = await verificarSeUsuarioExistePorCpf(cpf)
-        setUsuarioExiste(resposta.data.existe)
+        setUsuarioExiste(resposta.existe)
         setCpf(cpf)
         setIsloading(false);
     }
