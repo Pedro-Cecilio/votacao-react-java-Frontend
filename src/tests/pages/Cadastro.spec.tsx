@@ -1,8 +1,3 @@
-import * as criarUsuarioService from "../../services/criarUsuario.service"
-import * as useCriarUsuario from "../../hooks/useCriarUsuario"
-import * as useTokenLocalStorage from "../../hooks/useTokenLocalStorage"
-import * as useDadosUsuarioStore from "../../hooks/useDadosUsuarioStore"
-import * as router from 'react-router'
 
 import Cadastro from "../../pages/cadastro/Cadastro"
 import { BrowserRouter } from "react-router-dom"
@@ -10,6 +5,9 @@ import { ChakraProvider } from "@chakra-ui/react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import tema from "../../temas/temas"
 import { act } from "react-dom/test-utils"
+import { useTokenLocalStorageMock } from "../__mocks__/useTokenLocalStorageMock"
+import { useCriarUsuarioMock } from "../__mocks__/useCriarUsuarioMock"
+import { useDadosUsuarioStoreMock } from "../__mocks__/useDadosUsuarioStoreMock"
 
 
 describe("Testando página de cadastro", () => {
@@ -21,7 +19,7 @@ describe("Testando página de cadastro", () => {
     const TIPOUSUARIO_TESTID: string = "input-tipoDeUsuario";
     const BOTAO_TESTID: string = "botao-criarUsuario";
 
-  
+
     const cadastrarUsuario = (
         email: string,
         senha: string,
@@ -58,44 +56,18 @@ describe("Testando página de cadastro", () => {
         cpf: '12345678900',
         tipoUsuario: 'USUARIO'
     };
-    const criarUsuarioResposta: CriarUsuarioResposta = {
-        id: 1,
-        email: "novousuario@email.com",
-        nome: "Junior",
-        sobrenome: "Filho",
-        cpf: "12345678910",
-        admin: false
-    }
 
-    const criarUsuarioMock = jest.fn().mockResolvedValue(criarUsuarioResposta);
-    const obterTokenMock = jest.fn().mockReturnValue("tokenValido");
+    const criarUsuarioMock = jest.fn();
+    const obterTokenMock = jest.fn();
 
 
     beforeEach(() => {
         criarUsuarioMock.mockClear();
         obterTokenMock.mockClear();
-        
-        jest.spyOn(router, 'useNavigate').mockImplementation(() => jest.fn());
 
-        jest.spyOn(useDadosUsuarioStore, 'useDadosUsuarioStore').mockReturnValue({
-            setDadosUsuario: jest.fn(),
-            admin: true,
-            id: 1,
-            nome: "Saulo",
-            sobrenome: "Silva",
-        });
-
-        jest.spyOn(criarUsuarioService, 'criarUsuarioService').mockResolvedValue(criarUsuarioResposta);
-
-        jest.spyOn(useCriarUsuario, 'useCriarUsuario').mockReturnValue({
-            criarUsuario: criarUsuarioMock
-        });
-
-        jest.spyOn(useTokenLocalStorage, 'useTokenLocalStorage').mockReturnValue({
-            obterTokenDoLocalStorage: obterTokenMock,
-            inserirTokenNoLocalStorage: jest.fn(),
-            removerTokenDoLocalStorage: jest.fn()
-        });
+        useDadosUsuarioStoreMock();
+        useCriarUsuarioMock(criarUsuarioMock);
+        useTokenLocalStorageMock(obterTokenMock);
 
         render(
             <BrowserRouter>

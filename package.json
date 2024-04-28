@@ -60,7 +60,7 @@
       "<rootDir>/src/**/*.{js,ts,jsx,tsx}"
     ],
     "moduleNameMapper": {
-      "\\.(png|jpg|jpeg|gif|svg)$": "<rootDir>/src/tests/__mocks__/arquivoMock.js"
+      "\\.(png|jpg|jpeg|gif|svg)$": "<rootDir>/src/tests/__mocks__/arquivoMock.ts"
     }
   }
 }
