@@ -7,10 +7,11 @@ interface BotaoProps{
     isLoading?: boolean;
     rightIcon?: React.ReactElement
     disabled?: boolean
+    testid?: string
 }
-const Botao = ({onClick, tamanho, texto, isLoading, rightIcon, disabled}:BotaoProps) => {
+const Botao = ({onClick, tamanho, texto, isLoading, rightIcon, disabled, testid}:BotaoProps) => {
     return (
-        <Button isLoading={isLoading} onClick={onClick} bg={"cinza.700"} color={"branco"} size={tamanho} _hover={{ backgroundColor: "cinza.800" }} rightIcon={rightIcon} disabled={disabled}>
+        <Button data-testid={testid} isLoading={isLoading} onClick={onClick} bg={"cinza.700"} color={"branco"} size={tamanho} _hover={{ backgroundColor: "cinza.800" }} rightIcon={rightIcon} disabled={disabled}>
             {texto}
         </Button>
     )
