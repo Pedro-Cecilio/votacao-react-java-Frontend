@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useToastPersonalizado from "../../hooks/useToastPersonalizado";
 import { useCriarUsuario } from "../../hooks/useCriarUsuario";
 import { z } from "zod";
@@ -12,7 +12,7 @@ import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
 
 const Cadastro = () => {
-    const {obterTokenDoLocalStorage} = useTokenLocalStorage();
+    const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro, toastSucesso } = useToastPersonalizado();
     const { criarUsuario } = useCriarUsuario();
@@ -73,64 +73,63 @@ const Cadastro = () => {
         }
     };
 
-    if(paginaCarregada && !admin){
+    if (paginaCarregada && !admin) {
         return <NaoAutorizado />
     }
     return (
-            <Flex
-                gap={8}
+        <Flex
+            gap={8}
+            flexDirection={'column'}
+            alignItems={'center'}
+            justifyContent={'center'}
+        >
+            <Heading as={'h1'} size={'lg'} mt={2}>Cadastrar Usuário</Heading>
+
+            <FormControl
+
+                display={'flex'}
                 flexDirection={'column'}
                 alignItems={'center'}
-                justifyContent={'center'}
             >
-                <Heading as={'h1'} size={'lg'} mt={2}>Cadastrar Usuário</Heading>
-                <form
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-                    onSubmit={handleSubmit(onSubmit, onError)}
+                <InputGroup
+                    gap={2}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    maxWidth={400}
+                    minWidth={300}
                 >
-                    <FormControl
-                        display={'flex'}
-                        flexDirection={'column'}
-                        alignItems={'center'}
-                    >
-                        <InputGroup
-                            gap={2}
-                            display={'flex'}
-                            flexDirection={'column'}
-                            maxWidth={500}
-                            minWidth={300}
-                        >
-                            <FormLabel>Email</FormLabel>
-                            <Input type='email'  {...register('email')} data-testid="input-email" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
-                            <FormLabel>Senha</FormLabel>
-                            <Input type='password' {...register('senha')} data-testid="input-senha" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
-                            <FormLabel>Nome</FormLabel>
-                            <Input type='text' {...register('nome')} data-testid="input-nome" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
-                            <FormLabel>Sobrenome</FormLabel>
-                            <Input type='text' {...register('sobrenome')} data-testid="input-sobrenome" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
-                            <FormLabel>Cpf</FormLabel>
-                            <Input type='text' {...register('cpf')} data-testid="input-cpf" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
-                            <FormLabel htmlFor='tipoDeUsuario'>Tipo de Usuario</FormLabel>
-                            <Select {...register("tipoDeUsuario")} data-testid="input-tipoDeUsuario" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }}>
-                                {Object.values(TipoDeUsuario).map((tipo) => (
-                                    <option key={tipo} value={tipo} style={{ color: "black" }}>
-                                        {tipo}
-                                    </option>
-                                ))}
-                            </Select>
-                        </InputGroup>
-                    </FormControl>
-                    <Button
-                        isLoading={isLoading}
-                        my={4}
-                        maxWidth={300}
-                        minWidth={200}
-                        type="submit"
-                        colorScheme='gray'>
-                        Cadastrar
-                    </Button>
-                </form>
-            </Flex>
+                    <FormLabel>Email</FormLabel>
+                    <Input type='email'  {...register('email')} data-testid="input-email" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
+                    <FormLabel>Senha</FormLabel>
+                    <Input type='password' {...register('senha')} data-testid="input-senha" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
+                    <FormLabel>Nome</FormLabel>
+                    <Input type='text' {...register('nome')} data-testid="input-nome" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
+                    <FormLabel>Sobrenome</FormLabel>
+                    <Input type='text' {...register('sobrenome')} data-testid="input-sobrenome" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
+                    <FormLabel>Cpf</FormLabel>
+                    <Input type='text' {...register('cpf')} data-testid="input-cpf" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }} />
+                    <FormLabel htmlFor='tipoDeUsuario'>Tipo de Usuario</FormLabel>
+                    <Select {...register("tipoDeUsuario")} data-testid="input-tipoDeUsuario" borderColor={"cinza.500"} _hover={{ borderColor: "cinza.800" }} _focus={{ boxShadow: "none", borderColor: "cinza.800" }}>
+                        {Object.values(TipoDeUsuario).map((tipo) => (
+                            <option key={tipo} value={tipo} style={{ color: "black" }}>
+                                {tipo}
+                            </option>
+                        ))}
+                    </Select>
+                </InputGroup>
+            </FormControl>
+            <Button
+                onClick={handleSubmit(onSubmit, onError)}
+                data-testid="botao-criarUsuario"
+                isLoading={isLoading}
+                my={4}
+                maxWidth={300}
+                minWidth={200}
+                type="submit"
+                colorScheme='gray'>
+                Cadastrar
+            </Button>
+        </Flex>
     );
 
 
