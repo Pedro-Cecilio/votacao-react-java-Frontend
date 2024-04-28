@@ -1,13 +1,12 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "../pages/login/Login";
-import RotasComCabecalho from "./RotasComCabecalho";
-import RotasAutenticadas from "./RotasAutenticadas";
 import ExplorarPautasAtivas from "../pages/explorarPautasAtivas/ExplorarPautasAtivas";
 import ExplorarMinhasPautas from "../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 import Cadastro from "../pages/cadastro/Cadastro";
 import Detalhes from "../pages/detalhes/Detalhes";
 import VotoExterno from "../pages/votoExterno/VotoExterno";
 import NaoEncontrado from "../pages/components/naoEncontrado/NaoEncontrado";
+import EmpacotadorRotasAutenticadas from "./EmpacotadorRotasAutenticadas";
 
 const router = createBrowserRouter([
     {
@@ -20,30 +19,24 @@ const router = createBrowserRouter([
     },
     
     {           
-        element: <RotasAutenticadas />,
+        element: <EmpacotadorRotasAutenticadas />,
         children: [
-            
             {
-                element: <RotasComCabecalho />,
-                children: [
-                    {
-                        path: "/cadastro",
-                        element: <Cadastro />,
-                    },
-                    {
-                        path: "/explorar",
-                        element: <ExplorarPautasAtivas />,
-                    },
-                    {
-                        path: "/minhasPautas",
-                        element: <ExplorarMinhasPautas />,
-                    },
-                    {
-                        path: "/detalhes/:id",
-                        element: <Detalhes/>,
-                    }
-                ]
+                path: "/cadastro",
+                element: <Cadastro />,
             },
+            {
+                path: "/explorar",
+                element: <ExplorarPautasAtivas />,
+            },
+            {
+                path: "/minhasPautas",
+                element: <ExplorarMinhasPautas />,
+            },
+            {
+                path: "/detalhes/:id",
+                element: <Detalhes/>,
+            }
         ]
     },
     {
