@@ -79,7 +79,7 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     return (
         <Modal isOpen={aberto} onClose={fecharModal} size={"sm"}>
             <ModalOverlay />
-            <ModalContent display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+            <ModalContent display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} data-testid={"modal-nova-pauta"}>
                 <ModalHeader>Criar Pauta</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody w={"100%"}
