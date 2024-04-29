@@ -7,15 +7,15 @@ import PopoverTotalVotos from "../popoverTotalVotos/PopoverTotalVotos";
 import { TipoDeVoto } from "../../../enums/tipoDeVoto";
 interface CardPautaProps {
     respostaPautaDados: RespostaPautaDados,
-    metodoParaVotar: (tipoDeVoto: TipoDeVoto, pautaId:number) => Promise<void>;
+    metodoParaVotar: (tipoDeVoto: TipoDeVoto, pautaId: number) => Promise<void>;
 }
-const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar:votar }: CardPautaProps) => {
+const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar }: CardPautaProps) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
     const usuarioEstaLogadoEAdmin = idUsuarioLogado == dados.usuario.id && dados.usuario.admin;
-    
+
 
     return (
-        <Card w={"300px"} h={"350px"} id={dados.id.toString()}>
+        <Card w={"300px"} h={"350px"} data-testid={dados.id.toString()}>
             <CardHeader>
                 <Flex flexWrap='wrap' flexDirection={"column"}>
                     <Flex alignItems='center'>
@@ -23,23 +23,23 @@ const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar:votar }: CardPau
                             <Avatar name={`${dados.usuario.nome} ${dados.usuario.sobrenome}`} src='https://bit.ly/broken-link' bg={"gray.700"} color={"white"} />
 
                             <Box>
-                                <Heading size='sm'>{`${dados.usuario.nome} ${dados.usuario.sobrenome}`}</Heading>
+                                <Heading data-testid={`usuario-nome-${dados.id}`} size='sm'>{`${dados.usuario.nome} ${dados.usuario.sobrenome}`}</Heading>
                                 <Text fontStyle={"italic"}>Administrador</Text>
                             </Box>
                         </Flex>
-                        {usuarioEstaLogadoEAdmin && 
+                        {usuarioEstaLogadoEAdmin &&
                             <Box>
                                 <MenuCardPauta pautaId={dados.id} sessaoVotacao={dados.sessaoVotacao} />
                             </Box>
                         }
                     </Flex>
                     <Flex alignItems='center' mt={4} ml={2}>
-                        <Text fontSize={"small"} fontWeight={"700"} >{dados.categoria}</Text>
+                        <Text data-testid={`categoria-${dados.id}`} fontSize={"small"} fontWeight={"700"} >{dados.categoria}</Text>
                     </Flex>
                 </Flex>
             </CardHeader>
             <CardBody display={"flex"} justifyContent={"center"} fontWeight={'bold'}>
-                <Text fontSize="lg" fontWeight="bold" >
+                <Text fontSize="lg" fontWeight="bold" data-testid={`assunto-${dados.id}`} >
                     {dados.assunto}
                 </Text>
             </CardBody>
@@ -47,10 +47,10 @@ const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar:votar }: CardPau
                 {
                     idUsuarioLogado !== dados.usuario.id &&
                     <Flex w={"100%"}>
-                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={()=>votar(TipoDeVoto.VOTO_POSITIVO, dados.id)}>
+                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={() => votar(TipoDeVoto.VOTO_POSITIVO, dados.id)}>
                             Sim
                         </Button>
-                        <Button flex='1' variant='ghost' colorScheme="red" onClick={()=>votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)}>
+                        <Button flex='1' variant='ghost' colorScheme="red" onClick={() => votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)}>
                             Não
                         </Button>
                     </Flex>
