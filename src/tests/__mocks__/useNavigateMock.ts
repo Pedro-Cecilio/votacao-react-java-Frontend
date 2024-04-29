@@ -2,7 +2,7 @@ import * as router from 'react-router'
 
 
 
-export const useNavigateMock = (jestfn: jest.Mock<any, any, any> = jest.fn()): jest.Mock<any, any, any> => {
+export const useNavigateMock = (jestfn: jest.Mock = jest.fn()): jest.Mock => {
     jest.spyOn(router, 'useNavigate').mockImplementation(() => jestfn);
     return jestfn;
 }

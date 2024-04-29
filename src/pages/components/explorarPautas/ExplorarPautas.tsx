@@ -104,11 +104,11 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
     }
 
     return (
-        <Flex flexDirection={"column"} h={"100%"}>
+        <Flex flexDirection={"column"} h={"100%"} data-testid={"explorar-pautas"}>
             <Flex m={2} justifyContent={"space-between"}>
                 {admin && rotaAtual == "/minhasPautas" && (
                     <Box>
-                        <Botao onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
+                        <Botao testid={"botao-abrirModalNovaPauta"} onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
                     </Box>
                 )}
                 <Box>

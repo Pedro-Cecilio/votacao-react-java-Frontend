@@ -1,13 +1,13 @@
 
-import Cadastro from "../../pages/cadastro/Cadastro"
+import Cadastro from "../../../pages/cadastro/Cadastro"
 import { BrowserRouter } from "react-router-dom"
 import { ChakraProvider } from "@chakra-ui/react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import tema from "../../temas/temas"
+import tema from "../../../temas/temas"
 import { act } from "react-dom/test-utils"
-import { useTokenLocalStorageMock } from "../__mocks__/useTokenLocalStorageMock"
-import { useCriarUsuarioMock } from "../__mocks__/useCriarUsuarioMock"
-import { useDadosUsuarioStoreMock } from "../__mocks__/useDadosUsuarioStoreMock"
+import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMock"
+import { useCriarUsuarioMock } from "../../__mocks__/useCriarUsuarioMock"
+import { useDadosUsuarioStoreMock } from "../../__mocks__/useDadosUsuarioStoreMock"
 
 
 describe("Testando página de cadastro", () => {
@@ -65,7 +65,7 @@ describe("Testando página de cadastro", () => {
         criarUsuarioMock.mockClear();
         obterTokenMock.mockClear();
 
-        useDadosUsuarioStoreMock();
+        useDadosUsuarioStoreMock(true);
         useCriarUsuarioMock(criarUsuarioMock);
         useTokenLocalStorageMock(obterTokenMock);
 

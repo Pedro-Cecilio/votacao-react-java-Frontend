@@ -1,13 +1,13 @@
 import { BrowserRouter } from "react-router-dom";
-import { useDetalhesPautaMock } from "../__mocks__/useBuscarDetalhesPautaMock";
-import { useTokenLocalStorageMock } from "../__mocks__/useTokenLocalStorageMock"
+import { useDetalhesPautaMock } from "../../__mocks__/useBuscarDetalhesPautaMock";
+import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMock"
 import { ChakraProvider } from "@chakra-ui/react";
-import tema from "../../temas/temas";
-import Detalhes from "../../pages/detalhes/Detalhes";
+import tema from "../../../temas/temas";
+import Detalhes from "../../../pages/detalhes/Detalhes";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
-import { useNavigateMock } from "../__mocks__/useNavigateMock";
+import { useNavigateMock } from "../../__mocks__/useNavigateMock";
 
 
 

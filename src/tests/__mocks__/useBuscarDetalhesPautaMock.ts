@@ -6,7 +6,7 @@ export const useDetalhesPautaMock = () => {
   
     const detalhesPautaDados = detalhesPautaDadosMock()
     
-    const useBuscarDetalhesPautaMock = (jestfn: jest.Mock<any, any, any>) => {
+    const useBuscarDetalhesPautaMock = (jestfn: jest.Mock) => {
         jest.spyOn(useBuscarDetalhesPauta, 'useBuscarDetalhesPauta').mockReturnValue({
             buscarDetalhesPauta: jestfn.mockResolvedValue(detalhesPautaDados)
         });

@@ -1,11 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import tema from "../../temas/temas"
-import Login from "../../pages/login/Login"
+import tema from "../../../temas/temas"
+import Login from "../../../pages/login/Login"
 import { BrowserRouter } from "react-router-dom"
-import { useNavigateMock } from "../__mocks__/useNavigateMock"
+import { useNavigateMock } from "../../__mocks__/useNavigateMock"
 import { act } from "react-dom/test-utils"
-import { loginMocks } from "../__mocks__/loginMocks"
+import { loginMocks } from "../../__mocks__/loginMocks"
 
 
 describe("Testando pagina de login", () => {
