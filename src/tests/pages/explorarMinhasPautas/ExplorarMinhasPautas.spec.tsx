@@ -21,7 +21,7 @@ describe("Testando pagina de explorar minhas pautas", () => {
             useDadosUsuarioAdminPauta();
             useBuscarTodasPautasUsuarioLogadoMock(buscarTodasPautasUsuarioLogadoMock)
             useLocationMock("/minhasPautas")
-            useTokenLocalStorageMock(obterTokenMock);
+            useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(
                 <BrowserRouter >

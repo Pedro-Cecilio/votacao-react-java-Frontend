@@ -68,7 +68,7 @@ describe("Testando página de cadastro", () => {
 
         useDadosUsuarioAdminPauta()
         useCriarUsuarioMock(criarUsuarioMock);
-        useTokenLocalStorageMock(obterTokenMock);
+        useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
 
         render(
             <BrowserRouter>

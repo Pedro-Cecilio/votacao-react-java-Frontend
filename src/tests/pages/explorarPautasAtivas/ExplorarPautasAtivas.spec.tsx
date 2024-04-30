@@ -19,7 +19,7 @@ describe("Testando página de explorar pautas ativas", () => {
         await act(async () => {
             useDadosUsuarioNaoAdminPauta()
             useBuscarTodasPautasAtivasMock(buscarTodasPautasAtivasMock)
-            useTokenLocalStorageMock(obterTokenMock);
+            useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(
                 <BrowserRouter >

@@ -35,7 +35,7 @@ describe("Testando componente de ExplorarPautas com usuário não admin", () => 
 
         useDadosAbrirVotacaoStoreMock(setPautaIdMock);
         useAbrirSessaoVotacaoMock(abrirSessaoVotacaoMock)
-        useTokenLocalStorageMock(obterTokenMock)
+        useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
 
     })
 

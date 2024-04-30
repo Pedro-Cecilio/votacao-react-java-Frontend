@@ -22,7 +22,7 @@ describe("Testando componente de ExplorarPautas", () => {
     beforeEach(async () => {
 
         await act(async () => {
-            useTokenLocalStorageMock(obterTokenMock);
+            useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
             useDadosUsuarioAdminPauta()
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(

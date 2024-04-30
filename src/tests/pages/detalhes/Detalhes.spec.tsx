@@ -20,7 +20,7 @@ describe("Testando página de detalhes", () => {
     const navigateMock = jest.fn();
     beforeEach(async () => {
         await act(async () => {
-            useTokenLocalStorageMock(obterTokenMock);
+            useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
             useBuscarDetalhesPautaMock(buscarDetalhesPautaMock)
             useNavigateMock(navigateMock)
             render(

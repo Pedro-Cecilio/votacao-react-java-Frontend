@@ -1,11 +1,11 @@
 import * as useTokenLocalStorage from "../../hooks/useTokenLocalStorage"
 
 
-export const useTokenLocalStorageMock = (jestfn: jest.Mock<any, any, any>)  => {
+export const useTokenLocalStorageMock = (obterTokenMock: jest.Mock<any, any, any>, inserirTokenMock: jest.Mock<any, any, any>, removerTokenMock: jest.Mock<any, any, any>)  => {
     
     jest.spyOn(useTokenLocalStorage, 'useTokenLocalStorage').mockReturnValue({
-        obterTokenDoLocalStorage: jestfn.mockReturnValue("tokenValido"),
-        inserirTokenNoLocalStorage: jest.fn(),
-        removerTokenDoLocalStorage: jest.fn()
+        obterTokenDoLocalStorage: obterTokenMock.mockReturnValue("tokenValido"),
+        inserirTokenNoLocalStorage: inserirTokenMock,
+        removerTokenDoLocalStorage: removerTokenMock
     });
 }
