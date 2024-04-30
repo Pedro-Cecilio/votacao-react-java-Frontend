@@ -77,7 +77,7 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
     return (
         <Modal isOpen={aberto} onClose={fecharModal} size={"sm"}>
             <ModalOverlay />
-            <ModalContent display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
+            <ModalContent display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} data-testid={"modal-iniciar-votacao"}>
                 <ModalHeader>Abrir votação da pauta</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody w={"100%"}
@@ -85,10 +85,10 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
                     flexDirection={'column'}
                     alignItems={'center'}
                 >
-                    <FormControl>
-                        <FormLabel>Tempo da votação em Minutos</FormLabel>
+                    <FormControl data-testid={"form-abrir-sessao-votacao"}>
+                        <FormLabel>Tempo da votação em minutos</FormLabel>
                         <NumberInput defaultValue={1} min={1}>
-                            <NumberInputField {...register("minutos", {valueAsNumber:true})}/>
+                            <NumberInputField {...register("minutos", {valueAsNumber:true})} data-testid={"input-minutos-sessao-votacao"}/>
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
                                 <NumberDecrementStepper />
@@ -99,6 +99,7 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
 
                 <ModalFooter>
                     <Botao
+                        testid={"botao-abrir-sessao-votacao"}
                         isLoading={isLoading}
                         onClick={handleSubmit(onSubmit, onError)}
                         tamanho={"md"}
