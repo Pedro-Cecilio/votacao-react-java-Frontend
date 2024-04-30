@@ -16,7 +16,7 @@ const EmpacotadorRotasAutenticadas = ({ children }: { children?: React.ReactNode
         const validarToken = async () => {
             try {
                 const token = obterTokenDoLocalStorage();
-                if(token.trim().length == 0) return navigate("/")
+                if (token.trim().length == 0) return navigate("/")
                 const response = await buscarUsuarioLogado(token);
                 setDadosUsuario(response.id, response.nome, response.sobrenome, response.admin);
             } catch (error) {

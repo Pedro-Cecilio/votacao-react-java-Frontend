@@ -2,18 +2,18 @@ import * as useDadosUsuarioStore from "../../hooks/useDadosUsuarioStore"
 
 
 export const useDadosUsuarioStoreMock = ()=>{
-    const useDadosUsuarioAdminPauta = () => {
+    const useDadosUsuarioAdminPauta = (setDadosUsuarioMocks: jest.Mock = jest.fn()) => {
         jest.spyOn(useDadosUsuarioStore, 'useDadosUsuarioStore').mockReturnValue({
-            setDadosUsuario: jest.fn(),
+            setDadosUsuario: setDadosUsuarioMocks,
             admin: true,
             id: 1,
             nome: "Saulo",
             sobrenome: "Silva",
         });
     }
-    const useDadosUsuarioNaoAdminPauta = () => {
+    const useDadosUsuarioNaoAdminPauta = (setDadosUsuarioMocks: jest.Mock = jest.fn()) => {
         jest.spyOn(useDadosUsuarioStore, 'useDadosUsuarioStore').mockReturnValue({
-            setDadosUsuario: jest.fn(),
+            setDadosUsuario: setDadosUsuarioMocks,
             admin: false,
             id: 2,
             nome: "Paulo",
