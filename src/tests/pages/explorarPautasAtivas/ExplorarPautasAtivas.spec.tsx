@@ -11,15 +11,15 @@ import { useBuscarTodasPautasAtivasMock } from "../../__mocks__/useBuscarTodasPa
 
 
 describe("Testando página de explorar pautas ativas", () => {
-
+    const {useDadosUsuarioNaoAdminPauta} = useDadosUsuarioStoreMock();
     const obterTokenMock = jest.fn();
     const inserirVotoInternoMock = jest.fn();
     const buscarTodasPautasAtivasMock = jest.fn();
     beforeEach(async () => {
         await act(async () => {
+            useDadosUsuarioNaoAdminPauta()
             useBuscarTodasPautasAtivasMock(buscarTodasPautasAtivasMock)
             useTokenLocalStorageMock(obterTokenMock);
-            useDadosUsuarioStoreMock(true);
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(
                 <BrowserRouter >

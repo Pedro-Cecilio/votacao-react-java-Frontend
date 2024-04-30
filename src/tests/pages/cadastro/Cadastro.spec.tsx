@@ -18,6 +18,7 @@ describe("Testando página de cadastro", () => {
     const CPF_TESTID: string = "input-cpf";
     const TIPOUSUARIO_TESTID: string = "input-tipoDeUsuario";
     const BOTAO_TESTID: string = "botao-criarUsuario";
+    const { useDadosUsuarioAdminPauta } = useDadosUsuarioStoreMock();
 
 
     const cadastrarUsuario = (
@@ -65,7 +66,7 @@ describe("Testando página de cadastro", () => {
         criarUsuarioMock.mockClear();
         obterTokenMock.mockClear();
 
-        useDadosUsuarioStoreMock(true);
+        useDadosUsuarioAdminPauta()
         useCriarUsuarioMock(criarUsuarioMock);
         useTokenLocalStorageMock(obterTokenMock);
 

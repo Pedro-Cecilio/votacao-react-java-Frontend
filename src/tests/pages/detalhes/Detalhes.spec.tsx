@@ -4,7 +4,7 @@ import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMo
 import { ChakraProvider } from "@chakra-ui/react";
 import tema from "../../../temas/temas";
 import Detalhes from "../../../pages/detalhes/Detalhes";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 import { useNavigateMock } from "../../__mocks__/useNavigateMock";
@@ -56,7 +56,6 @@ describe("Testando página de detalhes", () => {
         const sobrenomeCriador = detalhesPautaDados.dadosPauta.usuario.sobrenome;
         const votosPositivosValor = detalhesPautaDados.dadosPauta.sessaoVotacao!.votosPositivos;
         const votosNegativosValor = detalhesPautaDados.dadosPauta.sessaoVotacao!.votosNegativos;
-       
 
         const assunto = screen.getByTestId("assunto-pauta").textContent;
         const categoria = screen.getByTestId("categoria-pauta").textContent;

@@ -11,15 +11,17 @@ import { useLocationMock } from "../../__mocks__/useLocationMock";
 import { useBuscarTodasPautasUsuarioLogadoMock } from "../../__mocks__/useBuscarTodasPautasUsuarioLogadoMock";
 
 describe("Testando pagina de explorar minhas pautas", () => {
+    const { useDadosUsuarioAdminPauta } = useDadosUsuarioStoreMock();
     const obterTokenMock = jest.fn();
     const inserirVotoInternoMock = jest.fn();
     const buscarTodasPautasUsuarioLogadoMock = jest.fn();
+    
     beforeEach(async () => {
         await act(async () => {
+            useDadosUsuarioAdminPauta();
             useBuscarTodasPautasUsuarioLogadoMock(buscarTodasPautasUsuarioLogadoMock)
             useLocationMock("/minhasPautas")
             useTokenLocalStorageMock(obterTokenMock);
-            useDadosUsuarioStoreMock(true);
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(
                 <BrowserRouter >

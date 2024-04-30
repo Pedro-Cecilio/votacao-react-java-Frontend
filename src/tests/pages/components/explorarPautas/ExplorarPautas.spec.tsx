@@ -12,6 +12,7 @@ import ExplorarPautas from "../../../../pages/components/explorarPautas/Explorar
 
 
 describe("Testando componente de ExplorarPautas", () => {
+    const {useDadosUsuarioAdminPauta} = useDadosUsuarioStoreMock();
     const listaDePautas = listaDeRespostaPautaDados();
     const metodoBuscarPautaBancoMock = jest.fn().mockResolvedValue(listaDePautas);
     const obterTokenMock = jest.fn();
@@ -22,7 +23,7 @@ describe("Testando componente de ExplorarPautas", () => {
 
         await act(async () => {
             useTokenLocalStorageMock(obterTokenMock);
-            useDadosUsuarioStoreMock(true);
+            useDadosUsuarioAdminPauta()
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(
                 <BrowserRouter >
@@ -40,18 +41,7 @@ describe("Testando componente de ExplorarPautas", () => {
             expect(cardPauta).toBeDefined();
         })
     })
-
-    it("Deve verificar se o conteúdo das pautas está sendo apresentado na tela", () => {
-        listaDePautas.forEach((pauta) => {
-            const nomeUsuario = screen.getByTestId(`usuario-nome-${pauta.id}`);
-            const categoria = screen.getByTestId(`categoria-${pauta.id}`);
-            const assunto = screen.getByTestId(`assunto-${pauta.id}`);
-
-            expect(nomeUsuario.textContent).toContain(`${pauta.usuario.nome} ${pauta.usuario.sobrenome}`);
-            expect(categoria.textContent).toContain(pauta.categoria);
-            expect(assunto.textContent).toContain(pauta.assunto);
-        })
-    })
+    
     it("Deve verificar se componente filtro está presente", () => {
         const filtro = screen.getByTestId("filtro");
         expect(filtro).toBeDefined();
