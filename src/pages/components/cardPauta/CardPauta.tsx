@@ -46,7 +46,7 @@ const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar }: CardPa
             <CardFooter flexDirection={"column"}>
                 {
                     idUsuarioLogado !== dados.usuario.id &&
-                    <Flex w={"100%"}>
+                    <Flex w={"100%"} test-dataid={"botoes-votacao"}>
                         <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={() => votar(TipoDeVoto.VOTO_POSITIVO, dados.id)}>
                             Sim
                         </Button>

@@ -9,7 +9,7 @@ interface PopoverTotalVotosProps{
 }
 const PopoverTotalVotos = ({ votosPositivos, votosNegativos }:PopoverTotalVotosProps) => {
     return (
-        <Popover>
+        <Popover test-dataid={"popover-card-votacao"}>
             <PopoverTrigger>
                 <Flex justifyContent={"center"} mt={4}>
                     <Button gap={3}>
