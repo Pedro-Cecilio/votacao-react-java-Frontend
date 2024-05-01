@@ -4,6 +4,7 @@ import { SubmitErrorHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import { useVerificarSeUsuarioExistePorCpf } from "../../../../hooks/useVerificarSeUsuarioExistePorCpf"
 import useToastPersonalizado from "../../../../hooks/useToastPersonalizado"
+import { REGEX_CPF } from "../../../../regex/regex"
 
 interface FormularioCpfProps {
     setUsuarioExiste: (usuarioExiste: boolean) => void;
@@ -15,10 +16,10 @@ interface FormularioCpfProps {
 
 const FormularioCpf = ({ setUsuarioExiste, setCpf, isLoading, setIsloading }: FormularioCpfProps) => {
     const { verificarSeUsuarioExistePorCpf } = useVerificarSeUsuarioExistePorCpf();
-    const { toastErro} = useToastPersonalizado();
+    const { toastErro } = useToastPersonalizado();
 
     const inputSchema = z.object({
-        cpf: z.string().length(11, "Cpf deve ter exatamente 11 caracteres.")
+        cpf: z.string().regex(REGEX_CPF, "Cpf deve conter 11 caracteres numéricos.")
     })
 
     type inputCpf = z.infer<typeof inputSchema>
@@ -54,10 +55,12 @@ const FormularioCpf = ({ setUsuarioExiste, setCpf, isLoading, setIsloading }: Fo
                 display={'flex'}
                 flexDirection={'column'}
                 justifyContent={"center"}
+                data-testid={"formulario-cpf"}
             >
                 <FormLabel>Cpf:</FormLabel>
                 <Input type='text' {...register('cpf')} data-testid="input-cpf" borderColor={"cinza.400"} _focus={{ boxShadow: "none", borderColor: "cinza.100" }} />
                 <Button
+                    data-testid={"botao-enviar-cpf"}
                     onClick={handleSubmit(onSubmit, onError)}
                     isLoading={isLoading}
                     my={4}

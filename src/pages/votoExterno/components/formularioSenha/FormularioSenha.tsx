@@ -9,7 +9,7 @@ import { useValidarUsuarioPorCpfESenha } from "../../../../hooks/useValidarUsuar
 interface FormularioSenhaProps {
     setUsuarioSeValidou: (usuarioSeValidou: boolean) => void;
     setSenha: (senha: string) => void;
-    cpf:string
+    cpf: string
     isLoading: boolean;
     setIsloading: (isLoading: boolean) => void;
 }
@@ -24,7 +24,7 @@ const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading, se
         senha: z.string().min(8, "Senha deve conter no mínimo 8 caracteres.")
     })
     type inputSenha = z.infer<typeof inputSchema>
-   
+
     const {
         register,
         handleSubmit,
@@ -53,28 +53,30 @@ const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading, se
     };
     return (
         <>
-        <Heading as={"h1"}>Insira sua senha:</Heading>
-        <FormControl
-            color={"branco"}
-            maxW={"300px"}
-            display={'flex'}
-            flexDirection={'column'}
-            justifyContent={"center"}
-        >
-            <FormLabel>Senha:</FormLabel>
-            <Input type='password' {...register('senha')} data-testid="input-senha" borderColor={"cinza.400"} _focus={{ boxShadow: "none", borderColor: "cinza.100" }} />
-            <Button
-                onClick={handleSubmit(onSubmit, onError)}
-                isLoading={isLoading}
-                my={4}
-                maxWidth={300}
-                minWidth={200}
-                type="submit"
-                colorScheme='gray'>
-                Enviar
-            </Button>
-        </FormControl>
-    </>
+            <Heading as={"h1"}>Insira sua senha:</Heading>
+            <FormControl
+                color={"branco"}
+                maxW={"300px"}
+                display={'flex'}
+                flexDirection={'column'}
+                justifyContent={"center"}
+                data-testid={"formulario-senha"}
+            >
+                <FormLabel>Senha:</FormLabel>
+                <Input type='password' {...register('senha')} data-testid="input-senha" borderColor={"cinza.400"} _focus={{ boxShadow: "none", borderColor: "cinza.100" }} />
+                <Button
+                    data-testid={"botao-senha"}
+                    onClick={handleSubmit(onSubmit, onError)}
+                    isLoading={isLoading}
+                    my={4}
+                    maxWidth={300}
+                    minWidth={200}
+                    type="submit"
+                    colorScheme='gray'>
+                    Enviar
+                </Button>
+            </FormControl>
+        </>
     )
 }
 

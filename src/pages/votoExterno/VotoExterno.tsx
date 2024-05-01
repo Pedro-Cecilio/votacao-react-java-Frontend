@@ -34,10 +34,7 @@ const VotoExterno = () => {
             setPauta(resposta);
             setBuscaConcluida(true);
         } catch (error) {
-            const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.response?.status == 404) {
-                setBuscaConcluida(true);
-            }
+            setBuscaConcluida(true)
         }
     }
     useEffect(() => {
