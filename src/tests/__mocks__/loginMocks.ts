@@ -1,4 +1,4 @@
-import * as useLoginUsuario from '../../hooks/useLoginUsuario';
+import * as hook from '../../hooks/useLoginUsuario';
 
 
 export const loginMocks = ()=>{
@@ -8,7 +8,7 @@ export const loginMocks = ()=>{
     }
 
     const useLoginUsuarioMock = (jestfn: jest.Mock<any, any, any> = jest.fn())=>{
-        jest.spyOn(useLoginUsuario, 'useLoginUsuario').mockReturnValue({
+        jest.spyOn(hook, 'useLoginUsuario').mockReturnValue({
             loginUsuario: jestfn.mockResolvedValue(autenticacaoRespostaDados)
         });    }
 

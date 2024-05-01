@@ -1,4 +1,4 @@
-import * as useBuscarDetalhesPauta from "../../hooks/useBuscarDetalhesPauta"
+import * as hook from "../../hooks/useBuscarDetalhesPauta"
 import { detalhesPautaDadosMock } from "./models/detalhesPautaDadosMock";
 
 
@@ -7,7 +7,7 @@ export const useDetalhesPautaMock = () => {
     const detalhesPautaDados = detalhesPautaDadosMock()
     
     const useBuscarDetalhesPautaMock = (jestfn: jest.Mock) => {
-        jest.spyOn(useBuscarDetalhesPauta, 'useBuscarDetalhesPauta').mockReturnValue({
+        jest.spyOn(hook, 'useBuscarDetalhesPauta').mockReturnValue({
             buscarDetalhesPauta: jestfn.mockResolvedValue(detalhesPautaDados)
         });
     }

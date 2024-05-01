@@ -1,7 +1,7 @@
-import * as ReactRouter from 'react-router';
+import * as router from 'react-router';
 
 export const useLocationMock = (pathname:string) => {
-    jest.spyOn(ReactRouter, 'useLocation').mockReturnValue({
+    jest.spyOn(router, 'useLocation').mockReturnValue({
         pathname: pathname,
         state: {},
         key: '',

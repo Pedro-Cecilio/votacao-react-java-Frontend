@@ -1,4 +1,4 @@
-import * as useCriarUsuario from "../../hooks/useCriarUsuario"
+import * as hook from "../../hooks/useCriarUsuario"
 
 
 export const useCriarUsuarioMock = (jestfn: jest.Mock<any, any, any>)=>{
@@ -10,7 +10,7 @@ export const useCriarUsuarioMock = (jestfn: jest.Mock<any, any, any>)=>{
         cpf: "12345678900",
         admin: false
     }
-    jest.spyOn(useCriarUsuario, 'useCriarUsuario').mockReturnValue({
+    jest.spyOn(hook, 'useCriarUsuario').mockReturnValue({
         criarUsuario: jestfn.mockResolvedValue(criarUsuarioResposta)
     });
 }
