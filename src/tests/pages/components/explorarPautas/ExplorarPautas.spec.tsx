@@ -36,10 +36,8 @@ describe("Testando componente de ExplorarPautas", () => {
     })
 
     it("Deve verificar se está listando as pautas", () => {
-        listaDePautas.forEach((pauta) => {
-            const cardPauta = screen.getByTestId(pauta.id);
-            expect(cardPauta).toBeDefined();
-        })
+        const cardPauta = screen.getAllByTestId("card-pauta");
+        expect(cardPauta.length).toBe(listaDePautas.length);
     })
     
     it("Deve verificar se componente filtro está presente", () => {

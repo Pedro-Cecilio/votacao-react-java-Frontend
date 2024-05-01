@@ -144,13 +144,13 @@ describe("Testando página de cadastro", () => {
     it("Deve falhar ao cadastrar usuário com cpf com menos de 11 caracteres", async () => {
         cadastrarUsuario(novoUsuario.email, novoUsuario.senha, novoUsuario.nome, novoUsuario.sobrenome, "1234567891", novoUsuario.tipoUsuario);
 
-        await waitFor(() => expect(screen.getByText("Cpf deve ter exatamente 11 caracteres.")).toBeDefined())
+        await waitFor(() => expect(screen.getByText("Cpf deve conter 11 caracteres numéricos.")).toBeDefined())
         await waitFor(() => expect(criarUsuarioMock).toHaveBeenCalledTimes(0))
     })
     it("Deve falhar ao cadastrar usuário com cpf com mais de 11 caracteres", async () => {
         cadastrarUsuario(novoUsuario.email, novoUsuario.senha, novoUsuario.nome, novoUsuario.sobrenome, "123456789101", novoUsuario.tipoUsuario);
 
-        await waitFor(() => expect(screen.getByText("Cpf deve ter exatamente 11 caracteres.")).toBeDefined())
+        await waitFor(() => expect(screen.getByText("Cpf deve conter 11 caracteres numéricos.")).toBeDefined())
         await waitFor(() => expect(criarUsuarioMock).toHaveBeenCalledTimes(0))
     })
     it("Deve falhar ao cadastrar usuário sem informar tipo de usuário", async () => {

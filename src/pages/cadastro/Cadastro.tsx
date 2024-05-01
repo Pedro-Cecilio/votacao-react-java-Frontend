@@ -10,6 +10,7 @@ import { TipoDeUsuario } from "../../enums/tipoDeUsuario";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
+import { REGEX_CPF } from "../../regex/regex";
 
 const Cadastro = () => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
@@ -25,7 +26,7 @@ const Cadastro = () => {
         senha: z.string().min(8, "Senha deve conter no mínimo 8 caracteres."),
         nome: z.string().min(3, "Nome deve conter no mínimo 3 caracteres.").max(20, "Nome deve conter no máximo 20 caracteres."),
         sobrenome: z.string().min(2, "Sobrenome deve conter no mínimo 2 caracteres.").max(20, "Sobrenome deve conter no máximo 20 caracteres."),
-        cpf: z.string().length(11, "Cpf deve ter exatamente 11 caracteres."),
+        cpf: z.string().regex(REGEX_CPF, "Cpf deve conter 11 caracteres numéricos."),
         tipoDeUsuario: z.string().min(1, "Tipo de usuario deve ser informado.")
     })
 

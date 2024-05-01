@@ -15,7 +15,7 @@ const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar }: CardPa
 
 
     return (
-        <Card w={"300px"} h={"350px"} data-testid={dados.id.toString()}>
+        <Card w={"300px"} h={"350px"} data-testid={"card-pauta"}>
             <CardHeader>
                 <Flex flexWrap='wrap' flexDirection={"column"}>
                     <Flex alignItems='center'>
