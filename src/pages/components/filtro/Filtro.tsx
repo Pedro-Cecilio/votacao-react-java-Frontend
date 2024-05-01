@@ -31,26 +31,26 @@ function Filtro({onSubmit, onError}:FiltroProps) {
         onClose();
     }
     return (
-        <Box>
-            <Botao rightIcon={<SettingsIcon />} onClick={onOpen} tamanho={"sm"} texto="Filtro" />
+        <Box data-testid={"filtro"}>
+            <Botao testid={"botao-filtro"} rightIcon={<SettingsIcon />} onClick={onOpen} tamanho={"sm"} texto="Filtro" />
             <Drawer
                 isOpen={isOpen}
                 placement='right'
                 onClose={onClose}
             >
                 <DrawerOverlay />
-                <DrawerContent>
-                    <DrawerCloseButton />
-                    <DrawerHeader borderBottomWidth='1px'>
+                <DrawerContent data-testid={"drawer-filtro"}>
+                    <DrawerCloseButton data-testid={"botao-fechar-filtro-topo"}/>
+                    <DrawerHeader borderBottomWidth='1px' data-testid={"header-filtro"}>
                         Filtre as pautas
                     </DrawerHeader>
 
                     <DrawerBody>
-                        <FormControl>
+                        <FormControl data-testid={"input-categoria-filtro"}>
                             <Stack spacing='24px'>
                                 <Box>
                                     <FormLabel htmlFor='categoria'>Categoria</FormLabel>
-                                    <Select {...register("categoria")} placeholder="Categorias">
+                                    <Select {...register("categoria")} placeholder="Categorias" data-testid={"categorias-filtro"}>
                                         {Object.values(Categoria).map((categoria) => (
                                             <option key={categoria} value={categoria}>
                                                 {categoria}
@@ -63,10 +63,10 @@ function Filtro({onSubmit, onError}:FiltroProps) {
                     </DrawerBody>
 
                     <DrawerFooter borderTopWidth='1px'>
-                        <Button variant='outline' mr={3} onClick={onClose}>
+                        <Button variant='outline' mr={3} onClick={onClose} data-testid={"botao-fechar-filtro-footer"}>
                             Cancel
                         </Button>
-                        <Botao onClick={handleSubmit(enviarFormulario, onError)} tamanho={"md"} texto="Filtrar" />
+                        <Botao testid={"botao-filtrar"} onClick={handleSubmit(enviarFormulario, onError)} tamanho={"md"} texto="Filtrar" />
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>

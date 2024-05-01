@@ -1,10 +1,10 @@
 import { AddIcon, HamburgerIcon, InfoOutlineIcon, LinkIcon } from "@chakra-ui/icons";
-import { IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Box, IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import ModalIniciarVotacaoAberto from "../modalIniciarVotacao/ModalIniciarVotacao";
 import { useState } from "react";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
 import { SessaoVotacaoResposta } from "../../../models/sessaoVotacaoModels";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 
 interface MenuAbrirVotacaoProps {
@@ -34,37 +34,39 @@ const MenuCardPauta = ({ pautaId, sessaoVotacao }: MenuAbrirVotacaoProps) => {
         toastInfo("Link copiado para área de transferência")
     }
     return (
-        <Menu>
-            <MenuButton
-                as={IconButton}
-                aria-label='Options'
-                icon={<HamburgerIcon />}
-                _hover={{ backgroundColor: "cinza.300", color: "white" }}
-                variant='outline'
-            />
-            <MenuList>
-                {
-                    sessaoVotacao == null &&
-                    <MenuItem icon={<AddIcon />} onClick={abrir}>
-                        Abrir Votação
-                    </MenuItem>
-                }
-                {
-                    sessaoVotacao?.sessaoAtiva &&
-                    <MenuItem icon={<LinkIcon />} onClick={compartilhar}>
-                        Compartilhar
-                    </MenuItem>
-                }
-                {
-                    sessaoVotacao &&
-                    <MenuItem icon={<InfoOutlineIcon />} onClick={() => navigate(`/detalhes/${pautaId}`)}>
-                        Detalhes
-                    </MenuItem>
-                }
-            </MenuList>
-            <ModalIniciarVotacaoAberto aberto={modalIniciarVotacaoAberto} fechar={fechar} />
+        <Box data-testid={"menu-card-pauta"}>
+            <Menu>
+                <MenuButton
+                    as={IconButton}
+                    aria-label='Options'
+                    icon={<HamburgerIcon />}
+                    _hover={{ backgroundColor: "cinza.300", color: "white" }}
+                    variant='outline'
+                />
+                <MenuList>
+                    {
+                        sessaoVotacao == null &&
+                        <MenuItem icon={<AddIcon />} onClick={abrir} data-testid={"menuItem-abrir-votacao"}>
+                            Abrir Votação
+                        </MenuItem>
+                    }
+                    {
+                        sessaoVotacao?.sessaoAtiva &&
+                        <MenuItem icon={<LinkIcon />} onClick={compartilhar} data-testid={"menuItem-compartilhar-votacao"}>
+                            Compartilhar
+                        </MenuItem>
+                    }
+                    {
+                        sessaoVotacao &&
+                        <MenuItem icon={<InfoOutlineIcon />} onClick={() => navigate(`/detalhes/${pautaId}`)} data-testid={"menuItem-detalhes-votacao"}>
+                            Detalhes
+                        </MenuItem>
+                    }
+                </MenuList>
+                <ModalIniciarVotacaoAberto aberto={modalIniciarVotacaoAberto} fechar={fechar} />
 
-        </Menu>
+            </Menu>
+        </ Box>
     )
 }
 

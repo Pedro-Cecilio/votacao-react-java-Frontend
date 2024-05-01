@@ -108,6 +108,7 @@ const Login = () => {
                 </InputGroup>
             </FormControl>
             <Button
+                data-testid="botao-login"
                 isLoading={isLoading}
                 onClick={handleSubmit(onSubmit, onError)}
                 my={8}

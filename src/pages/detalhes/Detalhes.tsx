@@ -25,7 +25,7 @@ const Detalhes = () => {
         try {
             const token = obterTokenDoLocalStorage();
             const resposta = await buscarDetalhesPauta(token, pautaId!);
-            setDados(resposta.data);
+            setDados(resposta);
             setBuscaConcluida(true);
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
@@ -66,25 +66,25 @@ const Detalhes = () => {
                 </CardHeader>
                 <CardBody>
                     <Flex flexDirection={"column"} gap={3}>
-                        <Text>
+                        <Text data-testid={"assunto-pauta"}>
                             <strong>Assunto:</strong> {dados.dadosPauta.assunto}
                         </Text>
-                        <Text>
+                        <Text data-testid={"categoria-pauta"}>
                             <strong>Categoria:</strong>{" "}
                             {dados.dadosPauta.categoria}
                         </Text>
-                        <Text>
+                        <Text data-testid={"criador-pauta"}>
                             <strong>Criador:</strong> {dados.dadosPauta.usuario.nome} {dados.dadosPauta.usuario.sobrenome}
                         </Text>
 
-                        <Text>
+                        <Text data-testid={"votosPositivos-pauta"}>
                             <strong>Votos positivos:</strong> {dados.dadosPauta.sessaoVotacao?.votosPositivos}
                         </Text>
-                        <Text>
+                        <Text data-testid={"votosNegativos-pauta"}>
                             <strong>Votos negativos:</strong> {dados.dadosPauta.sessaoVotacao?.votosNegativos}
                         </Text>
 
-                        <Text>
+                        <Text data-testid={"status-pauta"}>
                             <strong>Status:</strong>{" "}
                             {dados.status === StatusSessaoVotacao.APROVADA && (
                                 <Badge colorScheme="green">Aprovada</Badge>
@@ -101,8 +101,8 @@ const Detalhes = () => {
                 </CardBody>
 
                 <CardFooter>
-                    <Flex>
-                        <Botao onClick={() => navigate("/minhasPautas")} tamanho={'md'} texto="Retornar" />
+                    <Flex >
+                        <Botao testid="retornar-pauta" onClick={() => navigate("/minhasPautas")} tamanho={'md'} texto="Retornar" />
                     </Flex>
                 </CardFooter>
             </Card>

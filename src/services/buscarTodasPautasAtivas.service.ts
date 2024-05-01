@@ -7,5 +7,5 @@ export const buscarTodasPautasAtivasService = async (token: string, categoria:st
             Authorization: `Bearer ${token}`
         }
     });
-    return resposta;
+    return resposta.data;
 }

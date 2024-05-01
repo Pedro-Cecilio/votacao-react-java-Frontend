@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface DadosUsuarioState {
+export interface DadosUsuarioState {
   pautaId: number;
 
   setPautaId: (id: number ) => void;

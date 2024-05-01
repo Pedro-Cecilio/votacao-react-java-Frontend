@@ -10,14 +10,14 @@ import { useDadosUsuarioStore } from "../../../hooks/useDadosUsuarioStore";
 import ModalNovaPauta from "../modalNovaPauta/ModalNovaPauta";
 import Botao from "../botao/Botao";
 import conteudoNaoEncontrado from "../../../assets/conteudoNaoEncontrado.svg"
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError} from "axios";
 import { useLocation } from 'react-router-dom';
 import { TipoDeVoto } from "../../../enums/tipoDeVoto";
 import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useInserirVoto } from "../../../hooks/useInserirVoto";
 
 interface ExplorarPautasProps {
-    metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<AxiosResponse<RespostaPautaDados[], any>>
+    metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<RespostaPautaDados[]>
 }
 
 const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
@@ -39,8 +39,8 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
     const rotaAtual: string = useLocation().pathname;
     useEffect(() => {
         const buscarPautas = async () => {
-            const response = await metodoBuscarPautasBanco(token, categoria);
-            setPautas(response.data);
+            const resposta = await metodoBuscarPautasBanco(token, categoria);
+            setPautas(resposta);
             setBuscaConcluida(true);
         };
         buscarPautas();
@@ -104,11 +104,11 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
     }
 
     return (
-        <Flex flexDirection={"column"} h={"100%"}>
+        <Flex flexDirection={"column"} h={"100%"} data-testid={"explorar-pautas"}>
             <Flex m={2} justifyContent={"space-between"}>
                 {admin && rotaAtual == "/minhasPautas" && (
                     <Box>
-                        <Botao onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
+                        <Botao testid={"botao-abrirModalNovaPauta"} onClick={mudarModalNovaPautaAberto} tamanho={'sm'} texto={"Criar nova pauta"} />
                     </Box>
                 )}
                 <Box>
