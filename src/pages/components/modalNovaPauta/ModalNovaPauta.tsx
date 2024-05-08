@@ -81,7 +81,7 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
             <ModalOverlay />
             <ModalContent display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} data-testid={"modal-nova-pauta"}>
                 <ModalHeader>Criar Pauta</ModalHeader>
-                <ModalCloseButton />
+                <ModalCloseButton data-testid="fechar-modal-abrir-pauta"/>
                 <ModalBody w={"100%"}
                     display={'flex'}
                     flexDirection={'column'}
@@ -91,7 +91,7 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
                         <FormLabel>Assunto:</FormLabel>
                         <Input type='text' {...register('assunto')} data-testid="input-assunto" _focus={{ boxShadow: "none", borderColor: "cinza.400" }} />
                         <FormLabel>Categoria:</FormLabel>
-                        <Select {...register("categoria")} placeholder="Categorias">
+                        <Select {...register("categoria")} placeholder="Categorias" data-testid="select-categoria">
                             {Object.values(Categoria).map((categoria) => (
                                 <option key={categoria} value={categoria}>
                                     {categoria}
@@ -103,6 +103,7 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
 
                 <ModalFooter>
                     <Botao
+                        testid="botao-criar-pauta"
                         isLoading={isLoading}
                         onClick={handleSubmit(onSubmit, onError)}
                         tamanho={"md"}
