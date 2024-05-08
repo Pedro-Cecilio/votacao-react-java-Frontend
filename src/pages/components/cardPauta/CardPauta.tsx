@@ -8,14 +8,15 @@ import { TipoDeVoto } from "../../../enums/tipoDeVoto";
 interface CardPautaProps {
     respostaPautaDados: RespostaPautaDados,
     metodoParaVotar: (tipoDeVoto: TipoDeVoto, pautaId: number) => Promise<void>;
+    id: string;
 }
-const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar }: CardPautaProps) => {
+const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar, id }: CardPautaProps) => {
     const { id: idUsuarioLogado } = useDadosUsuarioStore();
     const usuarioEstaLogadoEAdmin = idUsuarioLogado == dados.usuario.id && dados.usuario.admin;
 
 
     return (
-        <Card w={"300px"} h={"350px"} data-testid={"card-pauta"}>
+        <Card w={"300px"} h={"350px"} data-testid={"card-pauta"} id={id}>
             <CardHeader>
                 <Flex flexWrap='wrap' flexDirection={"column"}>
                     <Flex alignItems='center'>
@@ -46,18 +47,18 @@ const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar }: CardPa
             <CardFooter flexDirection={"column"}>
                 {
                     idUsuarioLogado !== dados.usuario.id &&
-                    <Flex w={"100%"} test-dataid={"botoes-votacao"}>
-                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={() => votar(TipoDeVoto.VOTO_POSITIVO, dados.id)}>
+                    <Flex w={"100%"} data-testid={"botoes-votacao"}>
+                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={() => votar(TipoDeVoto.VOTO_POSITIVO, dados.id)} data-testid={`botao-voto-positivo-${id}`}>
                             Sim
                         </Button>
-                        <Button flex='1' variant='ghost' colorScheme="red" onClick={() => votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)}>
+                        <Button flex='1' variant='ghost' colorScheme="red" onClick={() => votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)} data-testid={`botao-voto-negativo-${id}`}>
                             Não
                         </Button>
                     </Flex>
                 }
                 {
                     dados.sessaoVotacao != null &&
-                    <PopoverTotalVotos votosPositivos={dados.sessaoVotacao.votosPositivos} votosNegativos={dados.sessaoVotacao.votosNegativos} />
+                    <PopoverTotalVotos votosPositivos={dados.sessaoVotacao.votosPositivos} votosNegativos={dados.sessaoVotacao.votosNegativos} idHtmlPauta={id} />
                 }
             </CardFooter>
         </Card>

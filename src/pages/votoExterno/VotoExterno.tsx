@@ -78,7 +78,7 @@ const VotoExterno = () => {
         >
             {!cpf && <FormularioCpf setUsuarioExiste={setUsuarioExiste} setCpf={setCpf} isLoading={isLoading} setIsloading={setIsLoading} />}
             {cpf && usuarioExiste && !usuarioSeValidou && <FormularioSenha setUsuarioSeValidou={setUsuarioSeValidou} setSenha={setSenha} cpf={cpf} isLoading={isLoading} setIsloading={setIsLoading} />}
-            {((cpf && usuarioExiste && usuarioSeValidou) || (cpf && !usuarioExiste && !usuarioSeValidou)) && <CardPauta respostaPautaDados={pauta} metodoParaVotar={metodoParaVotarNaPauta} />}
+            {((cpf && usuarioExiste && usuarioSeValidou) || (cpf && !usuarioExiste && !usuarioSeValidou)) && <CardPauta respostaPautaDados={pauta} metodoParaVotar={metodoParaVotarNaPauta} id="1"/>}
             
         </Flex>
     )

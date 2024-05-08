@@ -6,23 +6,24 @@ import dislike from "../../../assets/dislike.svg"
 interface PopoverTotalVotosProps{
     votosPositivos: number;
     votosNegativos: number;
+    idHtmlPauta:string;
 }
-const PopoverTotalVotos = ({ votosPositivos, votosNegativos }:PopoverTotalVotosProps) => {
+const PopoverTotalVotos = ({ votosPositivos, votosNegativos, idHtmlPauta }:PopoverTotalVotosProps) => {
     return (
-        <Popover test-dataid={"popover-card-votacao"}>
+        <Popover>
             <PopoverTrigger>
-                <Flex justifyContent={"center"} mt={4}>
+                <Flex justifyContent={"center"} mt={4} data-testid={`popover-card-votacao-${idHtmlPauta}`}>
                     <Button gap={3}>
                         <InfoOutlineIcon />
                         Votos
                     </Button>
                 </Flex>
             </PopoverTrigger>
-            <PopoverContent w={36}>
+            <PopoverContent w={36} >
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader>Votos:</PopoverHeader>
-                <PopoverBody >
+                <PopoverBody>
                     <Flex justifyContent="center" alignItems={"center"} flexDirection={"column"} gap={3}>
                         <Flex alignItems="center">
                             <Image src={like} alt="Like" w={6} mr={2} />

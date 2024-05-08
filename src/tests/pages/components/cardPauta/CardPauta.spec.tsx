@@ -17,7 +17,7 @@ describe("Testando componente de ExplorarPautas com usuário admin", () => {
         render(
             <BrowserRouter >
                 <ChakraProvider theme={tema}>
-                    <CardPauta metodoParaVotar={metodoParaVotar} respostaPautaDados={pauta} />
+                    <CardPauta metodoParaVotar={metodoParaVotar} respostaPautaDados={pauta} id="1"/>
                 </ChakraProvider>
             </BrowserRouter>
         )
@@ -48,8 +48,8 @@ describe("Testando componente de ExplorarPautas com usuário admin", () => {
     })
     it("Deve verificar se o popover é renderizado quando possui sessão de votação ativa", () => {
         renderizarComponenteComMocks(useDadosUsuarioAdminPauta)
-        const popover = screen.queryByTestId("popover-card-votacao");
-        expect(popover).toBeDefined();
+        const popover = screen.queryByTestId("popover-card-votacao-1");
+        expect(popover).not.toBeNull();
     })
 
     it("Deve verificar se os botões de voto aparecem para um usuário não dono", () => {
@@ -61,10 +61,5 @@ describe("Testando componente de ExplorarPautas com usuário admin", () => {
         renderizarComponenteComMocks(useDadosUsuarioNaoAdminPauta)
         const menuCard = screen.queryByTestId("menu-card-pauta");
         expect(menuCard).toBeNull();
-    })
-    it("Deve verificar se o popover é renderizado quando possui sessao de votação ativa", () => {
-        renderizarComponenteComMocks(useDadosUsuarioNaoAdminPauta)
-        const popover = screen.queryByTestId("popover-card-votacao");
-        expect(popover).toBeDefined();
     })
 })

@@ -18,7 +18,7 @@ const Cabecalho = () => {
     }
 
     return (
-        <Flex as="header" bg={'cinza.700'} p={3} justifyContent={"space-between"} alignItems={"center"} textColor={"branco"}>
+        <Flex as="header" bg={'cinza.700'} p={3} justifyContent={"space-between"} alignItems={"center"} textColor={"branco"} data-testid={"cabecalho"}>
             <Image src={logo} w='50px' data-testid={"logo-cabecalho"} />
             {mostrarMenuBurger ? (
                 <Menu>

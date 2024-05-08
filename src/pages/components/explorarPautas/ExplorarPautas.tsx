@@ -79,8 +79,9 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
     const renderizarPautasPorPagina = () => {
         const indexInicial = paginaAtual * itensPorPagina;
         const indexFinal = indexInicial + itensPorPagina;
-        return pautas.slice(indexInicial, indexFinal).map(pauta => (
+        return pautas.slice(indexInicial, indexFinal).map((pauta, index) => (
             <CardPauta
+                id={`${index + 1}`}
                 key={pauta.id}
                 respostaPautaDados={{
                     id: pauta.id,
