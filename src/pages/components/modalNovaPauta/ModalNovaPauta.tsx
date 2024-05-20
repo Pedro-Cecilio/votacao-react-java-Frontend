@@ -7,8 +7,8 @@ import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useEffect, useState } from "react";
 import Botao from "../botao/Botao";
 import { Categoria } from "../../../enums/categoria";
-import { useCriarPauta } from "../../../hooks/useCriarPauta";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
+import { criarPautaService } from "../../../services/criarPauta.service";
 
 interface ModalProps {
     aberto: boolean;
@@ -19,7 +19,6 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     const { toastErro, toastSucesso } = useToastPersonalizado()
     const [isLoading, setIsLoading] = useState(false)
     const { obterTokenDoLocalStorage } = useTokenLocalStorage()
-    const { criarPauta } = useCriarPauta()
 
     useEffect(() => {
         if (!aberto) {
@@ -49,7 +48,7 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     const onSubmit = async ({ assunto, categoria }: inputs) => {
         try {
             const token = obterTokenDoLocalStorage() ?? "";
-            await criarPauta(assunto, categoria, token);
+            await criarPautaService(assunto, categoria, token);
             fecharModal(); 
             setAtualizarPagina(true)
             toastSucesso("Pauta criada com sucesso!")

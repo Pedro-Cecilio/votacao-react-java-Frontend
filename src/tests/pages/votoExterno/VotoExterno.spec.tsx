@@ -5,14 +5,13 @@ import tema from "../../../temas/temas"
 import VotoExterno from "../../../pages/votoExterno/VotoExterno"
 import { useNavigateMock } from "../../__mocks__/useNavigateMock"
 import { useParamsMock } from "../../__mocks__/useParamsMock"
-import { useVerificarSeUsuarioExistePorCpfMock } from "../../__mocks__/useVerificarSeUsuarioExistePorCpfMock"
+import { verificarSeUsuarioExistePorCpfServiceMock } from "../../__mocks__/verificarSeUsuarioExistePorCpfServiceMock"
 import { buscarPautaPorIdMock } from "../../__mocks__/buscarPautaPorIdMock"
-import { useValidarUsuarioPorCpfESenhaMock } from "../../__mocks__/useValidarUsuarioPorCpfESenhaMock"
+import { validarUsuarioPorCpfESenhaServiceMock } from "../../__mocks__/validarUsuarioPorCpfESenhaServiceMock"
 
 describe("Testando página de voto externo", () => {
     const { buscarPautaPorIdEncontrada, buscarPautaPorIdNaoEncontrada } = buscarPautaPorIdMock();
     const verificarSeUsuarioExistePorCpfMock = jest.fn();
-    const validarUsuarioPorCpfESenhaMock = jest.fn();
 
     beforeEach(() => {
         useParamsMock("1");
@@ -20,7 +19,7 @@ describe("Testando página de voto externo", () => {
     })
     it("Deve renderizar somente formulário de cpf ao entrar na página", async () => {
         buscarPautaPorIdEncontrada()
-        useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
+        verificarSeUsuarioExistePorCpfServiceMock(true)
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>
@@ -37,7 +36,7 @@ describe("Testando página de voto externo", () => {
     })
     it("Deve renderizar componente de senha, após inserir cpf, caso cpf seja de um usuário cadastrado", async () => {
         buscarPautaPorIdEncontrada()
-        useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
+        verificarSeUsuarioExistePorCpfServiceMock(true)
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>
@@ -58,7 +57,7 @@ describe("Testando página de voto externo", () => {
     })
     it("Deve retornar mensagem de erro ao inserir senha com formato inválido", async () => {
         buscarPautaPorIdEncontrada()
-        useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
+        verificarSeUsuarioExistePorCpfServiceMock(true)
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>
@@ -81,8 +80,8 @@ describe("Testando página de voto externo", () => {
     })
     it("Deve renderizar componente de card Pauta, após usuário cadastrado inserir senha válida", async () => {
         buscarPautaPorIdEncontrada()
-        useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
-        useValidarUsuarioPorCpfESenhaMock(validarUsuarioPorCpfESenhaMock, true)
+        verificarSeUsuarioExistePorCpfServiceMock(true)
+        validarUsuarioPorCpfESenhaServiceMock(true)
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>
@@ -122,7 +121,7 @@ describe("Testando página de voto externo", () => {
     })
     it("Deve renderizar componente cardPauta, após inserir cpf, caso cpf seja de um usuário não cadastrado", async () => {
         buscarPautaPorIdEncontrada()
-        useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, false)
+        verificarSeUsuarioExistePorCpfServiceMock(false)
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>

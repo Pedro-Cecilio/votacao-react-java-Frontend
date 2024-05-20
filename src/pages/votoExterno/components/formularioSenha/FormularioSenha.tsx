@@ -4,7 +4,7 @@ import { SubmitErrorHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import useToastPersonalizado from "../../../../hooks/useToastPersonalizado"
 import { ValidarVotoExterno } from "../../../../models/sessaoVotacaoModels"
-import { useValidarUsuarioPorCpfESenha } from "../../../../hooks/useValidarUsuarioPorCpfESenha"
+import { validarUsuarioPorCpfESenhaService } from "../../../../services/validarUsuarioPorCpfESenha.service"
 
 interface FormularioSenhaProps {
     setUsuarioSeValidou: (usuarioSeValidou: boolean) => void;
@@ -17,8 +17,6 @@ interface FormularioSenhaProps {
 
 const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading, setSenha }: FormularioSenhaProps) => {
     const { toastErro } = useToastPersonalizado();
-    const { validarUsuarioPorCpfESenha } = useValidarUsuarioPorCpfESenha();
-
 
     const inputSchema = z.object({
         senha: z.string().min(8, "Senha deve conter no mínimo 8 caracteres.")
@@ -38,7 +36,7 @@ const FormularioSenha = ({ setUsuarioSeValidou, cpf, isLoading, setIsloading, se
             senha
         }
         setSenha(senha);
-        const resposta = await validarUsuarioPorCpfESenha(dados);
+        const resposta = await validarUsuarioPorCpfESenhaService(dados);
         setUsuarioSeValidou(resposta.valido);
         setIsloading(false);
     }

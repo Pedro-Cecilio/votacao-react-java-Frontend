@@ -2,9 +2,9 @@ import { Button, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitErrorHandler, useForm } from "react-hook-form"
 import { z } from "zod"
-import { useVerificarSeUsuarioExistePorCpf } from "../../../../hooks/useVerificarSeUsuarioExistePorCpf"
 import useToastPersonalizado from "../../../../hooks/useToastPersonalizado"
 import { REGEX_CPF } from "../../../../regex/regex"
+import { verificarSeUsuarioExistePorCpfService } from "../../../../services/verificarSeUsuarioExistePorCpf.service"
 
 interface FormularioCpfProps {
     setUsuarioExiste: (usuarioExiste: boolean) => void;
@@ -15,7 +15,6 @@ interface FormularioCpfProps {
 
 
 const FormularioCpf = ({ setUsuarioExiste, setCpf, isLoading, setIsloading }: FormularioCpfProps) => {
-    const { verificarSeUsuarioExistePorCpf } = useVerificarSeUsuarioExistePorCpf();
     const { toastErro } = useToastPersonalizado();
 
     const inputSchema = z.object({
@@ -32,7 +31,7 @@ const FormularioCpf = ({ setUsuarioExiste, setCpf, isLoading, setIsloading }: Fo
 
     const onSubmit = async ({ cpf }: inputCpf) => {
         setIsloading(true);
-        const resposta = await verificarSeUsuarioExistePorCpf(cpf)
+        const resposta = await verificarSeUsuarioExistePorCpfService(cpf)
         setUsuarioExiste(resposta.existe)
         setCpf(cpf)
         setIsloading(false);
