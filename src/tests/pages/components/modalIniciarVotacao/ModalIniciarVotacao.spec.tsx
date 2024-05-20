@@ -1,17 +1,18 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { respostaPautaDadosMock } from "../../../__mocks__/models/respostaPautaDadosMocks";
-import { useAbrirSessaoVotacaoMock } from "../../../__mocks__/useAbrirSessaoVotacaoMock";
+import { abrirSessaoVotacaoServiceMock } from "../../../__mocks__/abrirSessaoVotacaoServiceMock";
 import { useDadosAbrirVotacaoStoreMock } from "../../../__mocks__/useDadosAbrirVotacaoStoreMock";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import tema from "../../../../temas/temas";
 import ModalIniciarVotacaoAberto from "../../../../pages/components/modalIniciarVotacao/ModalIniciarVotacao";
 import { useTokenLocalStorageMock } from "../../../__mocks__/useTokenLocalStorageMock";
+import * as abrirSessaoVotacaoService from "../../../../services/abrirSessaoVotacao.service"
+
 
 describe("Testando componente de ExplorarPautas com usuário não admin", () => {
 
     const setPautaIdMock = jest.fn();
-    const abrirSessaoVotacaoMock = jest.fn()
     const fecharModalMock = jest.fn()
     const obterTokenMock = jest.fn()
 
@@ -34,7 +35,7 @@ describe("Testando componente de ExplorarPautas com usuário não admin", () => 
         fecharModalMock.mockClear();
 
         useDadosAbrirVotacaoStoreMock(setPautaIdMock);
-        useAbrirSessaoVotacaoMock(abrirSessaoVotacaoMock)
+        abrirSessaoVotacaoServiceMock();
         useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
 
     })
@@ -63,7 +64,7 @@ describe("Testando componente de ExplorarPautas com usuário não admin", () => 
         }
         await waitFor(() => botaoAbrirSessaoVotacao.click());
         expect(obterTokenMock).toHaveBeenCalledTimes(1);
-        expect(abrirSessaoVotacaoMock).toHaveBeenCalledWith(obterTokenMock(), dados);
+        expect(abrirSessaoVotacaoService.abrirSessaoVotacaoService).toHaveBeenCalledWith(obterTokenMock(), dados);
         expect(fecharModalMock).toHaveBeenCalledTimes(1);
     })
     it("Deve ser possível iniciar uma sessão de votação com tempo informando um tempo em minutos", async () => {
@@ -79,7 +80,7 @@ describe("Testando componente de ExplorarPautas com usuário não admin", () => 
             pautaId: respostaPautaDadosMock().id
         }
         expect(obterTokenMock).toHaveBeenCalledTimes(1);
-        expect(abrirSessaoVotacaoMock).toHaveBeenCalledWith(obterTokenMock(), dados);
+        expect(abrirSessaoVotacaoService.abrirSessaoVotacaoService).toHaveBeenCalledWith(obterTokenMock(), dados);
         expect(fecharModalMock).toHaveBeenCalledTimes(1);
     })
 

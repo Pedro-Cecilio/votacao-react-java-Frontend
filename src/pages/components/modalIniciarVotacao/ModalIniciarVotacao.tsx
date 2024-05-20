@@ -8,8 +8,8 @@ import { useState } from "react";
 import Botao from "../botao/Botao";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
-import { useAbrirSessaoVotacao } from "../../../hooks/useAbrirSessaoVotacao";
 import { AbrirSessaoVotacaoDados } from "../../../models/sessaoVotacaoModels";
+import { abrirSessaoVotacaoService } from "../../../services/abrirSessaoVotacao.service";
 
 interface ModalProps {
     aberto: boolean;
@@ -20,7 +20,6 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const {pautaId, setPautaId} = useDadosAbrirVotacaoStore();
-    const {abrirSessaoVotacao} = useAbrirSessaoVotacao();
 
     const inputSchema = z.object({
         minutos: z.number().int("O tempo deve ser informado em minutos.")
@@ -47,7 +46,7 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
                 pautaId
             }
             const token = obterTokenDoLocalStorage() ?? "";
-            await abrirSessaoVotacao(token, dados);
+            await abrirSessaoVotacaoService(token, dados);
             window.location.reload()
             fecharModal();
 

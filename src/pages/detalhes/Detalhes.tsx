@@ -7,12 +7,11 @@ import Botao from "../components/botao/Botao";
 import { AxiosError } from "axios";
 import conteudoNaoEncontrado from "../../assets/conteudoNaoEncontrado.svg"
 import { StatusSessaoVotacao } from "../../models/sessaoVotacaoModels";
-import { useBuscarDetalhesPauta } from "../../hooks/useBuscarDetalhesPauta";
+import { buscarDetalhesPautaService } from "../../services/buscarDetalhesPauta.service";
 
 const Detalhes = () => {
     const { id: pautaId } = useParams();
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
-    const { buscarDetalhesPauta } = useBuscarDetalhesPauta();
     const [dados, setDados] = useState<DetalhesPautaDados | null>(null);
     const [buscaConcluida, setBuscaConcluida] = useState<boolean>(false);
     const [paginaCarregada, setPaginaCarregada] = useState<boolean>(false);
@@ -24,7 +23,7 @@ const Detalhes = () => {
     const buscarDados = async () => {
         try {
             const token = obterTokenDoLocalStorage();
-            const resposta = await buscarDetalhesPauta(token, pautaId!);
+            const resposta = await buscarDetalhesPautaService(token, pautaId!);
             setDados(resposta);
             setBuscaConcluida(true);
         } catch (error) {
