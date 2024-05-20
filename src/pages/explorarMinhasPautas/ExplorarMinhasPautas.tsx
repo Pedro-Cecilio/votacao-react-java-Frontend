@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useBuscarTodasPautasUsuarioLogado } from "../../hooks/useBuscarTodasPautasUsuarioLogado";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import ExplorarPautas from "../components/explorarPautas/ExplorarPautas"
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
+import { buscarTodasPautasUsuarioLogadoService } from "../../services/buscarTodasPautasUsuarioLogado.service";
 
 const ExplorarMinhasPautas = ()=>{
-    const {buscarTodasPautasUsuarioLogado} = useBuscarTodasPautasUsuarioLogado()
     const { admin } = useDadosUsuarioStore();
     const [paginaCarregada, setPaginaCarregada] = useState<boolean>(false);
 
@@ -19,7 +18,7 @@ const ExplorarMinhasPautas = ()=>{
         return <NaoAutorizado />
     }
     return (
-        <ExplorarPautas metodoBuscarPautasBanco={buscarTodasPautasUsuarioLogado}/>
+        <ExplorarPautas metodoBuscarPautasBanco={buscarTodasPautasUsuarioLogadoService}/>
     )
         
         
