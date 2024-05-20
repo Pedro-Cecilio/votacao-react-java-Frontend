@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import Botao from "../botao/Botao";
 import { Categoria } from "../../../enums/categoria";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
-import { criarPautaService } from "../../../services/criarPauta.service";
+import { criarPautaService } from "../../../services/pauta.service";
 
 interface ModalProps {
     aberto: boolean;

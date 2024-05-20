@@ -7,7 +7,7 @@ import Botao from "../components/botao/Botao";
 import { AxiosError } from "axios";
 import conteudoNaoEncontrado from "../../assets/conteudoNaoEncontrado.svg"
 import { StatusSessaoVotacao } from "../../models/sessaoVotacaoModels";
-import { buscarDetalhesPautaService } from "../../services/buscarDetalhesPauta.service";
+import { buscarDetalhesPautaService } from "../../services/pauta.service";
 
 const Detalhes = () => {
     const { id: pautaId } = useParams();

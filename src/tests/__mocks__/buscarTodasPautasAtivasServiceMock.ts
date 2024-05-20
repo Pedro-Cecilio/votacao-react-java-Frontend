@@ -1,4 +1,4 @@
-import * as buscarTodasPautasAtivasService from "../../services/buscarTodasPautasAtivas.service";
+import * as buscarTodasPautasAtivasService from "../../services/pauta.service";
 import { listaDeRespostaPautaDados } from "./models/listaDeRespostaPautaDados";
 
 export const buscarTodasPautasAtivasServiceMock = () => {

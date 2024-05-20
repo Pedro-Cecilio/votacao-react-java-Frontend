@@ -8,7 +8,7 @@ import { act } from "react-dom/test-utils"
 import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMock"
 import { criarUsuarioServiceMock } from "../../__mocks__/criarUsuarioServiceMock"
 import { useDadosUsuarioStoreMock } from "../../__mocks__/useDadosUsuarioStoreMock"
-import { criarUsuarioService } from "../../../services/criarUsuario.service"
+import { criarUsuarioService } from "../../../services/usuario.service"
 
 
 describe("Testando página de cadastro", () => {

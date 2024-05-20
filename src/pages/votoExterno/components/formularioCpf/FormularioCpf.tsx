@@ -4,7 +4,7 @@ import { SubmitErrorHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import useToastPersonalizado from "../../../../hooks/useToastPersonalizado"
 import { REGEX_CPF } from "../../../../regex/regex"
-import { verificarSeUsuarioExistePorCpfService } from "../../../../services/verificarSeUsuarioExistePorCpf.service"
+import { verificarSeUsuarioExistePorCpfService } from "../../../../services/usuario.service"
 
 interface FormularioCpfProps {
     setUsuarioExiste: (usuarioExiste: boolean) => void;

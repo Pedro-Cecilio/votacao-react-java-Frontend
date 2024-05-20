@@ -7,7 +7,7 @@ import { z } from "zod";
 import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
-import { loginUsuarioService } from "../../services/loginUsuario.service";
+import { loginService } from "../../services/auth.service";
 
 
 const Login = () => {
@@ -33,7 +33,7 @@ const Login = () => {
     const onSubmit = async ({ email, senha }: inputs) => {
         try {
             setIsLoading(true);
-            const authReposta = await loginUsuarioService(email, senha);
+            const authReposta = await loginService(email, senha);
             inserirTokenNoLocalStorage(authReposta.token);
             navigate("/explorar")
         } catch (error) {

@@ -6,12 +6,12 @@ import { BrowserRouter } from "react-router-dom"
 import { useNavigateMock } from "../../__mocks__/useNavigateMock"
 import { act } from "react-dom/test-utils"
 import { loginMocks } from "../../__mocks__/loginMocks"
-import * as loginService from '../../../services/loginUsuario.service'
+import * as loginService from '../../../services/auth.service'
 
 
 describe("Testando pagina de login", () => {
 
-    const { loginUsuarioServiceMock, autenticacaoRespostaDados } = loginMocks()
+    const { loginServiceMock, autenticacaoRespostaDados } = loginMocks()
     const EMAIL_TESTID: string = "input-email";
     const SENHA_TESTID: string = "input-senha";
     const BOTAO_TESTID: string = "botao-login";
@@ -33,7 +33,7 @@ describe("Testando pagina de login", () => {
 
     beforeEach(() => {
 
-        loginUsuarioServiceMock();
+        loginServiceMock();
         useNavigateMock(navigateMock)
 
         render(
@@ -66,7 +66,7 @@ describe("Testando pagina de login", () => {
 
     it("Deve enviar dados corretos para LoginUsuario", async () => {
         efeturarLogin(EMAIL_VALIDO, SENHA_VALIDA);
-        await waitFor(() => expect(loginService.loginUsuarioService).toHaveBeenCalledWith(EMAIL_VALIDO, SENHA_VALIDA))
+        await waitFor(() => expect(loginService.loginService).toHaveBeenCalledWith(EMAIL_VALIDO, SENHA_VALIDA))
     })
     it("Deve definir token ao realizar login", async () => {
         efeturarLogin(EMAIL_VALIDO, SENHA_VALIDA);

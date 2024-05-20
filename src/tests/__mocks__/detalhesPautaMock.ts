@@ -1,4 +1,4 @@
-import * as buscarDetalhesPautaService from "../../services/buscarDetalhesPauta.service"
+import * as buscarDetalhesPautaService from "../../services/pauta.service"
 import { detalhesPautaDadosMock } from "./models/detalhesPautaDadosMock";
 
 

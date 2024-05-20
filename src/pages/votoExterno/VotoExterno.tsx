@@ -10,7 +10,7 @@ import { TipoDeVoto } from "../../enums/tipoDeVoto";
 import FormularioCpf from "./components/formularioCpf/FormularioCpf";
 import FormularioSenha from "./components/formularioSenha/FormularioSenha";
 import NaoEncontrado from "../components/naoEncontrado/NaoEncontrado";
-import { buscarPautaPorIdService } from "../../services/buscarPautaPorId.service";
+import { buscarPautaPorIdService } from "../../services/pauta.service";
 
 const VotoExterno = () => {
     const { id: pautaId } = useParams();

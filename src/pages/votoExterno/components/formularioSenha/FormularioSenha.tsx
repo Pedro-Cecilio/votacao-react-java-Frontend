@@ -4,7 +4,7 @@ import { SubmitErrorHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import useToastPersonalizado from "../../../../hooks/useToastPersonalizado"
 import { ValidarVotoExterno } from "../../../../models/sessaoVotacaoModels"
-import { validarUsuarioPorCpfESenhaService } from "../../../../services/validarUsuarioPorCpfESenha.service"
+import { validarUsuarioPorCpfESenhaService } from "../../../../services/auth.service"
 
 interface FormularioSenhaProps {
     setUsuarioSeValidou: (usuarioSeValidou: boolean) => void;

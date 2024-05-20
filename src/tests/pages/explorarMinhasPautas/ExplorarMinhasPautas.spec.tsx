@@ -9,7 +9,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import ExplorarMinhasPautas from "../../../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 import { useLocationMock } from "../../__mocks__/useLocationMock";
 import { buscarTodasPautasUsuarioLogadoServiceMock } from "../../__mocks__/buscarTodasPautasUsuarioLogadoServiceMock";
-import {buscarTodasPautasUsuarioLogadoService} from "../../../services/buscarTodasPautasUsuarioLogado.service"
+import {buscarTodasPautasUsuarioLogadoService} from "../../../services/pauta.service"
 describe("Testando pagina de explorar minhas pautas", () => {
     const { useDadosUsuarioAdminPauta } = useDadosUsuarioStoreMock();
     const obterTokenMock = jest.fn();

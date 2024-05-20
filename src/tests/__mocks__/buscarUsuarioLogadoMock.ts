@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import * as service from "../../services/buscarUsuarioLogado.service"
+import * as service from "../../services/usuario.service"
 import { usuarioRespostaMock } from "./models/usuarioRespostaMock"
 
 export const buscarUsuarioLogadoMock = () => {

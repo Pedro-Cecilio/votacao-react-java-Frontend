@@ -7,7 +7,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import tema from "../../../../temas/temas";
 import ModalIniciarVotacaoAberto from "../../../../pages/components/modalIniciarVotacao/ModalIniciarVotacao";
 import { useTokenLocalStorageMock } from "../../../__mocks__/useTokenLocalStorageMock";
-import * as abrirSessaoVotacaoService from "../../../../services/abrirSessaoVotacao.service"
+import * as abrirSessaoVotacaoService from "../../../../services/votacao.service"
 
 
 describe("Testando componente de ExplorarPautas com usuário não admin", () => {

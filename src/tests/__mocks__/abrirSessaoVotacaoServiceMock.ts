@@ -1,4 +1,4 @@
-import * as abrirSessaoVotacaoService from "../../services/abrirSessaoVotacao.service"
+import * as abrirSessaoVotacaoService from "../../services/votacao.service"
 import { respostaPautaDadosMock } from "./models/respostaPautaDadosMocks"
 
 export const abrirSessaoVotacaoServiceMock = ()=>{

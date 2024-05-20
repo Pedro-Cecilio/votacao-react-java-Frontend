@@ -1,4 +1,4 @@
-import * as loginService from '../../services/loginUsuario.service';
+import * as loginService from '../../services/auth.service';
 
 
 export const loginMocks = () => {
@@ -7,12 +7,12 @@ export const loginMocks = () => {
         token: "tokenValido"
     }
 
-    const loginUsuarioServiceMock = () => {
-        jest.spyOn(loginService, 'loginUsuarioService').mockResolvedValue(autenticacaoRespostaDados);
+    const loginServiceMock = () => {
+        jest.spyOn(loginService, 'loginService').mockResolvedValue(autenticacaoRespostaDados);
     }
 
     return {
-        loginUsuarioServiceMock,
+        loginServiceMock,
         autenticacaoRespostaDados
     }
 }

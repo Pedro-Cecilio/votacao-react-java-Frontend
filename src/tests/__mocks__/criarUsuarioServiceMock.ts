@@ -1,4 +1,4 @@
-import * as service from "../../services/criarUsuario.service"
+import * as service from "../../services/usuario.service"
 
 
 export const criarUsuarioServiceMock = () => {

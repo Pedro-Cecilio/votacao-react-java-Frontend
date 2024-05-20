@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import ExplorarPautas from "../components/explorarPautas/ExplorarPautas"
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
-import { buscarTodasPautasUsuarioLogadoService } from "../../services/buscarTodasPautasUsuarioLogado.service";
+import { buscarTodasPautasUsuarioLogadoService } from "../../services/pauta.service";
 
 const ExplorarMinhasPautas = ()=>{
     const { admin } = useDadosUsuarioStore();

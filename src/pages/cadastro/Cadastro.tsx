@@ -10,7 +10,7 @@ import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
 import { REGEX_CPF } from "../../regex/regex";
-import { criarUsuarioService } from "../../services/criarUsuario.service";
+import { criarUsuarioService } from "../../services/usuario.service";
 
 const Cadastro = () => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();

@@ -1,4 +1,4 @@
-import * as service from "../../services/buscarTodasPautasUsuarioLogado.service";
+import * as service from "../../services/pauta.service";
 import { listaDeRespostaPautaDados } from "./models/listaDeRespostaPautaDados";
 
 export const buscarTodasPautasUsuarioLogadoServiceMock = () => {

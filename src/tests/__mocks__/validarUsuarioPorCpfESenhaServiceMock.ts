@@ -1,4 +1,4 @@
-import * as service from "../../services/validarUsuarioPorCpfESenha.service";
+import * as service from "../../services/auth.service";
 import { ValidarVotoExternoResposta } from "../../models/sessaoVotacaoModels";
 
 export const validarUsuarioPorCpfESenhaServiceMock = (valido: boolean) => {

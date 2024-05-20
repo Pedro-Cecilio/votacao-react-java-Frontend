@@ -4,7 +4,7 @@ import { useDadosUsuarioStore } from "../hooks/useDadosUsuarioStore"
 import { useTokenLocalStorage } from "../hooks/useTokenLocalStorage"
 import { Box, VStack } from "@chakra-ui/react"
 import Cabecalho from "../pages/components/cabecalho/Cabecalho"
-import { buscarUsuarioLogadoService } from "../services/buscarUsuarioLogado.service"
+import { buscarUsuarioLogadoService } from "../services/usuario.service"
 
 const EmpacotadorRotasAutenticadas = ({ children }: { children?: React.ReactNode }) => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();

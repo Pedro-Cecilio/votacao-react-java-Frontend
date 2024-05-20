@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import * as buscarPautaPorIdService from "../../services/buscarPautaPorId.service";
+import * as buscarPautaPorIdService from "../../services/pauta.service";
 import { respostaPautaDadosMock } from "./models/respostaPautaDadosMocks";
 
 export const buscarPautaPorIdMock = () => {

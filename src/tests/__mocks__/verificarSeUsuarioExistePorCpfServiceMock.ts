@@ -1,4 +1,4 @@
-import * as service from "../../services/verificarSeUsuarioExistePorCpf.service";
+import * as service from "../../services/usuario.service";
 
 export const verificarSeUsuarioExistePorCpfServiceMock = (existe: boolean) => {
     const resposta: VerificarSeUsuarioExisteResposta = {
