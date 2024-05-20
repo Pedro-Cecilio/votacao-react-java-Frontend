@@ -6,11 +6,12 @@ import { BrowserRouter } from "react-router-dom"
 import { useNavigateMock } from "../../__mocks__/useNavigateMock"
 import { act } from "react-dom/test-utils"
 import { loginMocks } from "../../__mocks__/loginMocks"
+import * as loginService from '../../../services/loginUsuario.service'
 
 
 describe("Testando pagina de login", () => {
 
-    const { useLoginUsuarioMock, autenticacaoRespostaDados } = loginMocks()
+    const { loginUsuarioServiceMock, autenticacaoRespostaDados } = loginMocks()
     const EMAIL_TESTID: string = "input-email";
     const SENHA_TESTID: string = "input-senha";
     const BOTAO_TESTID: string = "botao-login";
@@ -29,12 +30,10 @@ describe("Testando pagina de login", () => {
         })
     }
     const navigateMock = jest.fn();
-    const mockLoginUsuario = jest.fn();
-
 
     beforeEach(() => {
 
-        useLoginUsuarioMock(mockLoginUsuario);
+        loginUsuarioServiceMock();
         useNavigateMock(navigateMock)
 
         render(
@@ -67,7 +66,7 @@ describe("Testando pagina de login", () => {
 
     it("Deve enviar dados corretos para LoginUsuario", async () => {
         efeturarLogin(EMAIL_VALIDO, SENHA_VALIDA);
-        await waitFor(() => expect(mockLoginUsuario).toHaveBeenCalledWith(EMAIL_VALIDO, SENHA_VALIDA))
+        await waitFor(() => expect(loginService.loginUsuarioService).toHaveBeenCalledWith(EMAIL_VALIDO, SENHA_VALIDA))
     })
     it("Deve definir token ao realizar login", async () => {
         efeturarLogin(EMAIL_VALIDO, SENHA_VALIDA);

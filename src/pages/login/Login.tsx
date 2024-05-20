@@ -5,15 +5,14 @@ import useToastPersonalizado from "../../hooks/useToastPersonalizado";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { AxiosError } from "axios";
-import { useLoginUsuario } from "../../hooks/useLoginUsuario";
 import { useNavigate } from "react-router-dom";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
+import { loginUsuarioService } from "../../services/loginUsuario.service";
 
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro } = useToastPersonalizado();
-    const { loginUsuario } = useLoginUsuario();
     const { inserirTokenNoLocalStorage } = useTokenLocalStorage()
     const navigate = useNavigate();
 
@@ -34,7 +33,7 @@ const Login = () => {
     const onSubmit = async ({ email, senha }: inputs) => {
         try {
             setIsLoading(true);
-            const authReposta = await loginUsuario(email, senha);
+            const authReposta = await loginUsuarioService(email, senha);
             inserirTokenNoLocalStorage(authReposta.token);
             navigate("/explorar")
         } catch (error) {
