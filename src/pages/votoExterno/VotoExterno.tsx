@@ -5,12 +5,12 @@ import { AxiosError } from "axios";
 import { RespostaPautaDados } from "../../models/pautaModels";
 import CardPauta from "../components/cardPauta/CardPauta";
 import { useNavigate, useParams } from "react-router-dom";
-import { useBuscarPautaPorId } from "../../hooks/useBuscarPautaPorId";
 import { useInserirVoto } from "../../hooks/useInserirVoto";
 import { TipoDeVoto } from "../../enums/tipoDeVoto";
 import FormularioCpf from "./components/formularioCpf/FormularioCpf";
 import FormularioSenha from "./components/formularioSenha/FormularioSenha";
 import NaoEncontrado from "../components/naoEncontrado/NaoEncontrado";
+import { buscarPautaPorIdService } from "../../services/buscarPautaPorId.service";
 
 const VotoExterno = () => {
     const { id: pautaId } = useParams();
@@ -20,7 +20,6 @@ const VotoExterno = () => {
     const [usuarioSeValidou, setUsuarioSeValidou] = useState<boolean>(false);
     const [senha, setSenha] = useState<string>("");
     const [pauta, setPauta] = useState<RespostaPautaDados | null>(null);
-    const { buscarPautaPorId } = useBuscarPautaPorId();
     const [buscaConcluida, setBuscaConcluida] = useState<boolean>(false);
     const [paginaCarregada, setPaginaCarregada] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -30,7 +29,7 @@ const VotoExterno = () => {
 
     const BuscarPauta = async () => {
         try {
-            const resposta = await buscarPautaPorId(pautaId!);
+            const resposta = await buscarPautaPorIdService(pautaId!);
             setPauta(resposta);
             setBuscaConcluida(true);
         } catch (error) {

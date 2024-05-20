@@ -2,7 +2,7 @@ import * as buscarDetalhesPautaService from "../../services/buscarDetalhesPauta.
 import { detalhesPautaDadosMock } from "./models/detalhesPautaDadosMock";
 
 
-export const useDetalhesPautaMock = () => {
+export const detalhesPautaMock = () => {
   
     const detalhesPautaDados = detalhesPautaDadosMock()
     

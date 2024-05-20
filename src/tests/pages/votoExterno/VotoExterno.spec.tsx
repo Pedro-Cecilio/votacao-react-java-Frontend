@@ -6,21 +6,20 @@ import VotoExterno from "../../../pages/votoExterno/VotoExterno"
 import { useNavigateMock } from "../../__mocks__/useNavigateMock"
 import { useParamsMock } from "../../__mocks__/useParamsMock"
 import { useVerificarSeUsuarioExistePorCpfMock } from "../../__mocks__/useVerificarSeUsuarioExistePorCpfMock"
-import { useBuscarPautaPorIdMock } from "../../__mocks__/useBuscarPautaPorIdMock"
+import { buscarPautaPorIdMock } from "../../__mocks__/buscarPautaPorIdMock"
 import { useValidarUsuarioPorCpfESenhaMock } from "../../__mocks__/useValidarUsuarioPorCpfESenhaMock"
 
 describe("Testando página de voto externo", () => {
-    const { buscarPautaPorIdEncontrada, buscarPautaPorIdNaoEncontrada } = useBuscarPautaPorIdMock();
+    const { buscarPautaPorIdEncontrada, buscarPautaPorIdNaoEncontrada } = buscarPautaPorIdMock();
     const verificarSeUsuarioExistePorCpfMock = jest.fn();
     const validarUsuarioPorCpfESenhaMock = jest.fn();
-    const buscarPautaPorIdMock = jest.fn();
 
     beforeEach(() => {
         useParamsMock("1");
         useNavigateMock();
     })
     it("Deve renderizar somente formulário de cpf ao entrar na página", async () => {
-        buscarPautaPorIdEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdEncontrada()
         useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
         render(
             <BrowserRouter>
@@ -37,7 +36,7 @@ describe("Testando página de voto externo", () => {
         await waitFor(() => expect(cardPauta).toBeNull())
     })
     it("Deve renderizar componente de senha, após inserir cpf, caso cpf seja de um usuário cadastrado", async () => {
-        buscarPautaPorIdEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdEncontrada()
         useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
         render(
             <BrowserRouter>
@@ -58,7 +57,7 @@ describe("Testando página de voto externo", () => {
         await waitFor(() => expect(cardPauta).toBeNull())
     })
     it("Deve retornar mensagem de erro ao inserir senha com formato inválido", async () => {
-        buscarPautaPorIdEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdEncontrada()
         useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
         render(
             <BrowserRouter>
@@ -81,7 +80,7 @@ describe("Testando página de voto externo", () => {
         await waitFor(() => expect(toastError).toBeDefined())
     })
     it("Deve renderizar componente de card Pauta, após usuário cadastrado inserir senha válida", async () => {
-        buscarPautaPorIdEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdEncontrada()
         useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, true)
         useValidarUsuarioPorCpfESenhaMock(validarUsuarioPorCpfESenhaMock, true)
         render(
@@ -106,7 +105,7 @@ describe("Testando página de voto externo", () => {
     })
 
     it("Deve renderizar componente retornar mensagem de erro ao inserir cpf com formato inválido", async () => {
-        buscarPautaPorIdEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdEncontrada()
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>
@@ -122,7 +121,7 @@ describe("Testando página de voto externo", () => {
         await waitFor(() => expect(toastError).toBeDefined())
     })
     it("Deve renderizar componente cardPauta, após inserir cpf, caso cpf seja de um usuário não cadastrado", async () => {
-        buscarPautaPorIdEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdEncontrada()
         useVerificarSeUsuarioExistePorCpfMock(verificarSeUsuarioExistePorCpfMock, false)
         render(
             <BrowserRouter>
@@ -143,7 +142,7 @@ describe("Testando página de voto externo", () => {
         await waitFor(() => expect(cardPauta).toBeDefined())
     })
     it("Deve renderizar componente naoEncontrado ao não encontrar pauta ativa por id", async () => {
-        buscarPautaPorIdNaoEncontrada(buscarPautaPorIdMock)
+        buscarPautaPorIdNaoEncontrada()
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>

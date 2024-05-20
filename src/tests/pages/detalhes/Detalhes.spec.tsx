@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { useDetalhesPautaMock } from "../../__mocks__/useDetalhesPautaMock";
+import { detalhesPautaMock } from "../../__mocks__/detalhesPautaMock";
 import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMock"
 import { ChakraProvider } from "@chakra-ui/react";
 import tema from "../../../temas/temas";
@@ -14,7 +14,7 @@ import { useNavigateMock } from "../../__mocks__/useNavigateMock";
 
 
 describe("Testando página de detalhes", () => {
-    const { detalhesPautaDados, buscarDetalhesPautaServiceMock } = useDetalhesPautaMock();
+    const { detalhesPautaDados, buscarDetalhesPautaServiceMock } = detalhesPautaMock();
     const obterTokenMock = jest.fn();
     const navigateMock = jest.fn();
     beforeEach(async () => {
