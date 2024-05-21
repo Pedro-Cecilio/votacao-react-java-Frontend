@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import Filtro from "../../../../pages/components/filtro/Filtro"
-import tema from "../../../../temas/temas"
+import tema from "../../../../theme/temas"
 import { Categoria } from "../../../../enums/categoria"
 
 

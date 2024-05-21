@@ -7,19 +7,20 @@ import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useEffect, useState } from "react";
 import Botao from "../botao/Botao";
 import { Categoria } from "../../../enums/categoria";
-import { useCriarPauta } from "../../../hooks/useCriarPauta";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
+import { criarPautaService } from "../../../services/pauta.service";
+import { tratamentoErroAxios } from "../../../utils/utils";
 
 interface ModalProps {
     aberto: boolean;
     fechar: () => void;
     setAtualizarPagina: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     const { toastErro, toastSucesso } = useToastPersonalizado()
     const [isLoading, setIsLoading] = useState(false)
     const { obterTokenDoLocalStorage } = useTokenLocalStorage()
-    const { criarPauta } = useCriarPauta()
 
     useEffect(() => {
         if (!aberto) {
@@ -49,19 +50,14 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     const onSubmit = async ({ assunto, categoria }: inputs) => {
         try {
             const token = obterTokenDoLocalStorage() ?? "";
-            await criarPauta(assunto, categoria, token);
-            fecharModal(); 
+            await criarPautaService(assunto, categoria, token);
             setAtualizarPagina(true)
             toastSucesso("Pauta criada com sucesso!")
+            fecharModal(); 
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem)
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false)
 

@@ -5,15 +5,15 @@ import useToastPersonalizado from "../../hooks/useToastPersonalizado";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { AxiosError } from "axios";
-import { useLoginUsuario } from "../../hooks/useLoginUsuario";
 import { useNavigate } from "react-router-dom";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
+import { loginService } from "../../services/auth.service";
+import { tratamentoErroAxios } from "../../utils/utils";
 
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro } = useToastPersonalizado();
-    const { loginUsuario } = useLoginUsuario();
     const { inserirTokenNoLocalStorage } = useTokenLocalStorage()
     const navigate = useNavigate();
 
@@ -34,18 +34,13 @@ const Login = () => {
     const onSubmit = async ({ email, senha }: inputs) => {
         try {
             setIsLoading(true);
-            const authReposta = await loginUsuario(email, senha);
+            const authReposta = await loginService(email, senha);
             inserirTokenNoLocalStorage(authReposta.token);
             navigate("/explorar")
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false);
     }

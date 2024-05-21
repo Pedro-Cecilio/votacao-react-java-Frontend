@@ -1,6 +1,6 @@
 import { TipoDeVoto } from "../enums/tipoDeVoto";
 import { InserirVotoDados } from "../models/sessaoVotacaoModels";
-import { inserirVotoService } from "../services/inserirVoto.service";
+import { inserirVotoService } from "../services/votacao.service";
 
 export const useInserirVoto = () => {
     const inserirVotoInterno = async (pautaId: number, tipoDeVoto: TipoDeVoto, token: string)=>{

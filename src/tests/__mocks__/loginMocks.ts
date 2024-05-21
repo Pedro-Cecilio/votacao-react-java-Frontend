@@ -1,19 +1,18 @@
-import * as hook from '../../hooks/useLoginUsuario';
+import * as loginService from '../../services/auth.service';
 
 
-export const loginMocks = ()=>{
+export const loginMocks = () => {
     const autenticacaoRespostaDados: AutenticacaoRespostaDados = {
         admin: false,
         token: "tokenValido"
     }
 
-    const useLoginUsuarioMock = (jestfn: jest.Mock<any, any, any> = jest.fn())=>{
-        jest.spyOn(hook, 'useLoginUsuario').mockReturnValue({
-            loginUsuario: jestfn.mockResolvedValue(autenticacaoRespostaDados)
-        });    }
+    const loginServiceMock = () => {
+        jest.spyOn(loginService, 'loginService').mockResolvedValue(autenticacaoRespostaDados);
+    }
 
     return {
-        useLoginUsuarioMock,
+        loginServiceMock,
         autenticacaoRespostaDados
     }
 }

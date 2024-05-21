@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import { TipoDeVoto } from "../../../enums/tipoDeVoto";
 import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useInserirVoto } from "../../../hooks/useInserirVoto";
+import { tratamentoErroAxios } from "../../../utils/utils";
 
 interface ExplorarPautasProps {
     metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<RespostaPautaDados[]>
@@ -38,7 +39,9 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
 
     const rotaAtual: string = useLocation().pathname;
     useEffect(() => {
+        setPaginaCarregada(false);
         const buscarPautas = async () => {
+            setBuscaConcluida(false);
             const resposta = await metodoBuscarPautasBanco(token, categoria);
             setPautas(resposta);
             setBuscaConcluida(true);
@@ -68,12 +71,7 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
             setAtualizarPagina(true);
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
     }
     const renderizarPautasPorPagina = () => {
@@ -119,8 +117,8 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
                     <Filtro onSubmit={onSubmitFiltro} onError={onError} />
                 </Box>
             </Flex>
-            <Grid gap={8} m={{ base: 2, sm: 4 }} p={{ base: 0, sm: 8 }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} >
-                {renderizarPautasPorPagina()}
+            <Grid gap={8} m={{ base: 2, sm: 4 }} p={{ base: 0, sm: 8 }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} data-testid={"lista-de-pautas"}>
+                {paginaCarregada && renderizarPautasPorPagina()}
             </Grid>
 
 

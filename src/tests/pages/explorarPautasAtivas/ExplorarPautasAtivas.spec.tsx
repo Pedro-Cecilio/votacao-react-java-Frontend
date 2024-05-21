@@ -5,20 +5,20 @@ import { useInserirVotoMock } from "../../__mocks__/useInserirVotoMock";
 import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import tema from "../../../temas/temas";
+import tema from "../../../theme/temas";
 import ExplorarPautasAtivas from "../../../pages/explorarPautasAtivas/ExplorarPautasAtivas";
-import { useBuscarTodasPautasAtivasMock } from "../../__mocks__/useBuscarTodasPautasAtivasMock";
+import { buscarTodasPautasAtivasServiceMock } from "../../__mocks__/buscarTodasPautasAtivasServiceMock";
+import {buscarTodasPautasAtivasService} from "../../../services/pauta.service"
 
 
 describe("Testando página de explorar pautas ativas", () => {
     const {useDadosUsuarioNaoAdminPauta} = useDadosUsuarioStoreMock();
     const obterTokenMock = jest.fn();
     const inserirVotoInternoMock = jest.fn();
-    const buscarTodasPautasAtivasMock = jest.fn();
     beforeEach(async () => {
         await act(async () => {
             useDadosUsuarioNaoAdminPauta()
-            useBuscarTodasPautasAtivasMock(buscarTodasPautasAtivasMock)
+            buscarTodasPautasAtivasServiceMock()
             useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
             render(
@@ -32,7 +32,7 @@ describe("Testando página de explorar pautas ativas", () => {
     })
 
     it("Deve buscar todas pautas ativas", async () => {
-        await waitFor(() => expect(buscarTodasPautasAtivasMock).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(buscarTodasPautasAtivasService).toHaveBeenCalledTimes(1));
     })
 
     it("Deve renderizar componente ExplorarPautas", () => {

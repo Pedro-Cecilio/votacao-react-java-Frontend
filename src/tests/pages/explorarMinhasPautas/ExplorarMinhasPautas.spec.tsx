@@ -3,23 +3,22 @@ import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMo
 import { useDadosUsuarioStoreMock } from "../../__mocks__/useDadosUsuarioStoreMock";
 import { useInserirVotoMock } from "../../__mocks__/useInserirVotoMock";
 import { render, screen, waitFor } from "@testing-library/react";
-import tema from "../../../temas/temas";
+import tema from "../../../theme/temas";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import ExplorarMinhasPautas from "../../../pages/explorarMinhasPautas/ExplorarMinhasPautas";
 import { useLocationMock } from "../../__mocks__/useLocationMock";
-import { useBuscarTodasPautasUsuarioLogadoMock } from "../../__mocks__/useBuscarTodasPautasUsuarioLogadoMock";
-
+import { buscarTodasPautasUsuarioLogadoServiceMock } from "../../__mocks__/buscarTodasPautasUsuarioLogadoServiceMock";
+import {buscarTodasPautasUsuarioLogadoService} from "../../../services/pauta.service"
 describe("Testando pagina de explorar minhas pautas", () => {
     const { useDadosUsuarioAdminPauta } = useDadosUsuarioStoreMock();
     const obterTokenMock = jest.fn();
     const inserirVotoInternoMock = jest.fn();
-    const buscarTodasPautasUsuarioLogadoMock = jest.fn();
     
     beforeEach(async () => {
         await act(async () => {
             useDadosUsuarioAdminPauta();
-            useBuscarTodasPautasUsuarioLogadoMock(buscarTodasPautasUsuarioLogadoMock)
+            buscarTodasPautasUsuarioLogadoServiceMock()
             useLocationMock("/minhasPautas")
             useTokenLocalStorageMock(obterTokenMock, jest.fn(), jest.fn());
             useInserirVotoMock(inserirVotoInternoMock, jest.fn());
@@ -33,7 +32,7 @@ describe("Testando pagina de explorar minhas pautas", () => {
         })
     })
     it("Deve buscar todas pautas do usuário logado", async () => {
-        await waitFor(() => expect(buscarTodasPautasUsuarioLogadoMock).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(buscarTodasPautasUsuarioLogadoService).toHaveBeenCalledTimes(1));
 
     })
     it("Deve renderizar componente ExplorarPautas", () => {

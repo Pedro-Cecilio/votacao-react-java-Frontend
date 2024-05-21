@@ -8,8 +8,9 @@ import { useState } from "react";
 import Botao from "../botao/Botao";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
-import { useAbrirSessaoVotacao } from "../../../hooks/useAbrirSessaoVotacao";
 import { AbrirSessaoVotacaoDados } from "../../../models/sessaoVotacaoModels";
+import { abrirSessaoVotacaoService } from "../../../services/votacao.service";
+import { tratamentoErroAxios } from "../../../utils/utils";
 
 interface ModalProps {
     aberto: boolean;
@@ -20,7 +21,6 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const {pautaId, setPautaId} = useDadosAbrirVotacaoStore();
-    const {abrirSessaoVotacao} = useAbrirSessaoVotacao();
 
     const inputSchema = z.object({
         minutos: z.number().int("O tempo deve ser informado em minutos.")
@@ -47,19 +47,14 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
                 pautaId
             }
             const token = obterTokenDoLocalStorage() ?? "";
-            await abrirSessaoVotacao(token, dados);
+            await abrirSessaoVotacaoService(token, dados);
             window.location.reload()
             fecharModal();
 
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.");
-                setIsLoading(false);
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false);
 

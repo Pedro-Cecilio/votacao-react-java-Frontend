@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useToastPersonalizado from "../../hooks/useToastPersonalizado";
-import { useCriarUsuario } from "../../hooks/useCriarUsuario";
 import { z } from "zod";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,13 +9,13 @@ import { TipoDeUsuario } from "../../enums/tipoDeUsuario";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
-import { REGEX_CPF } from "../../regex/regex";
+import { REGEX_CPF, tratamentoErroAxios } from "../../utils/utils";
+import { criarUsuarioService } from "../../services/usuario.service";
 
 const Cadastro = () => {
     const { obterTokenDoLocalStorage } = useTokenLocalStorage();
     const [isLoading, setIsLoading] = useState(false)
     const { toastErro, toastSucesso } = useToastPersonalizado();
-    const { criarUsuario } = useCriarUsuario();
     const { admin } = useDadosUsuarioStore();
     const [paginaCarregada, setPaginaCarregada] = useState(false);
 
@@ -33,9 +32,7 @@ const Cadastro = () => {
     type inputs = z.infer<typeof inputSchema>
 
     useEffect(() => {
-        window.addEventListener('load', () => {
             setPaginaCarregada(true);
-        });
     }, []);
     const {
         register,
@@ -49,18 +46,13 @@ const Cadastro = () => {
         try {
             setIsLoading(true)
             const token = obterTokenDoLocalStorage();
-            await criarUsuario(email, senha, nome, sobrenome, cpf, tipoDeUsuario == TipoDeUsuario.ADMINISTRADOR, token)
+            await criarUsuarioService(email, senha, nome, sobrenome, cpf, tipoDeUsuario == TipoDeUsuario.ADMINISTRADOR, token)
             reset()
             toastSucesso("Usuário criado com sucesso")
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem)
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false)
     }

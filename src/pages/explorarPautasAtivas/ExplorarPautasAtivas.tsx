@@ -1,10 +1,9 @@
-import { useBuscarTodasPautasAtivas } from "../../hooks/useBuscarTodasPautasAtivas"
+import { buscarTodasPautasAtivasService } from "../../services/pauta.service";
 import ExplorarPautas from "../components/explorarPautas/ExplorarPautas"
 
 const ExplorarPautasAtivas = ()=>{
-    const {buscarTodasPautasAtivas} = useBuscarTodasPautasAtivas()
     return (
-        <ExplorarPautas metodoBuscarPautasBanco={buscarTodasPautasAtivas}/>
+        <ExplorarPautas metodoBuscarPautasBanco={buscarTodasPautasAtivasService}/>
     )
 }
 

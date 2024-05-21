@@ -1,25 +1,24 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter } from "react-router-dom"
 import EmpacotadorRotasAutenticadas from "../../routes/EmpacotadorRotasAutenticadas"
-import tema from "../../temas/temas"
+import tema from "../../theme/temas"
 import { render, waitFor } from "@testing-library/react"
 import { useNavigateMock } from "../__mocks__/useNavigateMock"
-import { useBuscarUsuarioLogadoMock } from "../__mocks__/useBuscarUsuarioLogadoMock"
 import { useDadosUsuarioStoreMock } from "../__mocks__/useDadosUsuarioStoreMock"
 import { useTokenLocalStorageMock } from "../__mocks__/useTokenLocalStorageMock"
+import { buscarUsuarioLogadoMock } from "../__mocks__/buscarUsuarioLogadoMock"
+
 
 describe("Testando componente Empacotador de rotas autenticadas", () => {
-    const { buscarUsuarioLogadoMockSucesso, buscarUsuarioLogadoMockErro } = useBuscarUsuarioLogadoMock()
+    const { buscarUsuarioLogadoMockSucesso, buscarUsuarioLogadoMockErro } = buscarUsuarioLogadoMock();
     const { useDadosUsuarioAdminPauta } = useDadosUsuarioStoreMock();
 
     const buscarTokenMock = jest.fn();
     const navigateMock = jest.fn();
-    const buscarUsuarioLogadoMock = jest.fn();
     const setDadosUsuarioMock = jest.fn();
     beforeEach(() => {
         buscarTokenMock.mockClear();
         navigateMock.mockClear();
-        buscarUsuarioLogadoMock.mockClear();
         setDadosUsuarioMock.mockClear();
 
         useNavigateMock(navigateMock);
@@ -28,7 +27,7 @@ describe("Testando componente Empacotador de rotas autenticadas", () => {
 
     })
     it("Deve redirecionar usuário com token inválido para login", async () => {
-        buscarUsuarioLogadoMockErro(buscarUsuarioLogadoMock)
+        buscarUsuarioLogadoMockErro()
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>
@@ -40,7 +39,7 @@ describe("Testando componente Empacotador de rotas autenticadas", () => {
         await waitFor(() => expect(navigateMock).toHaveBeenCalled());
     })
     it("Deve capturar dados do usuário com token válido", async () => {
-        buscarUsuarioLogadoMockSucesso(buscarUsuarioLogadoMock)
+        buscarUsuarioLogadoMockSucesso()
         render(
             <BrowserRouter>
                 <ChakraProvider theme={tema}>

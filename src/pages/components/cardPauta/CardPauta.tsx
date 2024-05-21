@@ -48,10 +48,10 @@ const CardPauta = ({ respostaPautaDados: dados, metodoParaVotar: votar, id }: Ca
                 {
                     idUsuarioLogado !== dados.usuario.id &&
                     <Flex w={"100%"} data-testid={"botoes-votacao"}>
-                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={() => votar(TipoDeVoto.VOTO_POSITIVO, dados.id)} data-testid={`botao-voto-positivo-${id}`}>
+                        <Button flex='1' variant='ghost' colorScheme="whatsapp" onClick={() => votar(TipoDeVoto.VOTO_POSITIVO, dados.id)} data-testid={`botao-voto-positivo`}>
                             Sim
                         </Button>
-                        <Button flex='1' variant='ghost' colorScheme="red" onClick={() => votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)} data-testid={`botao-voto-negativo-${id}`}>
+                        <Button flex='1' variant='ghost' colorScheme="red" onClick={() => votar(TipoDeVoto.VOTO_NEGATIVO, dados.id)} data-testid={`botao-voto-negativo`}>
                             Não
                         </Button>
                     </Flex>
