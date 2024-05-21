@@ -38,7 +38,9 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
 
     const rotaAtual: string = useLocation().pathname;
     useEffect(() => {
+        setPaginaCarregada(false);
         const buscarPautas = async () => {
+            setBuscaConcluida(false);
             const resposta = await metodoBuscarPautasBanco(token, categoria);
             setPautas(resposta);
             setBuscaConcluida(true);
@@ -119,8 +121,8 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
                     <Filtro onSubmit={onSubmitFiltro} onError={onError} />
                 </Box>
             </Flex>
-            <Grid gap={8} m={{ base: 2, sm: 4 }} p={{ base: 0, sm: 8 }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} >
-                {renderizarPautasPorPagina()}
+            <Grid gap={8} m={{ base: 2, sm: 4 }} p={{ base: 0, sm: 8 }} templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} justifyItems={"center"} data-testid={"lista-de-pautas"}>
+                {paginaCarregada && renderizarPautasPorPagina()}
             </Grid>
 
 

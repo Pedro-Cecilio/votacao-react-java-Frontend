@@ -49,8 +49,8 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
         try {
             const token = obterTokenDoLocalStorage() ?? "";
             await criarPautaService(assunto, categoria, token);
-            fecharModal(); 
             setAtualizarPagina(true)
+            fecharModal(); 
             toastSucesso("Pauta criada com sucesso!")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
