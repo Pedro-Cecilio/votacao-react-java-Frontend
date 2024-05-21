@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitErrorHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 import useToastPersonalizado from "../../../../hooks/useToastPersonalizado"
-import { REGEX_CPF } from "../../../../regex/regex"
+import { REGEX_CPF } from "../../../../utils/utils"
 import { verificarSeUsuarioExistePorCpfService } from "../../../../services/usuario.service"
 
 interface FormularioCpfProps {

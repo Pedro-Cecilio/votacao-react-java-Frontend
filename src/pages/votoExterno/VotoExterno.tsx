@@ -11,6 +11,7 @@ import FormularioCpf from "./components/formularioCpf/FormularioCpf";
 import FormularioSenha from "./components/formularioSenha/FormularioSenha";
 import NaoEncontrado from "../components/naoEncontrado/NaoEncontrado";
 import { buscarPautaPorIdService } from "../../services/pauta.service";
+import { tratamentoErroAxios } from "../../utils/utils";
 
 const VotoExterno = () => {
     const { id: pautaId } = useParams();
@@ -53,12 +54,7 @@ const VotoExterno = () => {
             navigate("/")
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
     }
 

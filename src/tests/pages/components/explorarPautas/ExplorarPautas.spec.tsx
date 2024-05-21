@@ -6,7 +6,7 @@ import { useTokenLocalStorageMock } from "../../../__mocks__/useTokenLocalStorag
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import tema from "../../../../temas/temas";
+import tema from "../../../../theme/temas";
 import ExplorarPautas from "../../../../pages/components/explorarPautas/ExplorarPautas";
 
 

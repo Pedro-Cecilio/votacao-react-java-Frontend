@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { BrowserRouter } from "react-router-dom"
-import tema from "../../../temas/temas"
+import tema from "../../../theme/temas"
 import VotoExterno from "../../../pages/votoExterno/VotoExterno"
 import { useNavigateMock } from "../../__mocks__/useNavigateMock"
 import { useParamsMock } from "../../__mocks__/useParamsMock"

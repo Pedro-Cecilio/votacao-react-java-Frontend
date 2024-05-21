@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import { TipoDeVoto } from "../../../enums/tipoDeVoto";
 import useToastPersonalizado from "../../../hooks/useToastPersonalizado";
 import { useInserirVoto } from "../../../hooks/useInserirVoto";
+import { tratamentoErroAxios } from "../../../utils/utils";
 
 interface ExplorarPautasProps {
     metodoBuscarPautasBanco: (token: string, categoria: string) => Promise<RespostaPautaDados[]>
@@ -70,12 +71,7 @@ const ExplorarPautas = ({ metodoBuscarPautasBanco }: ExplorarPautasProps) => {
             setAtualizarPagina(true);
         } catch (error) {
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
     }
     const renderizarPautasPorPagina = () => {

@@ -4,7 +4,7 @@ import { abrirSessaoVotacaoServiceMock } from "../../../__mocks__/abrirSessaoVot
 import { useDadosAbrirVotacaoStoreMock } from "../../../__mocks__/useDadosAbrirVotacaoStoreMock";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import tema from "../../../../temas/temas";
+import tema from "../../../../theme/temas";
 import ModalIniciarVotacaoAberto from "../../../../pages/components/modalIniciarVotacao/ModalIniciarVotacao";
 import { useTokenLocalStorageMock } from "../../../__mocks__/useTokenLocalStorageMock";
 import * as abrirSessaoVotacaoService from "../../../../services/votacao.service"

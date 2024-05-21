@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { detalhesPautaMock } from "../../__mocks__/detalhesPautaMock";
 import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMock"
 import { ChakraProvider } from "@chakra-ui/react";
-import tema from "../../../temas/temas";
+import tema from "../../../theme/temas";
 import Detalhes from "../../../pages/detalhes/Detalhes";
 import { render, screen, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";

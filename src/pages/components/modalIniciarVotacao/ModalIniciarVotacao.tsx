@@ -10,6 +10,7 @@ import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 import { useDadosAbrirVotacaoStore } from "../../../hooks/useDadosAbrirVotacaoStore";
 import { AbrirSessaoVotacaoDados } from "../../../models/sessaoVotacaoModels";
 import { abrirSessaoVotacaoService } from "../../../services/votacao.service";
+import { tratamentoErroAxios } from "../../../utils/utils";
 
 interface ModalProps {
     aberto: boolean;
@@ -51,14 +52,9 @@ const ModalIniciarVotacaoAberto = ({ aberto, fechar }: ModalProps) => {
             fecharModal();
 
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.");
-                setIsLoading(false);
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false);
 

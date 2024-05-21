@@ -9,7 +9,7 @@ import { TipoDeUsuario } from "../../enums/tipoDeUsuario";
 import { useDadosUsuarioStore } from "../../hooks/useDadosUsuarioStore";
 import NaoAutorizado from "../components/naoAutorizado/NaoAutorizado";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
-import { REGEX_CPF } from "../../regex/regex";
+import { REGEX_CPF, tratamentoErroAxios } from "../../utils/utils";
 import { criarUsuarioService } from "../../services/usuario.service";
 
 const Cadastro = () => {
@@ -32,9 +32,7 @@ const Cadastro = () => {
     type inputs = z.infer<typeof inputSchema>
 
     useEffect(() => {
-        window.addEventListener('load', () => {
             setPaginaCarregada(true);
-        });
     }, []);
     const {
         register,
@@ -52,14 +50,9 @@ const Cadastro = () => {
             reset()
             toastSucesso("Usuário criado com sucesso")
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem)
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false)
     }

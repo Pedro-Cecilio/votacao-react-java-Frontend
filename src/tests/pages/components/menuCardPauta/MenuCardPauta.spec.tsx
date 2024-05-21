@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
-import tema from "../../../../temas/temas";
+import tema from "../../../../theme/temas";
 import MenuCardPauta from "../../../../pages/components/menuCardPauta/menuCardPauta";
 import { respostaPautaDadosMock } from "../../../__mocks__/models/respostaPautaDadosMocks";
 import { useDadosAbrirVotacaoStoreMock } from "../../../__mocks__/useDadosAbrirVotacaoStoreMock";

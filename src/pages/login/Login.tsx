@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useTokenLocalStorage } from "../../hooks/useTokenLocalStorage";
 import { loginService } from "../../services/auth.service";
+import { tratamentoErroAxios } from "../../utils/utils";
 
 
 const Login = () => {
@@ -37,14 +38,9 @@ const Login = () => {
             inserirTokenNoLocalStorage(authReposta.token);
             navigate("/explorar")
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem);
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false);
     }

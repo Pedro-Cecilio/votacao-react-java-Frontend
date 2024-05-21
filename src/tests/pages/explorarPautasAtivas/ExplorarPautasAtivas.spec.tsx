@@ -5,7 +5,7 @@ import { useInserirVotoMock } from "../../__mocks__/useInserirVotoMock";
 import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import tema from "../../../temas/temas";
+import tema from "../../../theme/temas";
 import ExplorarPautasAtivas from "../../../pages/explorarPautasAtivas/ExplorarPautasAtivas";
 import { buscarTodasPautasAtivasServiceMock } from "../../__mocks__/buscarTodasPautasAtivasServiceMock";
 import {buscarTodasPautasAtivasService} from "../../../services/pauta.service"

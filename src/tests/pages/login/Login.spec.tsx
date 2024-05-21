@@ -1,6 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import tema from "../../../temas/temas"
+import tema from "../../../theme/temas"
 import Login from "../../../pages/login/Login"
 import { BrowserRouter } from "react-router-dom"
 import { useNavigateMock } from "../../__mocks__/useNavigateMock"

@@ -3,7 +3,7 @@ import { useTokenLocalStorageMock } from "../../__mocks__/useTokenLocalStorageMo
 import { useDadosUsuarioStoreMock } from "../../__mocks__/useDadosUsuarioStoreMock";
 import { useInserirVotoMock } from "../../__mocks__/useInserirVotoMock";
 import { render, screen, waitFor } from "@testing-library/react";
-import tema from "../../../temas/temas";
+import tema from "../../../theme/temas";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import ExplorarMinhasPautas from "../../../pages/explorarMinhasPautas/ExplorarMinhasPautas";

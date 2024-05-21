@@ -9,12 +9,14 @@ import Botao from "../botao/Botao";
 import { Categoria } from "../../../enums/categoria";
 import { useTokenLocalStorage } from "../../../hooks/useTokenLocalStorage";
 import { criarPautaService } from "../../../services/pauta.service";
+import { tratamentoErroAxios } from "../../../utils/utils";
 
 interface ModalProps {
     aberto: boolean;
     fechar: () => void;
     setAtualizarPagina: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
     const { toastErro, toastSucesso } = useToastPersonalizado()
     const [isLoading, setIsLoading] = useState(false)
@@ -50,17 +52,12 @@ const ModalNovaPauta = ({ aberto, fechar, setAtualizarPagina }: ModalProps) => {
             const token = obterTokenDoLocalStorage() ?? "";
             await criarPautaService(assunto, categoria, token);
             setAtualizarPagina(true)
-            fecharModal(); 
             toastSucesso("Pauta criada com sucesso!")
+            fecharModal(); 
         } catch (error) {
+            setIsLoading(false)
             const axiosError = error as AxiosError<RespostaErro>;
-            if (axiosError.code == "ERR_NETWORK") {
-                toastErro("Erro ao conectar com servidor.")
-                setIsLoading(false)
-                return;
-            }
-            const mensagem: string = axiosError.response!.data.erro;
-            toastErro(mensagem)
+            tratamentoErroAxios({axiosError, toastErro})
         }
         setIsLoading(false)
 

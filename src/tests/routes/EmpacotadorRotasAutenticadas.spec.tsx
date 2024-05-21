@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter } from "react-router-dom"
 import EmpacotadorRotasAutenticadas from "../../routes/EmpacotadorRotasAutenticadas"
-import tema from "../../temas/temas"
+import tema from "../../theme/temas"
 import { render, waitFor } from "@testing-library/react"
 import { useNavigateMock } from "../__mocks__/useNavigateMock"
 import { useDadosUsuarioStoreMock } from "../__mocks__/useDadosUsuarioStoreMock"
